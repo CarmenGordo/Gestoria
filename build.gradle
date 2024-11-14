@@ -1,0 +1,48 @@
+plugins {
+    // Apply the application plugin to add support for building a CLI application in Java.
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.1.0'
+}
+
+repositories {
+    // Use Maven Central for resolving dependencies.
+    mavenCentral()
+}
+
+javafx {
+    version = "23"
+    modules = ['javafx.base', 'javafx.swing','javafx.graphics', 'javafx.controls','javafx.fxml','javafx.media']
+}
+
+dependencies {
+    //MYSQL
+    //implementation 'mysql:mysql-connector-java:8.0.32'
+    //MARIADB
+    implementation 'org.mariadb.jdbc:mariadb-java-client:3.1.2'
+
+    //para que no de errores
+    implementation 'ch.qos.logback:logback-classic:1.2.11'
+
+    //para el uso de json
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
+}
+
+
+mainClassName  = 'crud.Main'
+
+jar {
+ duplicatesStrategy 'exclude' //Excluye duplicados en ficheros de configuración
+    manifest { //Genera el fichero MANIFEST.MF que hay dentro del jar
+        attributes 'Main-Class': mainClassName // Clase principal del proyecto 
+    }
+}
+
+sourceSets {
+  main {
+    resources {
+        srcDirs = ["src/main/java","src/main/resources"]
+        
+    }
+  }
+}
+
