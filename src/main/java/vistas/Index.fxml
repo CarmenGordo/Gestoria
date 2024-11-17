@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Tab?>
@@ -10,6 +11,7 @@
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.Region?>
@@ -50,10 +52,10 @@
             </Pane>
             <Pane fx:id="paneBotonera" layoutY="60.0" prefHeight="44.0" prefWidth="650.0">
                <children>
-                  <Button fx:id="btnAñadir" contentDisplay="CENTER" graphicTextGap="2.0" layoutX="230.0" layoutY="9.0" prefHeight="26.0" prefWidth="73.0" text="_Añadir" />
-                  <Button fx:id="btnEditar" contentDisplay="CENTER" graphicTextGap="2.0" layoutX="318.0" layoutY="9.0" prefHeight="26.0" prefWidth="73.0" text="_Editar" />
-                  <Button fx:id="btnActualizar" contentDisplay="CENTER" graphicTextGap="2.0" layoutX="402.0" layoutY="9.0" prefHeight="26.0" prefWidth="73.0" text="Act_ualizar" />
-                  <Button fx:id="btnBorrar" contentDisplay="CENTER" graphicTextGap="2.0" layoutX="490.0" layoutY="9.0" prefHeight="26.0" prefWidth="73.0" text="B_orrar" />
+                  <Button fx:id="btnAñadir" contentDisplay="CENTER" graphicTextGap="2.0" layoutX="230.0" layoutY="9.0" onAction="#añadir" prefHeight="26.0" prefWidth="73.0" text="_Añadir" />
+                  <Button fx:id="btnEditar" contentDisplay="CENTER" graphicTextGap="2.0" layoutX="318.0" layoutY="9.0" onAction="#editar" prefHeight="26.0" prefWidth="73.0" text="_Editar" />
+                  <Button fx:id="btnActualizar" contentDisplay="CENTER" graphicTextGap="2.0" layoutX="402.0" layoutY="9.0" onAction="#actualizar" prefHeight="26.0" prefWidth="73.0" text="Act_ualizar" />
+                  <Button fx:id="btnBorrar" contentDisplay="CENTER" graphicTextGap="2.0" layoutX="490.0" layoutY="9.0" onAction="#borrar" prefHeight="26.0" prefWidth="73.0" text="B_orrar" />
                   <Text fx:id="textoDatosProcutos" layoutX="14.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Informacion:" />
                   <Button fx:id="btnVer" contentDisplay="CENTER" graphicTextGap="2.0" layoutX="599.0" layoutY="11.0" onAction="#verSeleccion" prefHeight="26.0" prefWidth="37.0" text="_Ver" />
                </children>
@@ -88,28 +90,71 @@
                         </TabPane>
                      </children>
                   </Pane>
-                  <Pane fx:id="paneContenidoProductoSelec" prefHeight="396.0" prefWidth="650.0">
+                  <Pane fx:id="paneContenidoProductoSelec" prefHeight="396.0" prefWidth="650.0" visible="false">
                      <children>
                         <TabPane prefHeight="396.0" prefWidth="650.0" tabClosingPolicy="UNAVAILABLE">
                            <tabs>
-                              <Tab fx:id="tabProductoProductos" text="Producto">
+                              <Tab fx:id="tabInfoProducto" text="Producto">
                                  <content>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
-                                          <VBox layoutX="8.0" layoutY="6.0" prefHeight="354.0" prefWidth="627.0">
+                                          <FlowPane prefHeight="245.0" prefWidth="632.0">
                                              <children>
-                                                <HBox prefHeight="252.0" prefWidth="627.0">
-                                                   <children>
-                                                      <ImageView fitHeight="193.0" fitWidth="232.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: red;" />
-                                                      <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                              <HBox alignment="CENTER_LEFT" prefHeight="327.0" prefWidth="632.0" spacing="10">
+  <!-- Imagen a la izquierda -->
+  <ImageView fx:id="imgProductoSelec" fitHeight="197.0" fitWidth="222.0" preserveRatio="true">
+                                                      <HBox.margin>
+                                                         <Insets left="20.0" />
+                                                      </HBox.margin>
+                                                   </ImageView>
+                                                   <Region prefHeight="253.0" prefWidth="43.0" />
+
+                                                    <!-- derecha: -->
+                                                    <VBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="225.0" prefWidth="275.0" spacing="10">
+                                                        <HBox prefHeight="25.0" prefWidth="275.0" spacing="5">
+                                                            <Text fx:id="labelIdProductoSelec" text="ID:" wrappingWidth="96.0" />
+                                                            <Text fx:id="textIdProductoSelec" text="X" wrappingWidth="172.51171875" />
+                                                        </HBox>
+                                                      <HBox prefHeight="25.0" prefWidth="275.0" spacing="5">
                                                          <children>
-                                                            <VBox prefHeight="252.0" prefWidth="399.0" />
+                                                            <Text fx:id="labelNombreProductoSelec" text="Nombre:" wrappingWidth="96.0" />
+                                                            <Text fx:id="textNombreProductoSelec" text="X" wrappingWidth="172.51171875" />
                                                          </children>
-                                                      </AnchorPane>
-                                                   </children>
-                                                </HBox>
-                                                <HBox prefHeight="100.0" prefWidth="200.0" />
-                                             </children></VBox>
+                                                      </HBox>
+                                                      <HBox prefHeight="25.0" prefWidth="275.0" spacing="5">
+                                                         <children>
+                                                            <Text fx:id="labelTipoProductoSelec" text="Categoria:" wrappingWidth="96.0" />
+                                                            <Text fx:id="textTipoProductoSelec" text="X" wrappingWidth="172.51171875" />
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox prefHeight="25.0" prefWidth="275.0" spacing="5">
+                                                         <children>
+                                                            <Text fx:id="labelSubTipoProductoSelec" text="Sub categoria:" wrappingWidth="96.0" />
+                                                            <Text fx:id="textSubTipoProductoSelec" text="X" wrappingWidth="172.51171875" />
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox prefHeight="25.0" prefWidth="275.0" spacing="5">
+                                                         <children>
+                                                            <Text fx:id="labelTallaProductoSelec" text="Tallas:" wrappingWidth="96.0" />
+                                                            <Text fx:id="textTallaProductoSelec" text="X" wrappingWidth="172.51171875" />
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox prefHeight="25.0" prefWidth="275.0" spacing="5">
+                                                         <children>
+                                                            <Text fx:id="labelPrecioProductoSelec" text="Precio:" wrappingWidth="96.0" />
+                                                            <Text fx:id="textPrecioProductoSelec" text="X" wrappingWidth="172.51171875" />
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox prefHeight="25.0" prefWidth="275.0" spacing="5">
+                                                         <children>
+                                                            <Text fx:id="labelStockProductoSelec" text="Stock:" wrappingWidth="96.0" />
+                                                            <Text fx:id="textStockProductoSelec" text="X" wrappingWidth="172.51171875" />
+                                                         </children>
+                                                      </HBox>
+  </VBox>
+</HBox>
+                                             </children>
+                                          </FlowPane>
                                        </children>
                                     </AnchorPane>
                                  </content>
@@ -165,7 +210,7 @@
                           <tabs>
                             <Tab fx:id="tabTiendas" text="Tiendas">
                               <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
                                           <TableView fx:id="tablaListaTiendas" layoutX="10.0" layoutY="14.0" prefHeight="342.0" prefWidth="630.0">
                                             <columns>
@@ -191,7 +236,7 @@
                      <children>
                         <TabPane prefHeight="396.0" prefWidth="650.0" tabClosingPolicy="UNAVAILABLE">
                           <tabs>
-                            <Tab fx:id="tabTiendaTiendas" text="Tienda">
+                            <Tab fx:id="tabInfoTienda" text="Tienda">
                               <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
@@ -260,13 +305,13 @@
                      <children>
                         <TabPane prefHeight="396.0" prefWidth="650.0" tabClosingPolicy="UNAVAILABLE">
                            <tabs>
-                              <Tab fx:id="tabListaAlmacenes1" text="Almacenes">
+                              <Tab fx:id="tabAlmacenes" text="Almacenes">
                                  <content>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
                                           <TableView fx:id="tablaListaAlmacenes" layoutX="10.0" layoutY="13.0" prefHeight="342.0" prefWidth="630.0">
                                              <columns>
-                                                <TableColumn fx:id="columnIdListaAlmacenes" prefWidth="51.0" text="Id" />
+                                                <TableColumn fx:id="columnIdListaAlmacenes" prefWidth="51.0" text="ID" />
                                                 <TableColumn fx:id="columnNombreListaAlmacenes" prefWidth="77.0" text="Nombre" />
                                                 <TableColumn fx:id="columnDirListaAlmacenes" prefWidth="72.0" text="Direccion" />
                                                 <TableColumn fx:id="columnCiudadListaAlmacenes" prefWidth="60.0" text="Ciudad" />
@@ -275,6 +320,117 @@
                                                 <TableColumn fx:id="columnHorarioListaAlmacenes" prefWidth="82.0" text="Horario" />
                                                 <TableColumn fx:id="columnCapOcupadaListaAlmacenes" prefWidth="82.0" text="Cap. Ocuapada" />
                                                 <TableColumn fx:id="columnCapTotalListaAlmacenes" prefWidth="82.0" text="Cap. Total" />
+                                             </columns>
+                                          </TableView>
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                              </Tab>
+                           </tabs>
+                        </TabPane>
+                     </children>
+                  </Pane>
+                  <Pane fx:id="paneContenidoAlmacenSelec" prefHeight="396.0" prefWidth="650.0">
+                     <children>
+                        <TabPane prefHeight="396.0" prefWidth="650.0" tabClosingPolicy="UNAVAILABLE">
+                           <tabs>
+                              <Tab fx:id="tabInfoAlmacen" text="Almacen">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <FlowPane layoutX="8.0" layoutY="9.0" prefHeight="348.0" prefWidth="628.0">
+                                              <children>
+                                                  <VBox alignment="top_left" prefHeight="349.0" prefWidth="324.0" spacing="10">
+                                                    <HBox spacing="5">
+                                                        <Text fx:id="labelIdAlmacenSelec" text="ID: " wrappingWidth="96.0" />
+                                                        <Text fx:id="texIdAlmacenSelec" text="X" wrappingWidth="195.0" />
+                                                    </HBox>
+                                                    <HBox spacing="5">
+                                                        <Text fx:id="labelNombreAlmacenSelec" text="Nombre:" wrappingWidth="96.0" />
+                                                        <Text fx:id="textNombreAlmacenSelec" text="X" wrappingWidth="195.0" />
+                                                    </HBox>
+                                                    <HBox spacing="5">
+                                                        <Text fx:id="labelTelAlmacenSelec" text="Tel:" wrappingWidth="96.0" />
+                                                        <Text fx:id="textTelAlmacenSelec" text="X" wrappingWidth="195.0" />
+                                                    </HBox>
+                                                   <HBox spacing="5">
+                                                      <children>
+                                                         <Text fx:id="labelDirAlmacenSelec" text="Direccion:" wrappingWidth="96.0" />
+                                                         <Text fx:id="textlDirAlmacenSelec" text="X" wrappingWidth="195.0" />
+                                                      </children>
+                                                   </HBox>
+                                                    <HBox spacing="5">
+                                                        <Text fx:id="labelHorarioAlmacenSelec" text="Horario:" wrappingWidth="96.0" />
+                                                    </HBox>
+                                                    <TableView fx:id="tablaHorarioAlmacenSelec" prefHeight="80.0" prefWidth="324.0">
+                                                      <columns>
+                                                         <TableColumn fx:id="columnLHorarioAlmacenSelec" prefWidth="60.0" text="Lunes" />
+                                                         <TableColumn fx:id="columnMHorarioAlmacenSelec" prefWidth="60.0" text="Martes" />
+                                                         <TableColumn fx:id="columnXHorarioAlmacenSelec" prefWidth="60.0" text="Miercoles" />
+                                                         <TableColumn fx:id="columnJHorarioAlmacenSelec" prefWidth="60.0" text="Jueves" />
+                                                         <TableColumn fx:id="columnVHorarioAlmacenSelec" prefWidth="60.0" text="Viernes" />
+                                                         <TableColumn fx:id="columnSHorarioAlmacenSelec" prefWidth="60.0" text="Sabado" />
+                                                         <TableColumn fx:id="columnDHorarioAlmacenSelec" prefWidth="60.0" text="Domingo" />
+                                                      </columns>
+                                                   </TableView>
+                                                </VBox>
+
+                                                <!-- derecha: -->
+                                                <VBox alignment="top_left" spacing="10">
+                                                    <HBox spacing="5">
+                                                        <Text fx:id="labelCiudadAlmacenSelec" text="Ciudad:" wrappingWidth="96.0" />
+                                                        <Text fx:id="textCiudadAlmacenSelec" text="X" wrappingWidth="195.0" />
+                                                    </HBox>
+                                                    <HBox spacing="5">
+                                                        <Text fx:id="labelPaisAlmacenSelec" text="Pais:" wrappingWidth="96.0" />
+                                                        <Text fx:id="textPaisAlmacenSelec" text="X" wrappingWidth="87.251953125" />
+                                                    </HBox>
+                                                   <Region prefHeight="31.0" prefWidth="300.0" />
+
+                                                    <!-- abajo derecha -->
+                                                    <HBox fx:id="hbox" prefHeight="239.0" prefWidth="300" />
+                                                </VBox>
+                                              </children>
+                                          </FlowPane>
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                              </Tab>
+                              <Tab fx:id="tablaProductosAlmacen" text="Productos">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="322.0" prefWidth="572.0">
+                                       <children>
+                                          <TableView fx:id="tablaProductosTienda11" layoutX="10.0" layoutY="14.0" prefHeight="337.0" prefWidth="630.0">
+                                             <columns>
+                                                <TableColumn fx:id="columnIdTiendaSelecProd11" prefWidth="54.0" text="Id" />
+                                                <TableColumn fx:id="columnNombreTiendaSelecProd11" prefWidth="97.0" text="Nombre" />
+                                                <TableColumn fx:id="columnImgTiendaSelecProd11" prefWidth="67.0" text="Imagen" />
+                                                <TableColumn fx:id="columnTipoTiendaSelecProd11" prefWidth="61.0" text="Tipo" />
+                                                <TableColumn fx:id="columnSubTipoTiendaSelecProd11" prefWidth="97.0" text="Subtipo" />
+                                                <TableColumn fx:id="columnTallaTiendaSelecProd11" prefWidth="87.0" text="Talla" />
+                                                <TableColumn fx:id="columnPrecioTiendaSelecProd11" prefWidth="77.0" text="Precio" />
+                                                <TableColumn fx:id="columnStockTiendaSelecProd11" prefWidth="89.0" text="Stock" />
+                                             </columns>
+                                          </TableView>
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                              </Tab>
+                              <Tab fx:id="tabTiendasAlmacen" text="Tiendas">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="365.0" prefWidth="650.0">
+                                       <children>
+                                          <TableView fx:id="tablaAlmacenesTienda11" layoutX="10.0" layoutY="13.0" prefHeight="342.0" prefWidth="630.0">
+                                             <columns>
+                                                <TableColumn fx:id="columnIdTiendaSelecAlmac11" prefWidth="61.0" text="Id" />
+                                                <TableColumn fx:id="columnNombreTiendaSelecAlmac11" prefWidth="67.0" text="Nombre" />
+                                                <TableColumn fx:id="columnDirTiendaSelecAlmac11" prefWidth="122.0" text="Direccion" />
+                                                <TableColumn fx:id="columnCiudadTiendaSelecAlmac11" minWidth="0.0" prefWidth="0.0" text="Ciudad" />
+                                                <TableColumn fx:id="columnPaisTiendaSelecAlmac11" prefWidth="47.0" text="Pais" />
+                                                <TableColumn fx:id="columnTelTiendaSelecAlmac11" prefWidth="57.0" text="Telefono" />
+                                                <TableColumn fx:id="columnHorarioTiendaSelecAlmac11" prefWidth="95.0" text="Horario" />
+                                                <TableColumn fx:id="columnCapOcupadaTiendaSelecAlmac11" prefWidth="98.0" text="Cap. Ocupada" />
+                                                <TableColumn fx:id="columnCapTotalTiendaSelecAlmac11" prefWidth="82.0" text="Cap. Total" />
                                              </columns>
                                           </TableView>
                                        </children>

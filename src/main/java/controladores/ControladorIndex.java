@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import modelos.Tiendas;
 import modelos.Almacenes;
+import modelos.HorarioAlmacen;
 import modelos.Productos;
 
 import javafx.collections.FXCollections;
@@ -25,6 +26,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import java.sql.Connection;
+import java.util.HashMap;
 import java.util.Locale;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -51,6 +53,7 @@ public class ControladorIndex implements Initializable {
 
     ObservableList<Tiendas> listaTiendas = FXCollections.observableArrayList();
     ObservableList<Almacenes> listaAlmacenes = FXCollections.observableArrayList();
+    ObservableList<HorarioAlmacen> horarioAlmacen = FXCollections.observableArrayList();
     ObservableList<Productos> listaProductos = FXCollections.observableArrayList();
     
     
@@ -73,6 +76,8 @@ public class ControladorIndex implements Initializable {
     private Pane paneContenidoTiendaSelec;
     @FXML
     private Pane paneContenidoListaAlmacenes;
+    @FXML
+    private Pane paneContenidoAlmacenSelec;
     @FXML
     private Pane paneContenidoListaProductos;
     @FXML
@@ -170,8 +175,7 @@ public class ControladorIndex implements Initializable {
         paneContenidoListaTiendas.setVisible(false);
         paneContenidoTiendaSelec.setVisible(false);
         paneContenidoListaAlmacenes.setVisible(false);
-        
-        //paneContenidoAlmacenSelec.setVisible(false);
+        paneContenidoAlmacenSelec.setVisible(false);
         
         paneMostrar.setVisible(true);
     } 
@@ -290,10 +294,86 @@ public class ControladorIndex implements Initializable {
     
     
     
-    //pg tienda selec:
+    //Tabla lista almacenes:
+    @FXML
+    private TableView<Almacenes> tablaListaAlmacenes;
+    @FXML
+    private TableColumn<Almacenes, String> columnIdListaAlmacenes;
+    @FXML
+    private TableColumn<Almacenes, String> columnNombreListaAlmacenes;
+    @FXML
+    private TableColumn<Almacenes, String> columnDirListaAlmacenes;
+    @FXML
+    private TableColumn<Almacenes, String> columnCiudadListaAlmacenes;   
+    @FXML
+    private TableColumn<Almacenes, String> columnPaisListaAlmacenes;
+    @FXML
+    private TableColumn<Almacenes, Integer> columnTelListaAlmacenes;
+    @FXML
+    private TableColumn<Almacenes, Map> columnHorarioListaAlmacenes;    
+    @FXML
+    private TableColumn<Almacenes, Integer> columnCapOcupadaListaAlmacenes; 
+    @FXML
+    private TableColumn<Almacenes, Integer> columnCapTotalListaAlmacenes; 
+    
+    //pg almacen selec elmentos
+    @FXML
+    private Text texIdAlmacenSelec;
+    @FXML
+    private Text textNombreAlmacenSelec;
+    @FXML
+    private Text textTelAlmacenSelec;
+    @FXML
+    private Text textlDirAlmacenSelec;
+    @FXML
+    private TableView<HorarioAlmacen> tablaHorarioAlmacenSelec;
+    @FXML
+    private TableColumn<Almacenes, String> columnLHorarioAlmacenSelec;
+    @FXML
+    private TableColumn<Almacenes, String> columnMHorarioAlmacenSelec;
+    @FXML
+    private TableColumn<Almacenes, String> columnXHorarioAlmacenSelec;
+    @FXML
+    private TableColumn<Almacenes, String> columnJHorarioAlmacenSelec;
+    @FXML
+    private TableColumn<Almacenes, String> columnVHorarioAlmacenSelec;
+    @FXML
+    private TableColumn<Almacenes, String> columnSHorarioAlmacenSelec;
+    @FXML
+    private TableColumn<Almacenes, String> columnDHorarioAlmacenSelec;
+    @FXML
+    private Text textCiudadAlmacenSelec;
+    @FXML
+    private Text textPaisAlmacenSelec;
+    
+    
+    
+    
+    //Botones pane botonera:
+    @FXML
+    private void añadir(){
+        
+    }
+    
+    @FXML
+    private void editar(){
+        
+    }
+            
+    @FXML
+    private void actualizar(){
+        
+    }
+            
+    @FXML
+    private void borrar(){
+        
+    }
+    
+    
     @FXML
     private void verSeleccion() {
-        
+       
         if (tablaListaTiendas.getSelectionModel().getSelectedItem() != null){
             Tiendas tiendaSelec = tablaListaTiendas.getSelectionModel().getSelectedItem();
             mostrarPane(paneContenidoTiendaSelec);
@@ -301,23 +381,37 @@ public class ControladorIndex implements Initializable {
             
             System.out.println("tiendaSelec id-- " + tiendaSelec.getId_tienda());
             rellenarTablaTiendaSelec(tiendaSelec);
+            rellenarProductosTienda(tiendaSelec.getId_tienda());
             rellenarAlmacenesTienda(tiendaSelec.getId_tienda());
             
+            tablaListaTiendas.getSelectionModel().clearSelection();
         }else if (tablaListaAlmacenes.getSelectionModel().getSelectedItem() != null){
             Almacenes almacenSelec = tablaListaAlmacenes.getSelectionModel().getSelectedItem();
-            //mostrarPane(paneContenidoAlmacenesSelec);
+            mostrarPane(paneContenidoAlmacenSelec);
             visiblePaneCabecera(true);
             
+            System.out.println("almacen selec id-- " + almacenSelec.getId_tienda());
+            rellenarAlmacenSelec(almacenSelec);
             //rellenarTablaAlmacenSelec(almacenSelec);
+            
+            tablaListaAlmacenes.getSelectionModel().clearSelection();
         }
         //?arreglar ver boton
         //else if (tablaListaProdutos.getSelectionModel().getSelectedItem() != null){
             //Tiendas tiendaSelec = tablaListaTiendas.getSelectionModel().getSelectedItem();
-            //mostrarPane(paneContenidoTiendaSelec);
+            //mostrarPane(paneContenidoProdcutoSelec);
+            //visiblePaneCabecera(true);
             
+            //System.out.println("producto Selec id-- " + productoSelec.getId_tienda());
+            //rellenarTablaTiendaSelec(tiendaSelec);
+            //rellenarAlmacenesTienda(tiendaSelec.getId_tienda());
+            
+            //tablaListaProductos.getSelectionModel().clearSelection();
         //}
         
     }  
+    
+    //pg tienda selec:
     private void rellenarTablaTiendaSelec(Tiendas tiendaSelec){
         ObservableList<Tiendas> listaTiendaSelec = FXCollections.observableArrayList();
         listaTiendaSelec.add(tiendaSelec); 
@@ -332,6 +426,30 @@ public class ControladorIndex implements Initializable {
         columnPaisTiendaSelec.setCellValueFactory(new PropertyValueFactory<>("pais"));
         columnTelTiendaSelec.setCellValueFactory(new PropertyValueFactory<>("telefono"));
         columnTipoTiendaSelec.setCellValueFactory(new PropertyValueFactory<>("tipo"));
+    }
+    private void rellenarProductosTienda(String idTienda) {
+        listaProductos.clear();
+        ObservableList<Productos> productos = darListaProductos();
+        
+        for (int i = 0; i < productos.size(); i++) {
+            Productos producto = productos.get(i);
+            if (producto.getId_tienda().equals(idTienda)) {
+                listaProductos.add(producto);
+            }
+        }
+        
+        columnIdTiendaSelecProd.setCellValueFactory(new PropertyValueFactory<>("id_producto"));
+        columnNombreTiendaSelecProd.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        columnImgTiendaSelecProd.setCellValueFactory(new PropertyValueFactory<>("imagen"));
+        columnTipoTiendaSelecProd.setCellValueFactory(new PropertyValueFactory<>("tipo"));
+        columnSubTipoTiendaSelecProd.setCellValueFactory(new PropertyValueFactory<>("pais"));
+        //?preguntar que es para rellenar
+//olumnTallaTiendaSelecProd.setCellValueFactory(new PropertyValueFactory<>("subtipo_ropa"));
+        columnTallaTiendaSelecProd.setCellValueFactory(new PropertyValueFactory<>("talla"));
+        columnPrecioTiendaSelecProd.setCellValueFactory(new PropertyValueFactory<>("talla"));
+        columnStockTiendaSelecProd.setCellValueFactory(new PropertyValueFactory<>("stock"));
+
+        tablaProductosTienda.setItems(listaProductos);
     }
     private void rellenarAlmacenesTienda(String idTienda) {
         listaAlmacenes.clear();
@@ -359,39 +477,43 @@ public class ControladorIndex implements Initializable {
     }
     
     
+    //pg almacen selec:
+    private void rellenarAlmacenSelec(Almacenes almacenSelec){
+        texIdAlmacenSelec.setText(almacenSelec.getId_almacen());
+        textNombreAlmacenSelec.setText(almacenSelec.getNombre());
+        textlDirAlmacenSelec.setText(almacenSelec.getDireccion());
+        textTelAlmacenSelec.setText(Integer.toString(almacenSelec.getTelefono()));
+        textCiudadAlmacenSelec.setText(almacenSelec.getCiudad());
+        textPaisAlmacenSelec.setText(almacenSelec.getPais());
+        
+        //para el horario:
+        Map<String, Map<String, String>> horarios = new HashMap<>();
+        horarios.put("lunes", Map.of("apertura", "10:00", "cierre", "18:00"));
+        horarios.put("martes", Map.of("apertura", "10:00", "cierre", "18:00"));
+        horarios.put("miércoles", Map.of("apertura", "10:00", "cierre", "18:00"));
+        horarios.put("jueves", Map.of("apertura", "10:00", "cierre", "18:00"));
+        horarios.put("viernes", Map.of("apertura", "10:00", "cierre", "18:00"));
+
+        HorarioAlmacen horario = new HorarioAlmacen(horarios);
+        ObservableList<HorarioAlmacen> listaHorarios = FXCollections.observableArrayList();
+        listaHorarios.add(horario);
+
+        columnLHorarioAlmacenSelec.setCellValueFactory(new PropertyValueFactory<>("lunes"));
+        columnMHorarioAlmacenSelec.setCellValueFactory(new PropertyValueFactory<>("martes"));
+        columnXHorarioAlmacenSelec.setCellValueFactory(new PropertyValueFactory<>("miercoles"));
+        columnJHorarioAlmacenSelec.setCellValueFactory(new PropertyValueFactory<>("jueves"));
+        columnVHorarioAlmacenSelec.setCellValueFactory(new PropertyValueFactory<>("viernes"));
+        columnSHorarioAlmacenSelec.setCellValueFactory(new PropertyValueFactory<>("sabado"));
+        columnDHorarioAlmacenSelec.setCellValueFactory(new PropertyValueFactory<>("domingo"));
+
+        tablaHorarioAlmacenSelec.setItems(listaHorarios);
+    }
     
     
-    //Tabla lista almacenes:
-    @FXML
-    private TableView<Almacenes> tablaListaAlmacenes;
-    @FXML
-    private TableColumn<Almacenes, String> columnIdListaAlmacenes;
-    @FXML
-    private TableColumn<Almacenes, String> columnNombreListaAlmacenes;
-    @FXML
-    private TableColumn<Almacenes, String> columnDirListaAlmacenes;
-    @FXML
-    private TableColumn<Almacenes, String> columnCiudadListaAlmacenes;   
-    @FXML
-    private TableColumn<Almacenes, String> columnPaisListaAlmacenes;
-    @FXML
-    private TableColumn<Almacenes, Integer> columnTelListaAlmacenes;
-    @FXML
-    private TableColumn<Almacenes, Map> columnHorarioListaAlmacenes;    
-    @FXML
-    private TableColumn<Almacenes, Integer> columnCapOcupadaListaAlmacenes; 
-    @FXML
-    private TableColumn<Almacenes, Integer> columnCapTotalListaAlmacenes; 
- 
     
     
+
     
-    
-    
-    
-    
-    
-   
     
     
     //? arreglar idioma
@@ -433,6 +555,9 @@ public class ControladorIndex implements Initializable {
         btnCambioIdioma.getItems().addAll("Español", "English");
         btnCambioIdioma.setValue("Español"); 
         btnCambioIdioma.setOnAction(e -> cambiarIdioma());
+        
+        //mostrar el pane de inicio
+        //mostrarPane(paneInicio);
         
         
         try {

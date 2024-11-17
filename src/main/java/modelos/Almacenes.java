@@ -1,7 +1,7 @@
 package modelos;
 
+import java.util.HashMap;
 import java.util.Map;
-import netscape.javascript.JSObject;
 
 /**
  *
@@ -15,7 +15,7 @@ public class Almacenes {
     public String ciudad;
     public String pais;
     public int telefono;
-    public Map<String, String> horario;
+    public Map<String, Map<String, String>> horario;
     public int capacidad_ocupada;
     public int capacidad_total;
     public String id_tienda;
@@ -30,7 +30,7 @@ public class Almacenes {
         this.ciudad = ciudad;
         this.pais = pais;
         this.telefono = telefono;
-        this.horario = horario;
+        this.horario = new HashMap<>();
         this.capacidad_ocupada = capacidad_ocupada;
         this.capacidad_total = capacidad_total;
         this.id_tienda = id_tienda;
@@ -84,11 +84,11 @@ public class Almacenes {
         this.telefono = telefono;
     }
 
-    public Map<String, String> getHorario() {
+    public Map<String, Map<String, String>> getHorario() {
         return horario;
     }
 
-    public void setHorario(Map<String, String> horario) {
+    public void setHorario(Map<String, Map<String, String>> horario) {
         this.horario = horario;
     }
 
@@ -115,5 +115,7 @@ public class Almacenes {
     public void setId_tienda(String id_tienda) {
         this.id_tienda = id_tienda;
     }
+    
+    
 
 }
