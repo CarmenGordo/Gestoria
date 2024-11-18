@@ -27,7 +27,10 @@ import java.util.ResourceBundle;
 
 import java.sql.Connection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Locale;
+import java.util.Set;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -188,21 +191,21 @@ public class ControladorIndex implements Initializable {
     @FXML
     private TableView<Productos> tablaListaProductos;
     @FXML
-    private TableColumn<Tiendas, String> columnIdListaProductos;
+    private TableColumn<Productos, String> columnIdListaProductos;
     @FXML
-    private TableColumn<Tiendas, String> columnNombreListaProductos;
+    private TableColumn<Productos, String> columnNombreListaProductos;
     @FXML
-    private TableColumn<Tiendas, String> columnImgListaProductos;
+    private TableColumn<Productos, String> columnImgListaProductos;
     @FXML
-    private TableColumn<Tiendas, Productos.TipoProducto> columnTipoListaProductos;
+    private TableColumn<Productos, Productos.TipoProducto> columnTipoListaProductos;
     @FXML
-    private TableColumn<Tiendas, ?> columnSubTipoListaProductos;
+    private TableColumn<Productos, String> columnSubTipoListaProductos;
     @FXML
-    private TableColumn<Tiendas, Productos.TallaProducto> columnTallaListaProductos;
+    private TableColumn<Productos, Productos.TallaProducto> columnTallaListaProductos;
     @FXML
-    private TableColumn<Tiendas, Double> columnPrecioListaProductos;
+    private TableColumn<Productos, Double> columnPrecioListaProductos;
     @FXML
-    private TableColumn<Tiendas, Integer> columnStockListaProductos;
+    private TableColumn<Productos, Integer> columnStockListaProductos;
     
     
     
@@ -439,7 +442,6 @@ public class ControladorIndex implements Initializable {
             
             tablaListaAlmacenes.getSelectionModel().clearSelection();
         }
-        //?arreglar ver boton
         //else if (tablaListaProdutos.getSelectionModel().getSelectedItem() != null){
             //Tiendas tiendaSelec = tablaListaTiendas.getSelectionModel().getSelectedItem();
             //mostrarPane(paneContenidoProdcutoSelec);
@@ -586,6 +588,9 @@ public class ControladorIndex implements Initializable {
     
     
     
+    //decodificar img base 64
+    //private 
+    
 
     
     
@@ -620,6 +625,7 @@ public class ControladorIndex implements Initializable {
         btnProductos.setText(rb.getString("btnProductos"));
     }
     
+    
 
     
     @Override
@@ -629,7 +635,7 @@ public class ControladorIndex implements Initializable {
         btnCambioIdioma.setValue("Español"); 
         btnCambioIdioma.setOnAction(e -> cambiarIdioma());
         
-        //mostrar el pane de inicio
+        //? mostrar el pane de inicio
         //mostrarPane(paneInicio);
         
         
@@ -650,10 +656,21 @@ public class ControladorIndex implements Initializable {
         
         if (conexion != null) {
             try {
+                ObservableList<Productos> listaP = darListaProductos();
                 ObservableList<Tiendas> listaT = darListaTiendas();
                 ObservableList<Almacenes> listaA = darListaAlmacenes();
-                ObservableList<Productos> listaP = darListaProductos();
                 
+                
+                columnIdListaProductos.setCellValueFactory(new PropertyValueFactory<>("id_producto"));
+                columnNombreListaProductos.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+                columnImgListaProductos.setCellValueFactory(new PropertyValueFactory<>("imagen"));
+                columnTipoListaProductos.setCellValueFactory(new PropertyValueFactory<>("tipo"));
+                columnSubTipoListaProductos.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().recogerSubTipo()));
+                columnTallaListaProductos.setCellValueFactory(new PropertyValueFactory<>("talla"));
+                columnPrecioListaProductos.setCellValueFactory(new PropertyValueFactory<>("precio"));
+                columnStockListaProductos.setCellValueFactory(new PropertyValueFactory<>("stock"));
+                
+                tablaListaProductos.setItems(listaP);
                 
                 columnIdListaTiendas.setCellValueFactory(new PropertyValueFactory<>("id_tienda"));
                 columnNombreListaTiendas.setCellValueFactory(new PropertyValueFactory<>("nombre"));
@@ -678,8 +695,6 @@ public class ControladorIndex implements Initializable {
                 
                 tablaListaAlmacenes.setItems(listaA);
                 
-                //? añadir productos
-                
             } catch (ExceptionInInitializerError e) {
                 e.printStackTrace();
                 
@@ -692,6 +707,74 @@ public class ControladorIndex implements Initializable {
     }
     
    //llamada a las listas:
+    private ObservableList<Productos> darListaProductos(){
+        ObservableList<Productos> listaProductos = FXCollections.observableArrayList();
+        
+        if (conexion != null) {
+            String query = "SELECT * FROM productos";
+            try {
+                rs = st.executeQuery(query);
+                while (rs.next()) {
+                    //convertir el enum a string
+                    Productos.TipoProducto tipo = Productos.TipoProducto.valueOf(rs.getString("tipo"));
+                    Productos.SubTipoRopaProducto subtipo_ropa = null;
+                    Productos.SubTipoAccProducto subtipo_accesorios = null;
+                    
+                    if (tipo == Productos.TipoProducto.Ropa && rs.getString("subtipo_ropa") != null) {
+                        String subTipoRopaString = rs.getString("subtipo_ropa").trim().toUpperCase().replace(" ", "_");
+                        subtipo_ropa = Productos.SubTipoRopaProducto.valueOf(subTipoRopaString);
+                    }
+                    
+                    if (tipo == Productos.TipoProducto.Accesorios && rs.getString("subtipo_accesorios") != null) {
+                        String subtipoAccString = rs.getString("subtipo_accesorios").trim().toUpperCase().replace(" ", "_");
+                        subtipo_accesorios = Productos.SubTipoAccProducto.valueOf(subtipoAccString);
+                    }
+                    
+                    Set<Productos.TallaProducto> tallas = new HashSet<>();
+                    String tallaString = rs.getString("talla");
+                    if (tallaString != null && !tallaString.isEmpty()) {
+                    //las tallas estan separadas por, 
+                    String[] tallaArray = tallaString.split(",");
+                    for (int i = 0; i < tallaArray.length; i++){
+                        String t = tallaArray[i];
+                        
+                        try {
+                            tallas.add(Productos.TallaProducto.fromString(t.trim()));
+                        } catch (IllegalArgumentException e) {
+                            // Si la talla no es válida, imprime un mensaje de advertencia
+                            System.out.println("Talla inválida: " + t.trim());
+                        }
+                    }
+                    
+                    Productos producto = new Productos(
+                        rs.getString("id_producto"),
+                        rs.getString("nombre"),
+                        rs.getString("imagen"),
+                        tipo,
+                        subtipo_ropa,
+                        subtipo_accesorios,
+                        tallas,
+                        rs.getDouble("precio"),
+                        rs.getInt("stock"),
+                        rs.getString("id_tienda"),
+                        rs.getString("id_almacen")
+                    );
+
+                        //System.out.println("id producto -- "+ producto.getId_producto());
+                    listaProductos.add(producto);
+                }}
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        
+        return listaProductos;
+    }
+    
+    private void mostrarProductos() {
+       tablaListaProductos.setItems(listaProductos);
+    }
+    
     private ObservableList<Tiendas> darListaTiendas(){
         ObservableList<Tiendas> listaTiendas = FXCollections.observableArrayList();
         
@@ -794,49 +877,7 @@ public class ControladorIndex implements Initializable {
        tablaListaAlmacenes.setItems(listaAlmacenes);
     }
     
-    private ObservableList<Productos> darListaProductos(){
-        ObservableList<Productos> listaProductos = FXCollections.observableArrayList();
-        
-        if (conexion != null) {
-            String query = "SELECT * FROM productos";
-            try {
-                rs = st.executeQuery(query);
-                while (rs.next()) {
-                    //convertir el enum a string
-                    Productos.TipoProducto tipo = Productos.TipoProducto.valueOf(rs.getString("tipo"));
-                    Productos.SubTipoRopaProducto subtipo_ropa = Productos.SubTipoRopaProducto.valueOf(rs.getString("subtipo_ropa"));
-                    Productos.SubTipoAccProducto subtipo_accesorios = Productos.SubTipoAccProducto.valueOf(rs.getString("subtipo_accesorios"));
-                    Productos.TallaProducto talla = Productos.TallaProducto.valueOf(rs.getString("talla"));
-
-                    
-                    Productos producto = new Productos(
-                        rs.getString("id_producto"),
-                        rs.getString("nombre"),
-                        rs.getString("imagen"),
-                        tipo,
-                        subtipo_ropa,
-                        subtipo_accesorios,
-                        talla,
-                        rs.getDouble("precio"),
-                        rs.getInt("stock"),
-                        rs.getString("id_tienda"),
-                        rs.getString("id_almacen")
-                    );
-
-                    
-                    listaProductos.add(producto);
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        
-        return listaProductos;
-    }
     
-    private void mostrarProductos() {
-       tablaListaProductos.setItems(listaProductos);
-    }
     
     
 }

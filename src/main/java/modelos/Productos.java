@@ -1,5 +1,8 @@
 package modelos;
 
+import java.util.Set;
+import java.util.HashSet;
+
 /**
  *
  * @author carmen_gordo
@@ -11,16 +14,17 @@ public class Productos {
     public TipoProducto tipo;
     public SubTipoRopaProducto subtipo_ropa;
     public SubTipoAccProducto subtipo_accesorios;
-    public TallaProducto talla;
+    public Set<TallaProducto> talla;
     public double precio;
     public int stock;
     public String id_tienda;
     public String id_almacen;	
 
     public Productos() {
+        talla = new HashSet<>();
     }
 
-    public Productos(String id_producto, String nombre, String imagen, TipoProducto tipo, SubTipoRopaProducto subtipo_ropa, SubTipoAccProducto subtipo_accesorios, TallaProducto talla, double precio, int stock, String id_tienda, String id_almacen) {
+    public Productos(String id_producto, String nombre, String imagen, TipoProducto tipo, SubTipoRopaProducto subtipo_ropa, SubTipoAccProducto subtipo_accesorios, Set<TallaProducto> talla, double precio, int stock, String id_tienda, String id_almacen) {
         this.id_producto = id_producto;
         this.nombre = nombre;
         this.imagen = imagen;
@@ -64,6 +68,13 @@ public class Productos {
 
     public void setTipo(TipoProducto tipo) {
         this.tipo = tipo;
+        
+        if (tipo != TipoProducto.Ropa) {
+            this.subtipo_ropa = null;
+        }
+        if (tipo != TipoProducto.Accesorios) {
+            this.subtipo_accesorios = null;
+        }
     }
 
     public SubTipoRopaProducto getSubtipo_ropa() {
@@ -71,7 +82,13 @@ public class Productos {
     }
 
     public void setSubtipo_ropa(SubTipoRopaProducto subtipo_ropa) {
-        this.subtipo_ropa = subtipo_ropa;
+        
+        if (this.tipo == TipoProducto.Ropa) {
+            this.subtipo_ropa = subtipo_ropa;
+            
+        } else {
+            this.subtipo_ropa = null;
+        }
     }
 
     public SubTipoAccProducto getSubtipo_accesorios() {
@@ -79,15 +96,27 @@ public class Productos {
     }
 
     public void setSubtipo_accesorios(SubTipoAccProducto subtipo_accesorios) {
-        this.subtipo_accesorios = subtipo_accesorios;
+        
+        if (this.tipo == TipoProducto.Accesorios) {
+            this.subtipo_accesorios = subtipo_accesorios;
+            
+        } else {
+            this.subtipo_accesorios = null;
+        }
     }
 
-    public TallaProducto getTalla() {
+    public Set<TallaProducto> getTalla() {
         return talla;
     }
 
-    public void setTalla(TallaProducto talla) {
-        this.talla = talla;
+    public void setTalla(Set<TallaProducto> talla) {
+        
+        if (talla == null || talla.isEmpty()) {
+            this.talla = null;
+            
+        } else {
+            this.talla = talla;
+        }
     }
 
     public double getPrecio() {
@@ -122,6 +151,18 @@ public class Productos {
         this.id_almacen = id_almacen;
     }
     
+    
+    //metodo para recoger subtipo independientemente
+    public String recogerSubTipo() {
+        if (tipo == TipoProducto.Ropa && subtipo_ropa != null) {
+            return subtipo_ropa.name();
+        } else if (tipo == TipoProducto.Accesorios && subtipo_accesorios != null) {
+            return subtipo_accesorios.name();
+        } else {
+            return "";
+        }
+    }
+    
     //enum de tiendas:
     public enum TipoProducto {
         Accesorios,
@@ -130,37 +171,58 @@ public class Productos {
     }
     
     public enum SubTipoRopaProducto {
-        camiseta,
-        sudadera,
-        jersey,
-        chaqueta,
-        pantalones_cortos,
-        pantalones_largos,
-        leggins,
-        chandals,
-        faldas,
-        vestidos
+        CAMISETA,
+        SUDADERA,
+        JERSEY,
+        CHAQUETA,
+        PANTALON_CORTO,
+        PANTALON_LARGO,
+        LEGGINS,
+        CHANDALS,
+        FALDA,
+        VESTIDO
         
     }
     
     public enum SubTipoAccProducto {
-        gorro_y_gorra,
-        bolso,
-        mochila,
-        calcetines,
-        guantes,
-        cinturones,
-        carteras,
-        gafas_de_sol
+        GORRO,
+        BOLSO,
+        MOCHILA,
+        CALCETINES,
+        GUANTES,
+        CINTURON,
+        CARTERA,
+        GAFAS_DE_SOL;
+        
+        
     }
     
-    public enum TallaProducto{
-        XS,
-        S,
-        M,
-        L,
-        XL,
-        XXL,
-        t35,t36,t37,t38,t39,t40,t41,t42,t43,t44,t45
+    public enum TallaProducto {
+        XS, S, M, L, XL, XXL, 
+        T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45;
+
+        public static TallaProducto fromString(String talla) {
+            switch (talla) {
+                case "XS": return XS;
+                case "S": return S;
+                case "M": return M;
+                case "L": return L;
+                case "XL": return XL;
+                case "XXL": return XXL;
+                case "35": return T35;
+                case "36": return T36;
+                case "37": return T37;
+                case "38": return T38;
+                case "39": return T39;
+                case "40": return T40;
+                case "41": return T41;
+                case "42": return T42;
+                case "43": return T43;
+                case "44": return T44;
+                case "45": return T45;
+                default: throw new IllegalArgumentException("No se encontró la talla: " + talla);
+            }
+        }
     }
+
 }
