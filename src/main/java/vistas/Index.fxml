@@ -232,9 +232,9 @@
                         </TabPane>
                      </children>
                   </Pane>
-                  <Pane fx:id="paneContenidoTiendaSelec" prefHeight="396.0" prefWidth="650.0" visible="false">
+                  <Pane fx:id="paneContenidoTiendaSelec" prefHeight="396.0" prefWidth="650.0">
                      <children>
-                        <TabPane prefHeight="396.0" prefWidth="650.0" tabClosingPolicy="UNAVAILABLE">
+                        <TabPane prefHeight="396.0" prefWidth="650.0" tabClosingPolicy="UNAVAILABLE" visible="false">
                           <tabs>
                             <Tab fx:id="tabInfoTienda" text="Tienda">
                               <content>
@@ -396,20 +396,20 @@
                                     </AnchorPane>
                                  </content>
                               </Tab>
-                              <Tab fx:id="tablaProductosAlmacen" text="Productos">
+                              <Tab fx:id="tabProductosAlmacen" text="Productos">
                                  <content>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="322.0" prefWidth="572.0">
                                        <children>
-                                          <TableView fx:id="tablaProductosTienda11" layoutX="10.0" layoutY="14.0" prefHeight="337.0" prefWidth="630.0">
+                                          <TableView fx:id="tablaProductosAlmacen" layoutX="10.0" layoutY="14.0" prefHeight="337.0" prefWidth="630.0">
                                              <columns>
-                                                <TableColumn fx:id="columnIdTiendaSelecProd11" prefWidth="54.0" text="Id" />
-                                                <TableColumn fx:id="columnNombreTiendaSelecProd11" prefWidth="97.0" text="Nombre" />
-                                                <TableColumn fx:id="columnImgTiendaSelecProd11" prefWidth="67.0" text="Imagen" />
-                                                <TableColumn fx:id="columnTipoTiendaSelecProd11" prefWidth="61.0" text="Tipo" />
-                                                <TableColumn fx:id="columnSubTipoTiendaSelecProd11" prefWidth="97.0" text="Subtipo" />
-                                                <TableColumn fx:id="columnTallaTiendaSelecProd11" prefWidth="87.0" text="Talla" />
-                                                <TableColumn fx:id="columnPrecioTiendaSelecProd11" prefWidth="77.0" text="Precio" />
-                                                <TableColumn fx:id="columnStockTiendaSelecProd11" prefWidth="89.0" text="Stock" />
+                                                <TableColumn fx:id="columnIdAlmacenSelecProductos" prefWidth="54.0" text="Id" />
+                                                <TableColumn fx:id="columnNombreAlmacenSelecProductos" prefWidth="97.0" text="Nombre" />
+                                                <TableColumn fx:id="columnImgAlmacenSelecProductos" prefWidth="67.0" text="Imagen" />
+                                                <TableColumn fx:id="columnTipoAlmacenSelecProductos" prefWidth="61.0" text="Tipo" />
+                                                <TableColumn fx:id="columnSubTipoAlmacenSelecProductos" prefWidth="97.0" text="Subtipo" />
+                                                <TableColumn fx:id="columnTallaAlmacenSelecProductos" prefWidth="87.0" text="Talla" />
+                                                <TableColumn fx:id="columnPrecioAlmacenSelecProductos" prefWidth="77.0" text="Precio" />
+                                                <TableColumn fx:id="columnStockAlmacenSelecProductos" prefWidth="89.0" text="Stock" />
                                              </columns>
                                           </TableView>
                                        </children>
@@ -420,17 +420,16 @@
                                  <content>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="365.0" prefWidth="650.0">
                                        <children>
-                                          <TableView fx:id="tablaAlmacenesTienda11" layoutX="10.0" layoutY="13.0" prefHeight="342.0" prefWidth="630.0">
+                                          <TableView fx:id="tablaTiendasAlmacen" layoutX="10.0" layoutY="13.0" prefHeight="342.0" prefWidth="630.0">
                                              <columns>
-                                                <TableColumn fx:id="columnIdTiendaSelecAlmac11" prefWidth="61.0" text="Id" />
-                                                <TableColumn fx:id="columnNombreTiendaSelecAlmac11" prefWidth="67.0" text="Nombre" />
-                                                <TableColumn fx:id="columnDirTiendaSelecAlmac11" prefWidth="122.0" text="Direccion" />
-                                                <TableColumn fx:id="columnCiudadTiendaSelecAlmac11" minWidth="0.0" prefWidth="0.0" text="Ciudad" />
-                                                <TableColumn fx:id="columnPaisTiendaSelecAlmac11" prefWidth="47.0" text="Pais" />
-                                                <TableColumn fx:id="columnTelTiendaSelecAlmac11" prefWidth="57.0" text="Telefono" />
-                                                <TableColumn fx:id="columnHorarioTiendaSelecAlmac11" prefWidth="95.0" text="Horario" />
-                                                <TableColumn fx:id="columnCapOcupadaTiendaSelecAlmac11" prefWidth="98.0" text="Cap. Ocupada" />
-                                                <TableColumn fx:id="columnCapTotalTiendaSelecAlmac11" prefWidth="82.0" text="Cap. Total" />
+                                                <TableColumn fx:id="columnIdAlmacenSelecTiendas" prefWidth="43.0" text="Id" />
+                                                <TableColumn fx:id="columnNombreAlmacenSelecTiendas" prefWidth="100.0" text="Nombre" />
+                                                <TableColumn fx:id="columnTipoAlmacenSelecTiendas" minWidth="0.0" prefWidth="71.0" text="Tipo" />
+                                                <TableColumn fx:id="columnDirAlmacenSelecTiendas" prefWidth="86.0" text="Direccion" />
+                                                <TableColumn fx:id="columnCiudadAlmacenSelecTiendas" minWidth="0.0" prefWidth="79.0" text="Ciudad" />
+                                                <TableColumn fx:id="columnPaisAlmacenSelecTiendas" minWidth="0.0" prefWidth="78.0" text="Pais" />
+                                                <TableColumn fx:id="columnTelAlmacenSelecTiendas" prefWidth="87.0" text="Telefono" />
+                                                <TableColumn fx:id="columnHorarioAlmacenSelecTiendas" minWidth="0.0" prefWidth="85.0" text="Horario" />
                                              </columns>
                                           </TableView>
                                        </children>

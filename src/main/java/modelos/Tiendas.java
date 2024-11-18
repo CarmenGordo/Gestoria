@@ -23,7 +23,7 @@ public class Tiendas {
     }
 
     public Tiendas( String id_tienda, String nombre, TipoTienda tipo, String direccion, String ciudad, String pais, int telefono, Map<String, String> horario) {
-       // this.check = check;
+       
         this.id_tienda = id_tienda;
         this.nombre = nombre;
         this.tipo = tipo;
