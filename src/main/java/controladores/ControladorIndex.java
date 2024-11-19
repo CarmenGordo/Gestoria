@@ -220,13 +220,14 @@ public class ControladorIndex implements Initializable {
     }
     @FXML
     private void abrirAjustes(){
+        
         try {
-            System.out.println("abrirAjustes");
+            //System.out.println("abrirAjustes");
             //cargar modal
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/vistas/ModalAjustes.fxml"));
             Parent root = fxmlLoader.load();
 
-            // Crear un nuevo Stage para el modal
+            
             Stage modalStage = new Stage();
             //no se puede salir del modal
             modalStage.initModality(Modality.WINDOW_MODAL.WINDOW_MODAL);
@@ -235,7 +236,7 @@ public class ControladorIndex implements Initializable {
             modalStage.setScene(new Scene(root));
             
             //mostrar el modal sin salir de inicio
-            modalStage.show();
+            modalStage.showAndWait();
             
         } catch (IOException e) {
             e.printStackTrace();
@@ -284,6 +285,46 @@ public class ControladorIndex implements Initializable {
     @FXML
     private ImageView imgProductoSelec;
     
+    //pg producto selec, tabla tiendas:
+    @FXML
+    private TableView<Tiendas> tablaTiendasProducto;
+    @FXML
+    private TableColumn<Tiendas, String> columnIdProductoSelecTiendas;
+    @FXML
+    private TableColumn<Tiendas, String> columnNombreProductoSelecTiendas;
+    @FXML
+    private TableColumn<Tiendas, String> columnTipoProductoSelecTiendas;
+    @FXML
+    private TableColumn<Tiendas, String> columnDirProductoSelecTiendas;
+    @FXML
+    private TableColumn<Tiendas, String> columnCiudadProductoSelecTiendas;
+    @FXML
+    private TableColumn<Tiendas, String> columnPaisProductoSelecTiendas;
+    @FXML
+    private TableColumn<Tiendas, Integer> columnTelProductoSelecTiendas;
+    @FXML
+    private TableColumn<Tiendas, Map> columnHorarioProductoSelecTiendas;
+   
+    @FXML
+    private TableView<Almacenes> tablaAlmacenesProductoSelec;
+    @FXML
+    private TableColumn<Almacenes, String> columnIdAlmacenSelecProducto;
+    @FXML
+    private TableColumn<Almacenes, String> columnNombreAlmacenSelecProducto;
+    @FXML
+    private TableColumn<Almacenes, String> columnDirAlmacenSelecProducto;
+    @FXML
+    private TableColumn<Almacenes, String> columnCiudadAlmacenSelecProducto;
+    @FXML
+    private TableColumn<Almacenes, String> columnPaisAlmacenSelecProducto;
+    @FXML
+    private TableColumn<Almacenes, String> columnTelAlmacenSelecProducto;
+    @FXML
+    private TableColumn<Almacenes, String> columnHorarioAlmacenSelecProducto;
+    @FXML
+    private TableColumn<Almacenes, String> columnCapOcupadaAlmacenSelecProducto;
+    @FXML
+    private TableColumn<Almacenes, String> columnCapTotalAlmacenSelecProducto;
     
     
     
@@ -523,13 +564,15 @@ public class ControladorIndex implements Initializable {
         }
         else if (tablaListaProductos.getSelectionModel().getSelectedItem() != null){
             Productos productoSelec = tablaListaProductos.getSelectionModel().getSelectedItem();
-            //var tiendaAlmacenSelec = almacenSelec.getId_tienda();
+            var idProductoSelec = productoSelec.getId_producto();
+            var almacenProductoSelec = productoSelec.getId_almacen();
             mostrarPane(paneContenidoProductoSelec);
             visiblePaneCabecera(true);
             
             System.out.println("producto Selec id-- " + productoSelec.getId_producto());
             rellenarProductoSelec(productoSelec);
-            //rellenarTiendasProductoSelec()
+            rellenarTiendasProductoSelec(idProductoSelec);
+            rellenarAlmacenesProductoSelec(almacenProductoSelec);
             
             tablaListaProductos.getSelectionModel().clearSelection();
         }
@@ -548,14 +591,82 @@ public class ControladorIndex implements Initializable {
         textPrecioProductoSelec.setText(String.format("%.2f", productoSelec.getPrecio()));
         textStockProductoSelec.setText(Integer.toString(productoSelec.getStock()));
         
-        //imgProductoSelec
         cargarImagen(productoSelec.getImagen(), imgProductoSelec);
     }
-    private void rellenarTiendasProductoSelec(){
+    //? pasar a modelos??
+    public boolean contenerProducto(String idProducto) {
+        ObservableList<Productos> productos = darListaProductos();
+        ObservableList<Tiendas> tiendas = darListaTiendas();
+        ObservableList<Almacenes> almacenes = darListaAlmacenes();
         
+        for (Tiendas tienda : tiendas) {
+            ObservableList<Productos> productosTienda = tienda.getProductos();
+            for (Productos producto : productosTienda) {
+                if (producto.getId_producto().equals(idProducto)) {
+                    return true;
+                }
+            }
+        }
+
+        
+        for (Almacenes almacen : almacenes) {
+            ObservableList<Productos> productosAlmacen = almacen.getProductos();
+            for (Productos producto : productosAlmacen) {
+                if (producto.getId_producto().equals(idProducto)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
-    private void rellenarAlmacenesProductoSelec(){
-        
+    private void rellenarTiendasProductoSelec(String idProducto){
+        listaTiendas.clear();
+        ObservableList<Tiendas> tiendas = darListaTiendas();
+
+        for (int i = 0; i < tiendas.size(); i++) {
+            Tiendas tienda = tiendas.get(i);
+            
+            if (contenerProducto(idProducto)) {
+                listaTiendas.add(tienda);
+            }
+        }
+
+        columnIdProductoSelecTiendas.setCellValueFactory(new PropertyValueFactory<>("id_tienda"));
+        columnNombreProductoSelecTiendas.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        columnTipoProductoSelecTiendas.setCellValueFactory(new PropertyValueFactory<>("tipo"));
+        columnDirProductoSelecTiendas.setCellValueFactory(new PropertyValueFactory<>("direccion"));
+        columnCiudadProductoSelecTiendas.setCellValueFactory(new PropertyValueFactory<>("ciudad"));
+        columnPaisProductoSelecTiendas.setCellValueFactory(new PropertyValueFactory<>("pais"));
+        columnTelProductoSelecTiendas.setCellValueFactory(new PropertyValueFactory<>("telefono"));
+
+        //columnHorarioProductoSelecTiendas.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().recogerHorario()));
+
+        tablaTiendasProducto.setItems(listaTiendas);
+
+    }
+    private void rellenarAlmacenesProductoSelec(String idProducto){
+        listaAlmacenes.clear();
+        ObservableList<Almacenes> almacenes = darListaAlmacenes();
+
+        for (int i = 0; i < almacenes.size(); i++) {
+            Almacenes almacen = almacenes.get(i);
+            
+            if (contenerProducto(idProducto)) {
+                listaAlmacenes.add(almacen); 
+            }
+        }
+
+        columnIdAlmacenSelecProducto.setCellValueFactory(new PropertyValueFactory<>("id_almacen"));
+        columnNombreAlmacenSelecProducto.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        columnDirAlmacenSelecProducto.setCellValueFactory(new PropertyValueFactory<>("direccion"));
+        columnCiudadAlmacenSelecProducto.setCellValueFactory(new PropertyValueFactory<>("ciudad"));
+        columnPaisAlmacenSelecProducto.setCellValueFactory(new PropertyValueFactory<>("pais"));
+        columnTelAlmacenSelecProducto.setCellValueFactory(new PropertyValueFactory<>("telefono"));
+        columnHorarioAlmacenSelecProducto.setCellValueFactory(new PropertyValueFactory<>("horario"));
+        columnCapOcupadaAlmacenSelecProducto.setCellValueFactory(new PropertyValueFactory<>("capacidad_ocupada"));
+        columnCapTotalAlmacenSelecProducto.setCellValueFactory(new PropertyValueFactory<>("capacidad_total"));
+
+        tablaAlmacenesProductoSelec.setItems(listaAlmacenes);
     }
     //para buscar la img
     public void cargarImagen(String imagenNombre, ImageView imgProductoSelec) {
@@ -771,6 +882,10 @@ public class ControladorIndex implements Initializable {
         //? acabar d eponer los textos para idiomas
         btnTablero.setText(rb.getString("btnTablero"));
         btnProductos.setText(rb.getString("btnProductos"));
+        btnTiendas.setText(rb.getString("btnTiendas"));
+        btnAlmacenes.setText(rb.getString("btnAlmacenes"));
+        btnAjustes.setText(rb.getString("btnAjustes"));
+
     }
     
     
@@ -942,7 +1057,7 @@ public class ControladorIndex implements Initializable {
 
                     //convertir el json a string
                     String horarioJson = rs.getString("horario");
-                    Map<String, String> horarioMap = null;
+                    Map<String, Map<String, String>> horarioMap = null;
                     if (horarioJson != null && !horarioJson.isEmpty()) {
                         ObjectMapper objectMapper = new ObjectMapper();
                         try {
@@ -964,7 +1079,9 @@ public class ControladorIndex implements Initializable {
                         rs.getInt("telefono"),
                         horarioMap  
                     );
-
+                    
+                    //? ajustar para recoger el horario bien
+                    //String horarioTexto = tienda.recogerHorario();
                     
                     listaTiendas.add(tienda);
                 }
@@ -1016,6 +1133,8 @@ public class ControladorIndex implements Initializable {
                         rs.getString("id_tienda")
                     );
 
+                    //? ajustar bien el horario para q sea string y no map
+                    //String horarioTexto = almacen.recogerHorario();
                     
                     listaAlmacenes.add(almacen);
                 }

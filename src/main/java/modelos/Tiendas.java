@@ -1,14 +1,14 @@
 package modelos;
 
 import java.util.Map;
+import javafx.collections.ObservableList;
 
 /**
  *
  * @author carmen_gordo
  */
 public class Tiendas {
-    
-    //private boolean check;
+
     private String id_tienda;
     private String nombre;
     private TipoTienda tipo;
@@ -16,13 +16,15 @@ public class Tiendas {
     private String ciudad;
     private String pais;
     private int telefono;
-    private Map<String, String> horario;
+    public Map<String, Map<String, String>> horario;
+    
+    private ObservableList<Productos> productos;
  
 
     public Tiendas() {
     }
 
-    public Tiendas( String id_tienda, String nombre, TipoTienda tipo, String direccion, String ciudad, String pais, int telefono, Map<String, String> horario) {
+    public Tiendas( String id_tienda, String nombre, TipoTienda tipo, String direccion, String ciudad, String pais, int telefono, Map<String, Map<String, String>> horario) {
        
         this.id_tienda = id_tienda;
         this.nombre = nombre;
@@ -92,11 +94,11 @@ public class Tiendas {
         this.telefono = telefono;
     }
 
-    public Map<String, String> getHorario() {
+    public Map<String, Map<String, String>> getHorario() {
         return horario;
     }
 
-    public void setHorario(Map<String, String> horario) {
+    public void setHorario(Map<String, Map<String, String>> horario) {
         this.horario = horario;
     }
 
@@ -106,5 +108,49 @@ public class Tiendas {
         normal,
         outlet,
         premium
+    }
+    
+    
+    public String recogerHorario() {
+        
+        if (horario == null || horario.isEmpty()) {
+            return "No disponible";
+        }
+
+        StringBuilder horarioString = new StringBuilder();
+
+        for (Map.Entry<String, Map<String, String>> dia : horario.entrySet()) {
+            String diaSemana = dia.getKey();
+            Map<String, String> horas = dia.getValue();
+            String apertura = horas.get("apertura");
+            String cierre = horas.get("cierre");
+
+            horarioString.append(ponerLetraMayus(diaSemana)).append(": ");
+            if (apertura != null && cierre != null) {
+                horarioString.append(apertura).append(" - ").append(cierre);
+            } else {
+                horarioString.append("Cerrado");
+            }
+            horarioString.append(", ");
+        }
+
+        if (horarioString.length() > 2) {
+            horarioString.setLength(horarioString.length() - 2);
+        }
+
+        return horarioString.toString();
+    }
+
+   
+    private String ponerLetraMayus(String text) {
+        if (text == null || text.isEmpty()) {
+            return text;
+        }
+        return text.substring(0, 1).toUpperCase() + text.substring(1);
+    }
+    
+    //para saber sus productos
+    public ObservableList<Productos> getProductos() {
+        return productos;
     }
 }

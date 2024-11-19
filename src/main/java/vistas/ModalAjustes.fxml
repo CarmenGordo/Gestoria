@@ -7,15 +7,14 @@
 <?import javafx.scene.layout.VBox?>
 
 <FlowPane fx:id="modalAjustes" alignment="CENTER" columnHalignment="CENTER" hgap="10" orientation="VERTICAL" prefHeight="334.0" prefWidth="329.0" vgap="10" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.ControladorModalAjustes">
-    <Button fx:id="btnCerrarAjustes" alignment="TOP_RIGHT" onAction="cerrarModalAjustes" text="X" />
+    <Button fx:id="btnCerrarAjustes" alignment="TOP_RIGHT" onAction="#cerrarModalAjustes" text="X" />
     <VBox alignment="CENTER" spacing="10">
-        <Button fx:id="btnVerCreditos" onAction="verCreditos" text="Ver Créditos" />
-        <Button fx:id="btnSalir" onAction="salir" text="Salir" />
+        <Button fx:id="btnVerCreditos" onAction="#verCreditos" text="Ver Créditos" />
+        <Button fx:id="btnSalir" onAction="#salir" text="Salir" />
     </VBox>
     
-    <Pane fx:id="paneCreditos" visible="false">
-        <Label alignment="CENTER" text="Aquí están los créditos" />
+    <Pane fx:id="paneCreditos" prefHeight="50.0" prefWidth="328.0">
+        <Label fx:id="textCreditos" alignment="CENTER" layoutY="17.0" prefHeight="0.0" prefWidth="328.0" text="Creado por: Carmen Gordo" textAlignment="CENTER" />
     </Pane>
 
 </FlowPane>
-

@@ -17,6 +17,7 @@ public class Main extends Application{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/vistas/Index.fxml"));
         
         Parent root = loader.load();
+        
         //pasar el stage para usar el modal:
         ControladorIndex controlador = loader.getController();
         controlador.setStage(stage);

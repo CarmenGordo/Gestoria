@@ -2,6 +2,7 @@ package modelos;
 
 import java.util.HashMap;
 import java.util.Map;
+import javafx.collections.ObservableList;
 
 /**
  *
@@ -19,6 +20,8 @@ public class Almacenes {
     public int capacidad_ocupada;
     public int capacidad_total;
     public String id_tienda;
+    
+    private ObservableList<Productos> productos;
 
     public Almacenes() {
     }
@@ -153,6 +156,11 @@ public class Almacenes {
             return text;
         }
         return text.substring(0, 1).toUpperCase() + text.substring(1);
+    }
+    
+    //para saber sus producots
+    public ObservableList<Productos> getProductos() {
+        return productos;
     }
 
 }

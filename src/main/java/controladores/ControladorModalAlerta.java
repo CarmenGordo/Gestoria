@@ -10,39 +10,33 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-public class ControladorModalAjustes implements Initializable{
+public class ControladorModalAlerta implements Initializable{
 
     @FXML
-    private Button btnCerrarAjustes;
+    private Button btnCancelar;
     @FXML
-    private Button btnSalir;
-    @FXML
-    private Button btnVerCreditos;
+    private Button btnCerrarAlerta;
     @FXML
     private FlowPane modalAjustes;
     @FXML
     private Pane paneCreditos;
     @FXML
     private Label textCreditos;
-    
+
     @FXML
-    private void cerrarModalAjustes() {
-        Stage stage = (Stage) btnCerrarAjustes.getScene().getWindow();
-        stage.close();
+    void aceptarOperacion() {
+
     }
-    
+
     @FXML
-    private void verCreditos() {
-        
-        paneCreditos.setVisible(true);
+    void cancelarOperacion() {
+
     }
-    
+
     @FXML
-    private void salir() {
-        
-        System.exit(0);
-    }
-    
+    void cerrarModalAlerta() {
+
+    }    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {

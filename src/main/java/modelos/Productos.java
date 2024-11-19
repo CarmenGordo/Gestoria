@@ -188,6 +188,7 @@ public class Productos {
         }
     }
     
+    
     //enum de tiendas:
     public enum TipoProducto {
         Accesorios,
