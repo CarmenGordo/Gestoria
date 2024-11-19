@@ -155,12 +155,20 @@ public class Productos {
     //metodo para recoger subtipo independientemente
     public String recogerSubTipo() {
         if (tipo == TipoProducto.Ropa && subtipo_ropa != null) {
-            return subtipo_ropa.name();
+            return ponerLetraMayus(subtipo_ropa.name());
         } else if (tipo == TipoProducto.Accesorios && subtipo_accesorios != null) {
-            return subtipo_accesorios.name();
+            return ponerLetraMayus(subtipo_accesorios.name());
         } else {
             return "-";
         }
+    }
+
+    private String ponerLetraMayus(String enumName) {
+        if (enumName == null || enumName.isEmpty()) {
+            return "";
+        }
+       
+        return enumName.substring(0, 1).toUpperCase() + enumName.substring(1).toLowerCase();
     }
     
     public String recogerTallas() {
@@ -170,7 +178,6 @@ public class Productos {
                 tallasString.append(tallaProducto.name()).append(", ");
             }
 
-            // Elimina la coma y espacio final
             if (tallasString.length() > 0) {
                 tallasString.delete(tallasString.length() - 2, tallasString.length());
             }
@@ -211,8 +218,6 @@ public class Productos {
         CINTURON,
         CARTERA,
         GAFAS_DE_SOL;
-        
-        
     }
     
     public enum TallaProducto {

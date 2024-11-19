@@ -169,6 +169,7 @@ public class ControladorIndex implements Initializable {
     @FXML
     private void cambiarPaneInicio(){
         quitarPaneCabecera(true);
+        visiblePaneCabecera(false);
         mostrarPane(paneContenidoInicio);
         
     }
@@ -177,6 +178,7 @@ public class ControladorIndex implements Initializable {
     @FXML
     private void cambiarPaneListaTiendas(){
         quitarPaneCabecera(false);
+        visiblePaneCabecera(false);
         mostrarPane(paneContenidoListaTiendas);
     }
     private void cambiarPaneTiendaSelec(){
@@ -188,6 +190,7 @@ public class ControladorIndex implements Initializable {
     @FXML
     private void cambiarPaneListaAlmacenes(){
         quitarPaneCabecera(false);
+        visiblePaneCabecera(false);
         mostrarPane(paneContenidoListaAlmacenes);
     }
     @FXML
@@ -195,6 +198,7 @@ public class ControladorIndex implements Initializable {
     @FXML
     private void cambiarPaneListaProductos(){
         quitarPaneCabecera(false);
+        visiblePaneCabecera(false);
         mostrarPane(paneContenidoListaProductos);
     }
     private void mostrarPane(Pane paneMostrar) {
@@ -427,7 +431,6 @@ public class ControladorIndex implements Initializable {
     //? acabar barrcaCapacidad
     
     
-    
     //pg almacen selec, tabla productos:
     @FXML
     private TableView<Productos> tablaProductosAlmacen;
@@ -511,7 +514,7 @@ public class ControladorIndex implements Initializable {
             mostrarPane(paneContenidoAlmacenSelec);
             visiblePaneCabecera(true);
             
-            System.out.println("almacen selec, id TIENDA -- " + almacenSelec.getId_tienda());
+            System.out.println("almacen selec -- " + almacenSelec.getId_almacen());
             rellenarAlmacenSelec(almacenSelec);
             rellenarProductosAlmacenSelec(tiendaAlmacenSelec);
             rellenarTiendasAlmacenSelec(tiendaAlmacenSelec);
@@ -682,11 +685,13 @@ public class ControladorIndex implements Initializable {
     private void rellenarProductosAlmacenSelec(String idAlmacen){
         listaProductos.clear();
         ObservableList<Productos> productos = darListaProductos();
-        
+
         for (int i = 0; i < productos.size(); i++) {
             Productos producto = productos.get(i);
+
             if (producto.getId_almacen().equals(idAlmacen)) {
                 listaProductos.add(producto);
+                System.out.println("2productos de almacen "+producto.getId_producto());
             }
         }
 
@@ -704,16 +709,16 @@ public class ControladorIndex implements Initializable {
     private void rellenarTiendasAlmacenSelec(String idTienda){
         listaTiendas.clear();
         ObservableList<Tiendas> tiendas = darListaTiendas();
-        System.out.println("bbb almacen selec, id TIENDA -- " + idTienda);
+        System.out.println("Almacen selec, id TIENDA -- " + idTienda);
 
         for (int i = 0; i < tiendas.size(); i++) {
             Tiendas tienda = tiendas.get(i);
             if (tienda.getId_tienda().equals(idTienda)) {
                 listaTiendas.add(tienda);
-                System.out.println("cc -- " + tienda.getId_tienda());
+                //System.out.println("cc -- " + tienda.getId_tienda());
             }
         }
-        System.out.println("Número de tiendas añadidas: " + listaTiendas.size());
+        //System.out.println("Num tiendas añadidas: " + listaTiendas.size());
 
         columnIdAlmacenSelecTiendas.setCellValueFactory(new PropertyValueFactory<>("id_tienda"));
         columnNombreAlmacenSelecTiendas.setCellValueFactory(new PropertyValueFactory<>("nombre"));
