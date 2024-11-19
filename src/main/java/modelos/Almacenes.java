@@ -117,5 +117,42 @@ public class Almacenes {
     }
     
     
+    public String recogerHorario() {
+        
+        if (horario == null || horario.isEmpty()) {
+            return "No disponible";
+        }
+
+        StringBuilder horarioString = new StringBuilder();
+
+        for (Map.Entry<String, Map<String, String>> dia : horario.entrySet()) {
+            String diaSemana = dia.getKey();
+            Map<String, String> horas = dia.getValue();
+            String apertura = horas.get("apertura");
+            String cierre = horas.get("cierre");
+
+            horarioString.append(ponerLetraMayus(diaSemana)).append(": ");
+            if (apertura != null && cierre != null) {
+                horarioString.append(apertura).append(" - ").append(cierre);
+            } else {
+                horarioString.append("Cerrado");
+            }
+            horarioString.append(", ");
+        }
+
+        if (horarioString.length() > 2) {
+            horarioString.setLength(horarioString.length() - 2);
+        }
+
+        return horarioString.toString();
+    }
+
+   
+    private String ponerLetraMayus(String text) {
+        if (text == null || text.isEmpty()) {
+            return text;
+        }
+        return text.substring(0, 1).toUpperCase() + text.substring(1);
+    }
 
 }

@@ -159,7 +159,25 @@ public class Productos {
         } else if (tipo == TipoProducto.Accesorios && subtipo_accesorios != null) {
             return subtipo_accesorios.name();
         } else {
-            return "";
+            return "-";
+        }
+    }
+    
+    public String recogerTallas() {
+        if (talla != null && !talla.isEmpty()) {
+            StringBuilder tallasString = new StringBuilder();
+            for (TallaProducto tallaProducto : talla) {
+                tallasString.append(tallaProducto.name()).append(", ");
+            }
+
+            // Elimina la coma y espacio final
+            if (tallasString.length() > 0) {
+                tallasString.delete(tallasString.length() - 2, tallasString.length());
+            }
+
+            return tallasString.toString();
+        } else {
+            return "No disponible";
         }
     }
     

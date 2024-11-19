@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Tab?>
@@ -29,12 +30,12 @@
                   <Button fx:id="btnMenu" alignment="CENTER" mnemonicParsing="false" onAction="#btnCambiarMenu" prefHeight="65.0" prefWidth="53.0" text="Button" />
                </children>
             </HBox>
-            <Button fx:id="btnTablero" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#cambiarPaneListaProductos" prefHeight="73.0" prefWidth="150.0" text="_Dashboard" />            
+            <Button fx:id="btnTablero" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#cambiarPaneInicio" prefHeight="73.0" prefWidth="150.0" text="_Tablero" />            
             <Button fx:id="btnProductos" onAction="#cambiarPaneListaProductos" prefHeight="113.0" prefWidth="412.0" text="_Productos" />
-            <Button fx:id="btnTiendas" onAction="#cambiarPaneListaTiendas" prefHeight="113.0" prefWidth="412.0" text="_Tiendas" />
+            <Button fx:id="btnTiendas" onAction="#cambiarPaneListaTiendas" prefHeight="113.0" prefWidth="412.0" text="T_iendas" />
             <Button fx:id="btnAlmacenes" onAction="#cambiarPaneListaAlmacenes" prefHeight="117.0" prefWidth="199.0" text="_Almacenes" />
             <Region prefHeight="79.0" prefWidth="150.0" VBox.vgrow="ALWAYS" />
-            <Button fx:id="btnAjustes" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#cambiarPaneListaProductos" prefHeight="73.0" prefWidth="150.0" text="_Herramientas" />
+            <Button fx:id="btnAjustes" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#abrirAjustes" prefHeight="73.0" prefWidth="150.0" text="_Herramientas" />
          </children>
       </VBox>
       <AnchorPane fx:id="anchorPaneContenedor" prefHeight="223.0" prefWidth="802.0">
@@ -43,11 +44,11 @@
                <children>
                   <Text fx:id="textoMigas" layoutX="49.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tiendas &gt; X" visible="false" />
                   <Button fx:id="btnVolver" contentDisplay="GRAPHIC_ONLY" layoutX="14.0" layoutY="17.0" mnemonicParsing="false" onAction="#volverTiendas" text="Volver" visible="false" />
-                        <Button fx:id="btnBuscar" contentDisplay="GRAPHIC_ONLY" graphicTextGap="2.0" layoutX="369.0" layoutY="17.0" text="_Buscar" />
+                        <Button fx:id="btnBuscar" contentDisplay="GRAPHIC_ONLY" graphicTextGap="2.0" layoutX="437.0" layoutY="17.0" text="_Buscar" />
 
-                  <TextField fx:id="textoBuscar" layoutX="203.0" layoutY="18.0" />
-                  <ToggleButton fx:id="btnTema" layoutX="417.0" layoutY="16.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="65.0" text="Off" textFill="RED" />
-                  <ComboBox fx:id="btnCambioIdioma" layoutX="509.0" layoutY="16.0" onAction="#cambiarIdioma" prefHeight="26.0" prefWidth="121.0" />
+                  <TextField fx:id="textoBuscar" layoutX="271.0" layoutY="16.0" />
+                  <ToggleButton fx:id="btnTema" layoutX="485.0" layoutY="16.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="65.0" text="Off" textFill="RED" />
+                  <ComboBox fx:id="btnCambioIdioma" layoutX="563.0" layoutY="16.0" onAction="#cambiarIdioma" prefHeight="26.0" prefWidth="67.0" />
                </children>
             </Pane>
             <Pane fx:id="paneBotonera" layoutY="60.0" prefHeight="44.0" prefWidth="650.0">
@@ -62,6 +63,20 @@
             </Pane>
             <StackPane fx:id="stackpaneContenido" layoutY="104.0" prefHeight="396.0" prefWidth="650.0">
                <children>
+                  <Pane fx:id="paneContenidoInicio" prefHeight="439.0" prefWidth="650.0" visible="false">
+                     <children>
+                        <FlowPane columnHalignment="CENTER" layoutY="-43.0" prefHeight="234.0" prefWidth="650.0">
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                              <Pane prefHeight="200.0" prefWidth="213.0" />
+                           </children></FlowPane>
+                        <FlowPane layoutY="162.0" prefHeight="234.0" prefWidth="650.0">
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+                           </children>
+                        </FlowPane>
+                     </children>
+                  </Pane>
                   <Pane fx:id="paneContenidoListaProductos" prefHeight="396.0" prefWidth="650.0" visible="false">
                      <children>
                         <TabPane prefHeight="396.0" prefWidth="650.0" tabClosingPolicy="UNAVAILABLE">
@@ -232,9 +247,9 @@
                         </TabPane>
                      </children>
                   </Pane>
-                  <Pane fx:id="paneContenidoTiendaSelec" prefHeight="396.0" prefWidth="650.0">
+                  <Pane fx:id="paneContenidoTiendaSelec" prefHeight="396.0" prefWidth="650.0" visible="false">
                      <children>
-                        <TabPane prefHeight="396.0" prefWidth="650.0" tabClosingPolicy="UNAVAILABLE" visible="false">
+                        <TabPane prefHeight="396.0" prefWidth="650.0" tabClosingPolicy="UNAVAILABLE">
                           <tabs>
                             <Tab fx:id="tabInfoTienda" text="Tienda">
                               <content>
@@ -343,20 +358,20 @@
                                                   <VBox alignment="top_left" prefHeight="349.0" prefWidth="324.0" spacing="10">
                                                     <HBox spacing="5">
                                                         <Text fx:id="labelIdAlmacenSelec" text="ID: " wrappingWidth="96.0" />
-                                                        <Text fx:id="texIdAlmacenSelec" text="X" wrappingWidth="195.0" />
+                                                        <Text fx:id="texIdAlmacenSelec" wrappingWidth="195.0" />
                                                     </HBox>
                                                     <HBox spacing="5">
                                                         <Text fx:id="labelNombreAlmacenSelec" text="Nombre:" wrappingWidth="96.0" />
-                                                        <Text fx:id="textNombreAlmacenSelec" text="X" wrappingWidth="195.0" />
+                                                        <Text fx:id="textNombreAlmacenSelec" wrappingWidth="195.0" />
                                                     </HBox>
                                                     <HBox spacing="5">
                                                         <Text fx:id="labelTelAlmacenSelec" text="Tel:" wrappingWidth="96.0" />
-                                                        <Text fx:id="textTelAlmacenSelec" text="X" wrappingWidth="195.0" />
+                                                        <Text fx:id="textTelAlmacenSelec" wrappingWidth="195.0" />
                                                     </HBox>
                                                    <HBox spacing="5">
                                                       <children>
                                                          <Text fx:id="labelDirAlmacenSelec" text="Direccion:" wrappingWidth="96.0" />
-                                                         <Text fx:id="textlDirAlmacenSelec" text="X" wrappingWidth="195.0" />
+                                                         <Text fx:id="textlDirAlmacenSelec" wrappingWidth="195.0" />
                                                       </children>
                                                    </HBox>
                                                     <HBox spacing="5">
@@ -374,21 +389,24 @@
                                                       </columns>
                                                    </TableView>
                                                 </VBox>
+                                                <Region prefHeight="349.0" prefWidth="27.0" />
 
                                                 <!-- derecha: -->
-                                                <VBox alignment="top_left" spacing="10">
+                                                <VBox alignment="top_left" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="342.0" prefWidth="277.0" spacing="10">
                                                     <HBox spacing="5">
                                                         <Text fx:id="labelCiudadAlmacenSelec" text="Ciudad:" wrappingWidth="96.0" />
-                                                        <Text fx:id="textCiudadAlmacenSelec" text="X" wrappingWidth="195.0" />
+                                                        <Text fx:id="textCiudadAlmacenSelec" wrappingWidth="195.0" />
                                                     </HBox>
                                                     <HBox spacing="5">
                                                         <Text fx:id="labelPaisAlmacenSelec" text="Pais:" wrappingWidth="96.0" />
-                                                        <Text fx:id="textPaisAlmacenSelec" text="X" wrappingWidth="87.251953125" />
+                                                        <Text fx:id="textPaisAlmacenSelec" wrappingWidth="87.251953125" />
                                                     </HBox>
                                                    <Region prefHeight="31.0" prefWidth="300.0" />
-
-                                                    <!-- abajo derecha -->
-                                                    <HBox fx:id="hbox" prefHeight="239.0" prefWidth="300" />
+                                                   <StackPane prefHeight="252.0" prefWidth="277.0">
+                                                      <children>
+                                                         <Canvas fx:id="barraCapacidad" height="216.0" width="261.0" />
+                                                      </children>
+                                                   </StackPane>
                                                 </VBox>
                                               </children>
                                           </FlowPane>

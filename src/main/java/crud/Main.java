@@ -1,5 +1,6 @@
 package crud;
 
+import controladores.ControladorIndex;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,7 +14,12 @@ import javafx.stage.Stage;
 public class Main extends Application{
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/vistas/Index.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/vistas/Index.fxml"));
+        
+        Parent root = loader.load();
+        //pasar el stage para usar el modal:
+        ControladorIndex controlador = loader.getController();
+        controlador.setStage(stage);
         
         Scene scene = new Scene(root);
         stage.setScene(scene);
