@@ -105,7 +105,6 @@
                                                 <TableColumn fx:id="columnSubTipoListaProductos" prefWidth="102.0" text="Sub categoria" />
                                                 <TableColumn fx:id="columnTallaListaProductos" prefWidth="88.0" text="Talla" />
                                                 <TableColumn fx:id="columnPrecioListaProductos" prefWidth="73.0" text="Precio" />
-                                                <TableColumn fx:id="columnStockListaProductos" prefWidth="69.0" text="Stock" />
                                              </columns>
                                           </TableView>
                                        </children>
@@ -133,7 +132,7 @@
                         </HBox>
                      </children>
                   </Pane>
-                  <Pane fx:id="paneContenidoProductoSelec" prefHeight="396.0" prefWidth="650.0" visible="false">
+                  <Pane fx:id="paneContenidoProductoSelec" prefHeight="396.0" prefWidth="650.0">
                      <children>
                         <TabPane prefHeight="396.0" prefWidth="650.0" tabClosingPolicy="UNAVAILABLE">
                            <tabs>
@@ -188,12 +187,6 @@
                                                             <Text fx:id="textPrecioProductoSelec" text="X" wrappingWidth="172.51171875" />
                                                          </children>
                                                       </HBox>
-                                                      <HBox prefHeight="25.0" prefWidth="275.0" spacing="5">
-                                                         <children>
-                                                            <Text fx:id="labelStockProductoSelec" text="Stock:" wrappingWidth="96.0" />
-                                                            <Text fx:id="textStockProductoSelec" text="X" wrappingWidth="172.51171875" />
-                                                         </children>
-                                                      </HBox>
   </VBox>
 </HBox>
                                              </children>
@@ -215,7 +208,7 @@
                                                 <TableColumn fx:id="columnCiudadProductoSelecTiendas" text="Ciudad" />
                                                 <TableColumn fx:id="columnPaisProductoSelecTiendas" prefWidth="87.0" text="Pais" />
                                                 <TableColumn fx:id="columnTelProductoSelecTiendas" prefWidth="77.0" text="Telefono" />
-                                                <TableColumn fx:id="columnHorarioProductoSelecTiendas" prefWidth="89.0" text="Horario" />
+                                                <TableColumn fx:id="columnStockProductoSelecTiendas" prefWidth="89.0" text="Stock" />
                                              </columns>
                                           </TableView>
                                        </children>
@@ -373,7 +366,7 @@
                         </TabPane>
                      </children>
                   </Pane>
-                  <Pane fx:id="paneContenidoAlmacenSelec" prefHeight="396.0" prefWidth="650.0">
+                  <Pane fx:id="paneContenidoAlmacenSelec" prefHeight="396.0" prefWidth="650.0" visible="false">
                      <children>
                         <TabPane prefHeight="396.0" prefWidth="650.0" tabClosingPolicy="UNAVAILABLE">
                            <tabs>

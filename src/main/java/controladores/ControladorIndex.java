@@ -31,6 +31,7 @@ import java.util.ResourceBundle;
 import java.sql.Connection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Set;
 import javafx.beans.property.SimpleStringProperty;
@@ -265,8 +266,7 @@ public class ControladorIndex implements Initializable {
     private TableColumn<Productos, String> columnTallaListaProductos;
     @FXML
     private TableColumn<Productos, Double> columnPrecioListaProductos;
-    @FXML
-    private TableColumn<Productos, Integer> columnStockListaProductos;
+    
     
     //pg producto selec:
     @FXML
@@ -281,8 +281,6 @@ public class ControladorIndex implements Initializable {
     private Text textTallaProductoSelec;
     @FXML
     private Text textPrecioProductoSelec;
-    @FXML
-    private Text textStockProductoSelec;
     @FXML
     private ImageView imgProductoSelec;
     
@@ -304,7 +302,7 @@ public class ControladorIndex implements Initializable {
     @FXML
     private TableColumn<Tiendas, Integer> columnTelProductoSelecTiendas;
     @FXML
-    private TableColumn<Tiendas, Map> columnHorarioProductoSelecTiendas;
+    private TableColumn<Tiendas, Integer> columnStockProductoSelecTiendas;
    
     @FXML
     private TableView<Almacenes> tablaAlmacenesProductoSelec;
@@ -653,7 +651,6 @@ public class ControladorIndex implements Initializable {
         textTallaProductoSelec.setText(productoSelec.recogerTallas());
         
         textPrecioProductoSelec.setText(String.format("%.2f", productoSelec.getPrecio()));
-        textStockProductoSelec.setText(Integer.toString(productoSelec.getStock()));
         
         cargarImagen(productoSelec.getImagen(), imgProductoSelec);
     }
@@ -709,8 +706,8 @@ public class ControladorIndex implements Initializable {
         columnCiudadProductoSelecTiendas.setCellValueFactory(new PropertyValueFactory<>("ciudad"));
         columnPaisProductoSelecTiendas.setCellValueFactory(new PropertyValueFactory<>("pais"));
         columnTelProductoSelecTiendas.setCellValueFactory(new PropertyValueFactory<>("telefono"));
-
-        //columnHorarioProductoSelecTiendas.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().recogerHorario()));
+        //? stock del producto en tienda:
+        //columnStockProductoSelecTiendas.setCellValueFactory(new PropertyValueFactory<>("stock"));
 
         tablaTiendasProducto.setItems(listaTiendas);
 
@@ -1000,6 +997,20 @@ public class ControladorIndex implements Initializable {
                 ObservableList<Tiendas> listaT = darListaTiendas();
                 ObservableList<Almacenes> listaA = darListaAlmacenes();
                 
+                //? no salen las gafas, gorros
+                
+                
+                //mostrar solo los productos con el mismo id_Producto
+                Set<String> mapeoListaP = new HashSet<>();
+                ObservableList<Productos> nuevaListaP = FXCollections.observableArrayList();
+                for(Productos producto : listaP){
+                    
+                    if(!mapeoListaP.contains(producto.getId_producto())){
+                        mapeoListaP.add(producto.getId_producto());
+                        nuevaListaP.add(producto);
+                    }
+                }
+                
                 
                 columnIdListaProductos.setCellValueFactory(new PropertyValueFactory<>("id_producto"));
                 columnNombreListaProductos.setCellValueFactory(new PropertyValueFactory<>("nombre"));
@@ -1008,9 +1019,8 @@ public class ControladorIndex implements Initializable {
                 columnSubTipoListaProductos.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().recogerSubTipo()));
                 columnTallaListaProductos.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().recogerTallas()));
                 columnPrecioListaProductos.setCellValueFactory(new PropertyValueFactory<>("precio"));
-                columnStockListaProductos.setCellValueFactory(new PropertyValueFactory<>("stock"));
                 
-                tablaListaProductos.setItems(listaP);
+                tablaListaProductos.setItems(nuevaListaP);
                 
                 columnIdListaTiendas.setCellValueFactory(new PropertyValueFactory<>("id_tienda"));
                 columnNombreListaTiendas.setCellValueFactory(new PropertyValueFactory<>("nombre"));
@@ -1051,6 +1061,7 @@ public class ControladorIndex implements Initializable {
         ObservableList<Productos> listaProductos = FXCollections.observableArrayList();
         
         if (conexion != null) {
+            //String query = "SELECT * FROM productos where id_producto = 'P100'";
             String query = "SELECT * FROM productos";
             try {
                 rs = st.executeQuery(query);
@@ -1061,12 +1072,12 @@ public class ControladorIndex implements Initializable {
                     Productos.SubTipoAccProducto subtipo_accesorios = null;
                     
                     if (tipo == Productos.TipoProducto.Ropa && rs.getString("subtipo_ropa") != null) {
-                        String subTipoRopaString = rs.getString("subtipo_ropa").trim().toUpperCase().replace(" ", "_");
+                        String subTipoRopaString = rs.getString("subtipo_ropa").trim().replace(" ", "_");
                         subtipo_ropa = Productos.SubTipoRopaProducto.valueOf(subTipoRopaString);
                     }
                     
                     if (tipo == Productos.TipoProducto.Accesorios && rs.getString("subtipo_accesorios") != null) {
-                        String subtipoAccString = rs.getString("subtipo_accesorios").trim().toUpperCase().replace(" ", "_");
+                        String subtipoAccString = rs.getString("subtipo_accesorios").trim().replace(" ", "_");
                         subtipo_accesorios = Productos.SubTipoAccProducto.valueOf(subtipoAccString);
                     }
                     
@@ -1099,9 +1110,13 @@ public class ControladorIndex implements Initializable {
                         rs.getString("id_tienda"),
                         rs.getString("id_almacen")
                     );
+                    
+                 
 
                         //System.out.println("id producto -- "+ producto.getId_producto());
                     listaProductos.add(producto);
+                    
+                    
                 }}
             } catch (SQLException e) {
                 e.printStackTrace();

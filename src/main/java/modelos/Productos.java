@@ -172,7 +172,11 @@ public class Productos {
     }
     
     public String recogerTallas() {
-        if (talla != null && !talla.isEmpty()) {
+        if(talla == null){
+            return "-";
+        }
+        
+        if(!talla.isEmpty()) {
             StringBuilder tallasString = new StringBuilder();
             for (TallaProducto tallaProducto : talla) {
                 tallasString.append(tallaProducto.name()).append(", ");
@@ -184,7 +188,7 @@ public class Productos {
 
             return tallasString.toString();
         } else {
-            return "No disponible";
+            return "-";
         }
     }
     
@@ -197,28 +201,42 @@ public class Productos {
     }
     
     public enum SubTipoRopaProducto {
-        CAMISETA,
-        SUDADERA,
-        JERSEY,
-        CHAQUETA,
-        PANTALON_CORTO,
-        PANTALON_LARGO,
-        LEGGINS,
-        CHANDALS,
-        FALDA,
-        VESTIDO
+        Camiseta,
+        Sudadera,
+        Jersey,
+        Chaqueta,
+        Pantalon_corto,
+        Pantalon_largo,
+        Leggins,
+        Chandals,
+        Falda,
+        Vestido
         
     }
     
     public enum SubTipoAccProducto {
-        GORRO,
-        BOLSO,
-        MOCHILA,
-        CALCETINES,
-        GUANTES,
-        CINTURON,
-        CARTERA,
-        GAFAS_DE_SOL;
+        Gorro,
+        Bolso,
+        Mochila,
+        Calcetines,
+        Guantes,
+        Cinturon,
+        Cartera,
+        Gafas_de_sol;
+        
+        public static SubTipoAccProducto fromString(String setSubtipo_accesorios) {
+            switch (setSubtipo_accesorios) {
+                case "Gorro": return Gorro;
+                case "Bolso": return Bolso;
+                case "Mochila": return Mochila;
+                case "Calcetines": return Calcetines;
+                case "Guantes": return Guantes;
+                case "Cinturon": return Cinturon;
+                case "Cartera": return Cartera;
+                case "Gafas_de_sol": return Gafas_de_sol;
+                default: throw new IllegalArgumentException("No se encontró el subtipo accesorio: " + setSubtipo_accesorios);
+            }
+        }
     }
     
     public enum TallaProducto {
@@ -226,6 +244,7 @@ public class Productos {
         T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45;
 
         public static TallaProducto fromString(String talla) {
+            
             switch (talla) {
                 case "XS": return XS;
                 case "S": return S;
