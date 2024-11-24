@@ -622,21 +622,20 @@ public class ControladorIndex implements Initializable {
             
             System.out.println("almacen selec -- " + almacenSelec.getId_almacen());
             rellenarAlmacenSelec(almacenSelec);
-            rellenarProductosAlmacenSelec(tiendaAlmacenSelec);
+            rellenarProductosAlmacenSelec(almacenSelec.getId_almacen());
             rellenarTiendasAlmacenSelec(tiendaAlmacenSelec);
             
             tablaListaAlmacenes.getSelectionModel().clearSelection();
         }
         else if (tablaListaProductos.getSelectionModel().getSelectedItem() != null){
             Productos productoSelec = tablaListaProductos.getSelectionModel().getSelectedItem();
-            var idProductoSelec = productoSelec.getId_producto();
             var almacenProductoSelec = productoSelec.getId_almacen();
             mostrarPane(paneContenidoProductoSelec);
             visiblePaneCabecera(true);
             
             System.out.println("producto Selec id-- " + productoSelec.getId_producto());
             rellenarProductoSelec(productoSelec);
-            rellenarTiendasProductoSelec(idProductoSelec);
+            rellenarTiendasProductoSelec(productoSelec.getId_producto());
             rellenarAlmacenesProductoSelec(almacenProductoSelec);
             
             tablaListaProductos.getSelectionModel().clearSelection();
@@ -659,45 +658,50 @@ public class ControladorIndex implements Initializable {
         cargarImagen(productoSelec.getImagen(), imgProductoSelec);
     }
     //? pasar a modelos??
-    public boolean contenerProducto(String idProducto) {
+    public Object contenerProducto(String idProducto) {
         ObservableList<Productos> productos = darListaProductos();
         ObservableList<Tiendas> tiendas = darListaTiendas();
         ObservableList<Almacenes> almacenes = darListaAlmacenes();
         
-        
-            for (Tiendas tienda : tiendas) {
-                ObservableList<Productos> productosTienda = tienda.getProductos();
-                var tiendaId = tienda.getId_tienda(); 
-                for (Productos producto : productosTienda) {
-                    if (producto.getId_producto().equals(tiendaId)) {
-                        return true;
+        for(Productos producto : productos){
+            if(producto.getId_producto().equals(idProducto)){
+                //System.out.println("idProducto contenerr---"+ producto);
+                
+                for (Tiendas tienda : tiendas){
+                    var idTienda = tienda.getId_tienda();
+                    
+                    if(producto.getId_tienda().equals(idTienda)){
+                        return tienda;
+                    }
+                }
+                
+                
+                for (Almacenes almacen : almacenes){
+                    var idAlmacen = almacen.getId_tienda();
+                    
+                    if(producto.getId_tienda().equals(idAlmacen)){
+                        return almacen;
                     }
                 }
             }
-        
-        
-        for (Almacenes almacen : almacenes) {
-            ObservableList<Productos> productosAlmacen = almacen.getProductos();
-            for (Productos producto : productosAlmacen) {
-                if (producto.getId_producto().equals(idProducto)) {
-                    return true;
-                }
-            }
         }
-        return false;
+        
+        return null;
+               
     }
     private void rellenarTiendasProductoSelec(String idProducto){
         listaTiendas.clear();
         ObservableList<Tiendas> tiendas = darListaTiendas();
-
+        
         for (int i = 0; i < tiendas.size(); i++) {
             Tiendas tienda = tiendas.get(i);
             
-            if (contenerProducto(idProducto)) {
-                listaTiendas.add(tienda);
-            }
-        }
-
+            contenerProducto(idProducto);
+            listaTiendas.add(tienda);
+            //System.err.println("contenerProducto----"+contenerProducto(idProducto));
+           
+        }   
+        
         columnIdProductoSelecTiendas.setCellValueFactory(new PropertyValueFactory<>("id_tienda"));
         columnNombreProductoSelecTiendas.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         columnTipoProductoSelecTiendas.setCellValueFactory(new PropertyValueFactory<>("tipo"));
@@ -718,9 +722,8 @@ public class ControladorIndex implements Initializable {
         for (int i = 0; i < almacenes.size(); i++) {
             Almacenes almacen = almacenes.get(i);
             
-            if (contenerProducto(idProducto)) {
-                listaAlmacenes.add(almacen); 
-            }
+            contenerProducto(idProducto);
+            listaAlmacenes.add(almacen); 
         }
 
         columnIdAlmacenesSelecProducto.setCellValueFactory(new PropertyValueFactory<>("id_almacen"));
@@ -866,10 +869,10 @@ public class ControladorIndex implements Initializable {
 
         for (int i = 0; i < productos.size(); i++) {
             Productos producto = productos.get(i);
-
+            
             if (producto.getId_almacen().equals(idAlmacen)) {
                 listaProductos.add(producto);
-                System.out.println("2productos de almacen "+producto.getId_producto());
+                //System.out.println("2productos de almacen "+producto.getId_producto());
             }
         }
 
