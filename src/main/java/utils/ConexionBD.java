@@ -16,6 +16,8 @@ public class ConexionBD {
 
     public static Connection getConexion() throws SQLException {
         
+        //Se esta usando LAMP2, para la bd
+        
         Properties properties = new Properties();
         String IP, PORT, BBDD, USER, PWD;
         
