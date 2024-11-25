@@ -29,6 +29,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -45,6 +46,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
@@ -102,6 +104,8 @@ public class ControladorIndex implements Initializable {
     private Pane paneContenidoListaAlmacenes;
     @FXML
     private Pane paneContenidoAlmacenSelec;
+    @FXML
+    private Pane paneAñadirAlmacen;
     
     
    
@@ -211,10 +215,13 @@ public class ControladorIndex implements Initializable {
         paneContenidoListaProductos.setVisible(false);
         paneContenidoProductoSelec.setVisible(false);
         paneAñadirProducto.setVisible(false);
+        
         paneContenidoListaTiendas.setVisible(false);
         paneContenidoTiendaSelec.setVisible(false);
+        
         paneContenidoListaAlmacenes.setVisible(false);
         paneContenidoAlmacenSelec.setVisible(false);
+        paneAñadirAlmacen.setVisible(false);
         
         paneMostrar.setVisible(true);
     } 
@@ -530,7 +537,7 @@ public class ControladorIndex implements Initializable {
     
     
     //Botones pane botonera:
-    //btn añadir y sus elementos:
+    //btn añadir y sus elementos de productos:
     @FXML
     private Label labelNombreAñProducto;
     @FXML
@@ -549,12 +556,43 @@ public class ControladorIndex implements Initializable {
     private ChoiceBox choiceBoxTipoPrecioAñProducto;
     @FXML
     private Label labelPrecioAñProducto;
+  
    
+    
+    //elementos de tiendas:
+    //elementos de almacenes:
+    @FXML
+    private TextField textoNombreAñAlmacen;
+    @FXML
+    private TextField textoDirAñAlmacen;
+    @FXML
+    private ComboBox comboBoxPaisAñAlmacen;
+    @FXML
+    private ComboBox comboBoxCiudadAñAlmacen;
+    @FXML
+    private TextField textoTelAñAlmacen;
+    @FXML
+    private TextField textoCapTotalAñAlmacen;
+    @FXML
+    private TableView tablaHorarioAñAlmacen;
+    @FXML
+    private TableColumn columnLHorarioAñAlmacen;
+    @FXML
+    private TableColumn columnMHorarioAñAlmacen;
+    @FXML
+    private TableColumn columnXHorarioAñAlmacen;
+    @FXML
+    private TableColumn columnJHorarioAñAlmacen;
+    @FXML
+    private TableColumn columnVHorarioAñAlmacen;
+    @FXML
+    private TableColumn columnSHorarioAñAlmacen;
+    @FXML
+    private TableColumn columnDHorarioAñAlmacen;
     @FXML
     private void añadir(){
         
-        
-        if (paneContenidoListaProductos.isVisible()) {
+        if (paneContenidoListaProductos.isVisible() || paneContenidoProductoSelec.isVisible()) {
             mostrarPane(paneAñadirProducto);
             
             ObservableList<Productos.TipoProducto> opcTipo = FXCollections.observableArrayList(Productos.TipoProducto.values());
@@ -587,17 +625,23 @@ public class ControladorIndex implements Initializable {
             choiceBoxTipoPrecioAñProducto.getItems().addAll("€", "£");
             choiceBoxTipoPrecioAñProducto.getSelectionModel().selectFirst();
             
+        }else if (paneContenidoListaTiendas.isVisible() || paneContenidoTiendaSelec.isVisible()){
+            
+        }else if (paneContenidoListaAlmacenes.isVisible() || paneContenidoAlmacenSelec.isVisible()){
+            mostrarPane(paneAñadirAlmacen);
+            
+            
         }
         
     }
     
     
     @FXML
-    private void aceptar(){
+    private void aceptarAñProducto(){
         
     }
     @FXML
-    private void cancelar(){
+    private void cancelarAñProducto(){
         
     }
     
@@ -675,7 +719,20 @@ public class ControladorIndex implements Initializable {
     @FXML
     private void verSeleccion() {
        
-        if (tablaListaTiendas.getSelectionModel().getSelectedItem() != null){
+        if (tablaListaProductos.getSelectionModel().getSelectedItem() != null){
+            Productos productoSelec = tablaListaProductos.getSelectionModel().getSelectedItem();
+            var almacenProductoSelec = productoSelec.getId_almacen();
+            mostrarPane(paneContenidoProductoSelec);
+            visiblePaneCabecera(true);
+
+            System.out.println("producto Selec id-- " + productoSelec.getId_producto());
+            rellenarProductoSelec(productoSelec);
+            rellenarTiendasProductoSelec(productoSelec.getId_producto());
+            rellenarAlmacenesProductoSelec(almacenProductoSelec);
+
+            tablaListaProductos.getSelectionModel().clearSelection();
+                    
+        }else if (tablaListaTiendas.getSelectionModel().getSelectedItem() != null){
             Tiendas tiendaSelec = tablaListaTiendas.getSelectionModel().getSelectedItem();
             mostrarPane(paneContenidoTiendaSelec);
             visiblePaneCabecera(true);
@@ -686,6 +743,7 @@ public class ControladorIndex implements Initializable {
             rellenarAlmacenesTiendaSelec(tiendaSelec.getId_tienda());
             
             tablaListaTiendas.getSelectionModel().clearSelection();
+            
         }else if (tablaListaAlmacenes.getSelectionModel().getSelectedItem() != null){
             Almacenes almacenSelec = tablaListaAlmacenes.getSelectionModel().getSelectedItem();
             var tiendaAlmacenSelec = almacenSelec.getId_tienda();
@@ -699,19 +757,7 @@ public class ControladorIndex implements Initializable {
             
             tablaListaAlmacenes.getSelectionModel().clearSelection();
         }
-        else if (tablaListaProductos.getSelectionModel().getSelectedItem() != null){
-            Productos productoSelec = tablaListaProductos.getSelectionModel().getSelectedItem();
-            var almacenProductoSelec = productoSelec.getId_almacen();
-            mostrarPane(paneContenidoProductoSelec);
-            visiblePaneCabecera(true);
-            
-            System.out.println("producto Selec id-- " + productoSelec.getId_producto());
-            rellenarProductoSelec(productoSelec);
-            rellenarTiendasProductoSelec(productoSelec.getId_producto());
-            rellenarAlmacenesProductoSelec(almacenProductoSelec);
-            
-            tablaListaProductos.getSelectionModel().clearSelection();
-        }
+       
     }  
     
     
@@ -1133,7 +1179,6 @@ public class ControladorIndex implements Initializable {
         ObservableList<Productos> listaProductos = FXCollections.observableArrayList();
         
         if (conexion != null) {
-            //String query = "SELECT * FROM productos where id_producto = 'P100'";
             String query = "SELECT * FROM productos";
             try {
                 rs = st.executeQuery(query);
@@ -1198,10 +1243,6 @@ public class ControladorIndex implements Initializable {
         return listaProductos;
     }
     
-    private void mostrarProductos() {
-       tablaListaProductos.setItems(listaProductos);
-    }
-    
     private ObservableList<Tiendas> darListaTiendas(){
         ObservableList<Tiendas> listaTiendas = FXCollections.observableArrayList();
         
@@ -1249,10 +1290,6 @@ public class ControladorIndex implements Initializable {
         }
         
         return listaTiendas;
-    }
-    
-    private void mostrarTiendas() {
-       tablaListaTiendas.setItems(listaTiendas);
     }
     
     private ObservableList<Almacenes> darListaAlmacenes(){
@@ -1304,11 +1341,114 @@ public class ControladorIndex implements Initializable {
         return listaAlmacenes;
     }
     
-    private void mostrarAlmacenes() {
-       tablaListaAlmacenes.setItems(listaAlmacenes);
+    
+    
+    //Añadir en bd:
+    //comporbar el ultimo id de las tabalas
+    private String obtenerUltimoId(String tabla, String columnaId) {
+        String ultimoId = null;
+
+        if (conexion != null) {
+            
+            String query = "SELECT " + columnaId + " FROM " + tabla + " ORDER BY " + columnaId + " DESC LIMIT 1";
+            try {
+                rs = st.executeQuery(query);
+                if (rs.next()) {
+                    ultimoId = rs.getString(columnaId);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        String prefijo = "";
+        
+        if (ultimoId != null && !ultimoId.isEmpty()) {
+            
+            prefijo = ultimoId.substring(0, 1);
+
+            String numeroStr = ultimoId.substring(1);
+            int numero = Integer.parseInt(numeroStr);
+
+            numero++;
+            return String.format("%s%03d", prefijo, numero);
+        }
+
+        switch (tabla.toLowerCase()) {
+            case "almacenes":
+                prefijo = "A";
+                break;
+            case "productos":
+                prefijo = "P";
+                break;
+            case "tiendas":
+                prefijo = "T";
+                break;
+            default:
+                throw new IllegalArgumentException("No se ha generado id");
+        }
+
+        return String.format("%s001", prefijo);
     }
-    
-    
+
+
+    private void añadirAlmacen(String idAlmacen, String nombre, String direccion, String ciudad, String pais, int telefono, 
+                           Map<String, String> horario, int capacidadOcupada, int capacidadTotal, String idTienda) {
+        if (conexion != null) {
+            String nuevoIdAlmacen = obtenerUltimoId("almacenes", "id_almacen");
+
+            String query = "INSERT INTO almacenes (id_almacen, nombre, direccion, ciudad, pais, telefono, horario, capacidad_ocupada, capacidad_total, id_tienda) " +
+                           "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            
+            try {
+                //convertir el mapa de horario a JSON
+                String horarioJson = null;
+                if (horario != null && !horario.isEmpty()) {
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    horarioJson = objectMapper.writeValueAsString(horario);
+                }
+
+                PreparedStatement ps = conexion.prepareStatement(query);
+                ps.setString(1, idAlmacen);
+                ps.setString(2, nombre);
+                ps.setString(3, direccion);
+                ps.setString(4, ciudad);
+                ps.setString(5, pais);
+                ps.setInt(6, telefono);
+                ps.setString(7, horarioJson);
+                ps.setInt(8, capacidadOcupada);
+                ps.setInt(9, capacidadTotal);
+                ps.setString(10, idTienda);
+
+                int rowsInserted = ps.executeUpdate();
+
+                //? cambiar texto segun idioma
+                if (rowsInserted > 0) {
+                    System.out.println("Almacen añadido!");
+                    mostrarAlerta(Alert.AlertType.INFORMATION, "Operacion exitosa", "Almacen añadido! :)");
+                } else {
+                    System.err.println("No se ha añadido el almacen");
+                    mostrarAlerta(Alert.AlertType.ERROR, "Error", "No se ha podido añadir el almacen :(");
+                }
+                
+            } catch (SQLException | JsonProcessingException e) {
+                System.err.println("--error añadir almacen: " + e.getMessage());
+                mostrarAlerta(Alert.AlertType.ERROR, "Error", "No se ha podido añadir el almacen, revisa los campos" + e.getMessage());
+            }
+            
+        } else {
+            System.err.println("No se pudo conectar a la base de datos");
+        }
+    }
+
+    //Alerta para informar al usuario
+    private void mostrarAlerta(Alert.AlertType tipo, String titulo, String mensaje) {
+        
+        Alert alerta = new Alert(tipo);
+        alerta.setTitle(titulo);
+        alerta.setHeaderText(mensaje);
+        alerta.showAndWait();
+    }
     
     
 }
