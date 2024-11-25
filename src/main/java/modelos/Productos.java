@@ -233,7 +233,7 @@ public class Productos {
                 case "Guantes": return Guantes;
                 case "Cinturon": return Cinturon;
                 case "Cartera": return Cartera;
-                case "Gafas_de_sol": return Gafas_de_sol;
+                case "Gafas de sol": return Gafas_de_sol;
                 default: throw new IllegalArgumentException("No se encontró el subtipo accesorio: " + setSubtipo_accesorios);
             }
         }

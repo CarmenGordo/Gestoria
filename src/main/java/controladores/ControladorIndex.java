@@ -41,6 +41,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TabPane;
@@ -86,6 +87,12 @@ public class ControladorIndex implements Initializable {
     
     //Pane contenido:
     @FXML
+    private Pane paneContenidoListaProductos;
+    @FXML
+    private Pane paneContenidoProductoSelec;
+    @FXML
+    private Pane paneAñadirProducto;
+    @FXML
     private Pane paneContenidoInicio;
     @FXML
     private Pane paneContenidoListaTiendas;
@@ -95,10 +102,6 @@ public class ControladorIndex implements Initializable {
     private Pane paneContenidoListaAlmacenes;
     @FXML
     private Pane paneContenidoAlmacenSelec;
-    @FXML
-    private Pane paneContenidoListaProductos;
-    @FXML
-    private Pane paneContenidoProductoSelec;
     
     
    
@@ -207,6 +210,7 @@ public class ControladorIndex implements Initializable {
         paneContenidoInicio.setVisible(false);
         paneContenidoListaProductos.setVisible(false);
         paneContenidoProductoSelec.setVisible(false);
+        paneAñadirProducto.setVisible(false);
         paneContenidoListaTiendas.setVisible(false);
         paneContenidoTiendaSelec.setVisible(false);
         paneContenidoListaAlmacenes.setVisible(false);
@@ -524,11 +528,81 @@ public class ControladorIndex implements Initializable {
     
     
     
+    
     //Botones pane botonera:
+    //btn añadir y sus elementos:
+    @FXML
+    private Label labelNombreAñProducto;
+    @FXML
+    private ChoiceBox<Productos.TipoProducto> choiceBoxTipoAñProducto;
+    @FXML
+    private Label labelTipoAñProducto;
+    @FXML
+    private ChoiceBox choiceBoxSubTipoAñProducto;
+    @FXML
+    private Label labelSubTipoAñProducto;
+    @FXML
+    private ComboBox<Productos.TallaProducto> comboBoxTallasAñProducto;
+    @FXML
+    private Label labelTallaAñProducto;
+    @FXML
+    private ChoiceBox choiceBoxTipoPrecioAñProducto;
+    @FXML
+    private Label labelPrecioAñProducto;
+   
     @FXML
     private void añadir(){
         
+        
+        if (paneContenidoListaProductos.isVisible()) {
+            mostrarPane(paneAñadirProducto);
+            
+            ObservableList<Productos.TipoProducto> opcTipo = FXCollections.observableArrayList(Productos.TipoProducto.values());
+            ObservableList<Productos.TallaProducto> opcTalla = FXCollections.observableArrayList(Productos.TallaProducto.values());
+            choiceBoxTipoAñProducto.setItems(opcTipo);
+            
+            choiceBoxTipoAñProducto.setOnAction((event) -> {
+                if (choiceBoxTipoAñProducto.getValue() == Productos.TipoProducto.Ropa) {
+                    ObservableList<Productos.SubTipoRopaProducto> ropaOpciones = FXCollections.observableArrayList(Productos.SubTipoRopaProducto.values());
+                    choiceBoxSubTipoAñProducto.setItems(ropaOpciones);
+                    choiceBoxSubTipoAñProducto.setDisable(false);
+                    
+                    //labelTipoAñProducto.setText("Ropa");
+                } else if (choiceBoxTipoAñProducto.getValue() == Productos.TipoProducto.Accesorios) {
+                    ObservableList<Productos.SubTipoAccProducto> accesoriosOpciones = FXCollections.observableArrayList(Productos.SubTipoAccProducto.values());
+                    choiceBoxSubTipoAñProducto.setItems(accesoriosOpciones);
+                    choiceBoxSubTipoAñProducto.setDisable(false);
+                    
+                    //labelTipoAñProducto.setText("Accesorios");
+                } else {
+                    choiceBoxSubTipoAñProducto.setItems(FXCollections.observableArrayList());
+                    labelTipoAñProducto.setText("Zapatillas");
+                }
+                //labelSubTipoAñProducto.setText(choiceBoxSubTipoAñProducto.getValue().toString());
+
+            });
+            choiceBoxSubTipoAñProducto.setDisable(true);
+            comboBoxTallasAñProducto.setItems(opcTalla);
+            
+            choiceBoxTipoPrecioAñProducto.getItems().addAll("€", "£");
+            choiceBoxTipoPrecioAñProducto.getSelectionModel().selectFirst();
+            
+        }
+        
     }
+    
+    
+    @FXML
+    private void aceptar(){
+        
+    }
+    @FXML
+    private void cancelar(){
+        
+    }
+    
+    
+    
     @FXML
     private HBox footerModificarProductoSelect;
     @FXML
@@ -650,7 +724,7 @@ public class ControladorIndex implements Initializable {
         textSubTipoProductoSelec.setText(productoSelec.recogerSubTipo());
         textTallaProductoSelec.setText(productoSelec.recogerTallas());
         
-        textPrecioProductoSelec.setText(String.format("%.2f", productoSelec.getPrecio()));
+        textPrecioProductoSelec.setText(String.format("%.2f €", productoSelec.getPrecio()));
         
         cargarImagen(productoSelec.getImagen(), imgProductoSelec);
     }
@@ -997,8 +1071,6 @@ public class ControladorIndex implements Initializable {
                 ObservableList<Tiendas> listaT = darListaTiendas();
                 ObservableList<Almacenes> listaA = darListaAlmacenes();
                 
-                //? no salen las gafas, gorros
-                
                 
                 //mostrar solo los productos con el mismo id_Producto
                 Set<String> mapeoListaP = new HashSet<>();
@@ -1093,7 +1165,7 @@ public class ControladorIndex implements Initializable {
                             tallas.add(Productos.TallaProducto.fromString(t.trim()));
                         } catch (IllegalArgumentException e) {
                             
-                            System.out.println("Talla inválida: " + t.trim());
+                           
                         }
                     }
                     

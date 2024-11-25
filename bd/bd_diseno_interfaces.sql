@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 18-11-2024 a las 18:07:17
+-- Tiempo de generación: 25-11-2024 a las 12:16:43
 -- Versión del servidor: 5.7.35-0ubuntu0.18.04.2
 -- Versión de PHP: 8.0.10
 
@@ -45,13 +45,13 @@ CREATE TABLE `almacenes` (
 --
 
 INSERT INTO `almacenes` (`id_almacen`, `nombre`, `direccion`, `ciudad`, `pais`, `telefono`, `capacidad_ocupada`, `capacidad_total`, `horario`, `id_tienda`) VALUES
-('A001', 'Almacén Barcelona', 'Carrer de Pau Claris, 30', 'Barcelona', 'España', 932345679, 150, 500, '{\"lunes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"jueves\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"martes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"viernes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"miércoles\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}}', 'T001'),
-('A002', 'Almacén Madrid', 'Calle de Vallehermoso, 85', 'Madrid', 'España', 912345679, 200, 600, '{\"lunes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"jueves\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"martes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"viernes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"miércoles\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}}', 'T002'),
-('A003', 'Almacén Londres', 'Oxford Street, 40', 'Londres', 'Reino Unido', 203456790, 250, 700, '{\"lunes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"jueves\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"martes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"viernes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"miércoles\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}}', 'T003'),
-('A004', 'Almacén Los Ángeles', 'Hollywood Boulevard, 140', 'Los Ángeles', 'EE.UU.', 213456790, 180, 400, '{\"lunes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"jueves\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"martes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"viernes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"miércoles\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}}', 'T004'),
-('A005', 'Almacén Tokio', 'Shibuya, 5', 'Tokio', 'Japón', 312345679, 300, 650, '{\"lunes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"jueves\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"martes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"viernes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"miércoles\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}}', 'T005'),
-('A006', 'Almacén París', 'Avenue des Champs-Élysées, 60', 'París', 'Francia', 142345679, 220, 700, '{\"lunes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"jueves\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"martes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"viernes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"miércoles\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}}', 'T006'),
-('A007', 'Almacén Berlín', 'Kurfürstendamm, 120', 'Berlín', 'Alemania', 302345679, 160, 450, '{\"lunes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"jueves\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"martes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"viernes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"miércoles\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}}', 'T007');
+('A001', 'Almacén Barcelona', 'Carrer de Pau Claris, 30', 'Barcelona', 'España', 932345679, 164, 500, '{\"lunes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"jueves\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"martes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"viernes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"miércoles\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}}', 'T001'),
+('A002', 'Almacén Madrid', 'Calle de Vallehermoso, 85', 'Madrid', 'España', 912345679, 163, 600, '{\"lunes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"jueves\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"martes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"viernes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"miércoles\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}}', 'T002'),
+('A003', 'Almacén Londres', 'Oxford Street, 40', 'Londres', 'Reino Unido', 203456790, 144, 700, '{\"lunes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"jueves\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"martes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"viernes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"miércoles\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}}', 'T003'),
+('A004', 'Almacén Los Ángeles', 'Hollywood Boulevard, 140', 'Los Ángeles', 'EE.UU.', 213456790, 217, 400, '{\"lunes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"jueves\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"martes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"viernes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"miércoles\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}}', 'T004'),
+('A005', 'Almacén Tokio', 'Shibuya, 5', 'Tokio', 'Japón', 312345679, 116, 650, '{\"lunes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"jueves\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"martes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"viernes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"miércoles\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}}', 'T005'),
+('A006', 'Almacén París', 'Avenue des Champs-Élysées, 60', 'París', 'Francia', 142345679, 125, 700, '{\"lunes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"jueves\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"martes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"viernes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"miércoles\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}}', 'T006'),
+('A007', 'Almacén Berlín', 'Kurfürstendamm, 120', 'Berlín', 'Alemania', 302345679, 45, 450, '{\"lunes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"jueves\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"martes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"viernes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"miércoles\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}}', 'T007');
 
 -- --------------------------------------------------------
 
@@ -66,7 +66,7 @@ CREATE TABLE `productos` (
   `tipo` enum('Accesorios','Ropa','Zapatillas') NOT NULL,
   `subtipo_ropa` enum('Camiseta','Sudadera','Jersey','Chaqueta','Pantalon_corto','Pantalon_largo','Leggins','Chandals','Falda','Vestido') DEFAULT NULL,
   `subtipo_accesorios` enum('Gorro','Bolso','Mochila','Calcetines','Guantes','Cinturon','Cartera','Gafas de sol') DEFAULT NULL,
-  `talla` set('XS','S','M','L','XL','XXL','35','36','37','38','39','40','41','42','43','44','45') DEFAULT NULL,
+  `talla` set('XS','S','M','L','XL','XXL','35','36','37','38','39','40','41','42','43','44','45','-') DEFAULT NULL,
   `precio` double NOT NULL,
   `stock` int(4) NOT NULL,
   `id_tienda` varchar(20) NOT NULL,
@@ -78,7 +78,6 @@ CREATE TABLE `productos` (
 --
 
 INSERT INTO `productos` (`id_producto`, `nombre`, `imagen`, `tipo`, `subtipo_ropa`, `subtipo_accesorios`, `talla`, `precio`, `stock`, `id_tienda`, `id_almacen`) VALUES
-('P001', 'Nike Shox R4', 'ZapatillaShoxR4.jpg', 'Zapatillas', NULL, NULL, '38,40,41,42', 160.49, 10, 'T001', 'A001'),
 ('P001', 'Nike Shox R4', 'ZapatillaShoxR4.jpg', 'Zapatillas', NULL, NULL, '35,36', 160.49, 3, 'T002', 'A002'),
 ('P001', 'Nike Shox R4', 'ZapatillaShoxR4.jpg', 'Zapatillas', NULL, NULL, '45', 160.49, 20, 'T003', 'A003'),
 ('P001', 'Nike Shox R4', 'ZapatillaShoxR4.jpg', 'Zapatillas', NULL, NULL, '35,37,44', 160.49, 4, 'T004', 'A004'),
@@ -136,24 +135,24 @@ INSERT INTO `productos` (`id_producto`, `nombre`, `imagen`, `tipo`, `subtipo_rop
 ('P008', 'Cartera Icon Ace', 'CarteraIconAce.jpg', 'Accesorios', NULL, 'Cartera', NULL, 23.9, 0, 'T007', 'A007'),
 ('P009', 'Gafas Shox XRush', 'GafasShoxXRush.png', 'Accesorios', NULL, 'Gafas de sol', NULL, 80, 0, 'T001', 'A001'),
 ('P009', 'Gafas Shox XRush', 'GafasShoxXRush.png', 'Accesorios', NULL, 'Gafas de sol', NULL, 80, 0, 'T002', 'A002'),
-('P009', 'Gafas Shox XRush', 'GafasShoxXRush.png', 'Accesorios', NULL, 'Gafas de sol', NULL, 80, 4, 'T003', 'A003'),
+('P009', 'Gafas Shox XRush', 'GafasShoxXRush.png', 'Accesorios', NULL, 'Gafas de sol', '-', 80, 4, 'T003', 'A003'),
 ('P009', 'Gafas Shox XRush', 'GafasShoxXRush.png', 'Accesorios', NULL, 'Gafas de sol', NULL, 80, 0, 'T004', 'A004'),
 ('P009', 'Gafas Shox XRush', 'GafasShoxXRush.png', 'Accesorios', NULL, 'Gafas de sol', NULL, 80, 0, 'T005', 'A005'),
-('P009', 'Gafas Shox XRush', 'GafasShoxXRush.png', 'Accesorios', NULL, 'Gafas de sol', NULL, 80, 2, 'T006', 'A006'),
+('P009', 'Gafas Shox XRush', 'GafasShoxXRush.png', 'Accesorios', NULL, 'Gafas de sol', '-', 80, 2, 'T006', 'A006'),
 ('P009', 'Gafas Shox XRush', 'GafasShoxXRush.png', 'Accesorios', NULL, 'Gafas de sol', NULL, 80, 0, 'T007', 'A007'),
 ('P010', 'Gafas Skylon Ace', 'GafasSkylonAce.jpg', 'Accesorios', NULL, 'Gafas de sol', NULL, 30, 0, 'T001', 'A001'),
-('P010', 'Gafas Skylon Ace', 'GafasSkylonAce.jpg', 'Accesorios', NULL, 'Gafas de sol', NULL, 30, 5, 'T002', 'A002'),
-('P010', 'Gafas Skylon Ace', 'GafasSkylonAce.jpg', 'Accesorios', NULL, 'Gafas de sol', NULL, 30, 10, 'T003', 'A003'),
+('P010', 'Gafas Skylon Ace', 'GafasSkylonAce.jpg', 'Accesorios', NULL, 'Gafas de sol', '-', 30, 5, 'T002', 'A002'),
+('P010', 'Gafas Skylon Ace', 'GafasSkylonAce.jpg', 'Accesorios', NULL, 'Gafas de sol', '-', 30, 10, 'T003', 'A003'),
 ('P010', 'Gafas Skylon Ace', 'GafasSkylonAce.jpg', 'Accesorios', NULL, 'Gafas de sol', NULL, 30, 0, 'T004', 'A004'),
-('P010', 'Gafas Skylon Ace', 'GafasSkylonAce.jpg', 'Accesorios', NULL, 'Gafas de sol', NULL, 30, 3, 'T005', 'A005'),
-('P010', 'Gafas Skylon Ace', 'GafasSkylonAce.jpg', 'Accesorios', NULL, 'Gafas de sol', NULL, 30, 20, 'T006', 'A006'),
+('P010', 'Gafas Skylon Ace', 'GafasSkylonAce.jpg', 'Accesorios', NULL, 'Gafas de sol', '-', 30, 3, 'T005', 'A005'),
+('P010', 'Gafas Skylon Ace', 'GafasSkylonAce.jpg', 'Accesorios', NULL, 'Gafas de sol', '-', 30, 20, 'T006', 'A006'),
 ('P010', 'Gafas Skylon Ace', 'GafasSkylonAce.jpg', 'Accesorios', NULL, 'Gafas de sol', NULL, 30, 0, 'T007', 'A007'),
 ('P011', 'Mochila Lakers', 'MochilaLakers.png', 'Accesorios', NULL, 'Mochila', NULL, 60.4, 0, 'T001', 'A001'),
 ('P011', 'Mochila Lakers', 'MochilaLakers.png', 'Accesorios', NULL, 'Mochila', NULL, 60.4, 0, 'T002', 'A002'),
-('P011', 'Mochila Lakers', 'MochilaLakers.png', 'Accesorios', NULL, 'Mochila', NULL, 60.4, 4, 'T003', 'A003'),
+('P011', 'Mochila Lakers', 'MochilaLakers.png', 'Accesorios', NULL, 'Mochila', '-', 60.4, 4, 'T003', 'A003'),
 ('P011', 'Mochila Lakers', 'MochilaLakers.png', 'Accesorios', NULL, 'Mochila', NULL, 60.4, 0, 'T004', 'A004'),
 ('P011', 'Mochila Lakers', 'MochilaLakers.png', 'Accesorios', NULL, 'Mochila', NULL, 60.4, 0, 'T005', 'A005'),
-('P011', 'Mochila Lakers', 'MochilaLakers.png', 'Accesorios', NULL, 'Mochila', NULL, 60.4, 7, 'T006', 'A006'),
+('P011', 'Mochila Lakers', 'MochilaLakers.png', 'Accesorios', NULL, 'Mochila', '-', 60.4, 7, 'T006', 'A006'),
 ('P011', 'Mochila Lakers', 'MochilaLakers.png', 'Accesorios', NULL, 'Mochila', NULL, 60.4, 0, 'T007', 'A007'),
 ('P012', 'Mochila Mini', 'MochilaMini.png', 'Accesorios', NULL, 'Mochila', 'M', 26.9, 20, 'T001', 'A001'),
 ('P012', 'Mochila Mini', 'MochilaMini.png', 'Accesorios', NULL, 'Mochila', 'M', 26.9, 15, 'T002', 'A002'),
@@ -169,20 +168,20 @@ INSERT INTO `productos` (`id_producto`, `nombre`, `imagen`, `tipo`, `subtipo_rop
 ('P013', 'Calcetines Everyday Plus', 'CalcetinesEverydayPlus.png', 'Accesorios', NULL, 'Calcetines', '36,37,38', 29.8, 8, 'T005', 'A005'),
 ('P013', 'Calcetines Everyday Plus', 'CalcetinesEverydayPlus.png', 'Accesorios', NULL, 'Calcetines', NULL, 29.8, 0, 'T006', 'A006'),
 ('P013', 'Calcetines Everyday Plus', 'CalcetinesEverydayPlus.png', 'Accesorios', NULL, 'Calcetines', '35,38,39,45', 29.8, 12, 'T007', 'A007'),
-('P014', 'Gorra Club', 'GorraClub.jpg', 'Accesorios', NULL, 'Gorro', NULL, 34, 6, 'T001', 'A001'),
+('P014', 'Gorra Club', 'GorraClub.jpg', 'Accesorios', NULL, 'Gorro', '-', 34, 6, 'T001', 'A001'),
 ('P014', 'Gorra Club', 'GorraClub.jpg', 'Accesorios', NULL, 'Gorro', NULL, 34, 0, 'T002', 'A002'),
-('P014', 'Gorra Club', 'GorraClub.jpg', 'Accesorios', NULL, 'Gorro', NULL, 34, 12, 'T003', 'A003'),
-('P014', 'Gorra Club', 'GorraClub.jpg', 'Accesorios', NULL, 'Gorro', NULL, 34, 11, 'T004', 'A004'),
+('P014', 'Gorra Club', 'GorraClub.jpg', 'Accesorios', NULL, 'Gorro', '-', 34, 12, 'T003', 'A003'),
+('P014', 'Gorra Club', 'GorraClub.jpg', 'Accesorios', NULL, 'Gorro', '-', 34, 11, 'T004', 'A004'),
 ('P014', 'Gorra Club', 'GorraClub.jpg', 'Accesorios', NULL, 'Gorro', NULL, 34, 0, 'T005', 'A005'),
-('P014', 'Gorra Club', 'GorraClub.jpg', 'Accesorios', NULL, 'Gorro', NULL, 34, 6, 'T006', 'A006'),
-('P014', 'Gorra Club', 'GorraClub.jpg', 'Accesorios', NULL, 'Gorro', NULL, 34, 16, 'T007', 'A007'),
-('P015', 'Gorro Peak Beanie', 'GorroPeakBeanie.jpg', 'Accesorios', NULL, 'Gorro', NULL, 12.9, 13, 'T001', 'A001'),
-('P015', 'Gorro Peak Beanie', 'GorroPeakBeanie.jpg', 'Accesorios', NULL, 'Gorro', NULL, 12.9, 22, 'T002', 'A002'),
+('P014', 'Gorra Club', 'GorraClub.jpg', 'Accesorios', NULL, 'Gorro', '-', 34, 6, 'T006', 'A006'),
+('P014', 'Gorra Club', 'GorraClub.jpg', 'Accesorios', NULL, 'Gorro', '-', 34, 16, 'T007', 'A007'),
+('P015', 'Gorro Peak Beanie', 'GorroPeakBeanie.jpg', 'Accesorios', NULL, 'Gorro', '-', 12.9, 13, 'T001', 'A001'),
+('P015', 'Gorro Peak Beanie', 'GorroPeakBeanie.jpg', 'Accesorios', NULL, 'Gorro', '-', 12.9, 22, 'T002', 'A002'),
 ('P015', 'Gorro Peak Beanie', 'GorroPeakBeanie.jpg', 'Accesorios', NULL, 'Gorro', NULL, 12.9, 0, 'T003', 'A003'),
-('P015', 'Gorro Peak Beanie', 'GorroPeakBeanie.jpg', 'Accesorios', NULL, 'Gorro', NULL, 12.9, 11, 'T004', 'A004'),
-('P015', 'Gorro Peak Beanie', 'GorroPeakBeanie.jpg', 'Accesorios', NULL, 'Gorro', NULL, 12.9, 8, 'T005', 'A005'),
+('P015', 'Gorro Peak Beanie', 'GorroPeakBeanie.jpg', 'Accesorios', NULL, 'Gorro', '-', 12.9, 11, 'T004', 'A004'),
+('P015', 'Gorro Peak Beanie', 'GorroPeakBeanie.jpg', 'Accesorios', NULL, 'Gorro', '-', 12.9, 8, 'T005', 'A005'),
 ('P015', 'Gorro Peak Beanie', 'GorroPeakBeanie.jpg', 'Accesorios', NULL, 'Gorro', NULL, 12.9, 0, 'T006', 'A006'),
-('P015', 'Gorro Peak Beanie', 'GorroPeakBeanie.jpg', 'Accesorios', NULL, 'Gorro', NULL, 12.9, 1, 'T007', 'A007'),
+('P015', 'Gorro Peak Beanie', 'GorroPeakBeanie.jpg', 'Accesorios', NULL, 'Gorro', '-', 12.9, 1, 'T007', 'A007'),
 ('P016', 'Guantes Pack', 'GuantesPeakBeanie.jpg', 'Accesorios', NULL, 'Guantes', 'M,XL', 47.9, 5, 'T003', 'A003'),
 ('P016', 'Guantes Pack', 'GuantesPeakBeanie.jpg', 'Accesorios', NULL, 'Guantes', 'M,L,XL', 47.9, 15, 'T006', 'A006'),
 ('P017', 'Camiseta M90 Sega', 'CamisetaM90Sega.jpg', 'Ropa', 'Camiseta', NULL, 'XS,S,XL', 23.6, 13, 'T001', 'A001'),
@@ -235,6 +234,58 @@ INSERT INTO `productos` (`id_producto`, `nombre`, `imagen`, `tipo`, `subtipo_rop
 --
 -- Disparadores `productos`
 --
+DELIMITER $$
+CREATE TRIGGER `actualizar_capacidad_ocupada_delete` AFTER DELETE ON `productos` FOR EACH ROW BEGIN
+    -- Verificar si el almacén asociado existe
+    IF EXISTS (SELECT 1 FROM almacen WHERE id_almacen = OLD.id_almacen) THEN
+        -- Actualizar la capacidad ocupada del almacén
+        UPDATE almacen
+        SET capacidad_ocupada = (
+            SELECT COALESCE(SUM(stock), 0) 
+            FROM productos 
+            WHERE id_almacen = OLD.id_almacen
+        )
+        WHERE id_almacen = OLD.id_almacen;
+    END IF;
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `actualizar_capacidad_ocupada_insert` AFTER INSERT ON `productos` FOR EACH ROW BEGIN
+    UPDATE almacen
+    SET capacidad_ocupada = (
+        SELECT COALESCE(SUM(stock), 0)
+        FROM productos
+        WHERE id_almacen = NEW.id_almacen
+    )
+    WHERE id_almacen = NEW.id_almacen;
+END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `actualizar_capacidad_ocupada_update` AFTER UPDATE ON `productos` FOR EACH ROW BEGIN
+    -- Primero, actualizamos la capacidad del almacén afectado por el cambio
+    UPDATE almacen
+    SET capacidad_ocupada = (
+        SELECT COALESCE(SUM(stock), 0)
+        FROM productos
+        WHERE id_almacen = NEW.id_almacen
+    )
+    WHERE id_almacen = NEW.id_almacen;
+
+    -- Si el producto ha cambiado de almacén, actualizamos el almacén de destino
+    IF OLD.id_almacen != NEW.id_almacen THEN
+        UPDATE almacen
+        SET capacidad_ocupada = (
+            SELECT COALESCE(SUM(stock), 0)
+            FROM productos
+            WHERE id_almacen = NEW.id_almacen
+        )
+        WHERE id_almacen = NEW.id_almacen;
+    END IF;
+END
+$$
+DELIMITER ;
 DELIMITER $$
 CREATE TRIGGER `before_insert_producto` BEFORE INSERT ON `productos` FOR EACH ROW BEGIN
     IF NEW.stock = 0 THEN
@@ -291,7 +342,6 @@ INSERT INTO `tiendas` (`id_tienda`, `nombre`, `tipo`, `direccion`, `ciudad`, `pa
 --
 ALTER TABLE `almacenes`
   ADD PRIMARY KEY (`id_almacen`),
-  ADD KEY `id_almacen` (`id_almacen`),
   ADD KEY `fk_almacen_tienda` (`id_tienda`);
 
 --
@@ -299,7 +349,6 @@ ALTER TABLE `almacenes`
 --
 ALTER TABLE `productos`
   ADD PRIMARY KEY (`id_producto`,`id_tienda`,`id_almacen`),
-  ADD KEY `id_producto` (`id_producto`),
   ADD KEY `fk_tienda` (`id_tienda`),
   ADD KEY `fk_almacen` (`id_almacen`);
 
@@ -324,8 +373,6 @@ ALTER TABLE `almacenes`
 -- Filtros para la tabla `productos`
 --
 ALTER TABLE `productos`
-  ADD CONSTRAINT `fk_almacen` FOREIGN KEY (`id_almacen`) REFERENCES `almacenes` (`id_almacen`),
-  ADD CONSTRAINT `fk_tienda` FOREIGN KEY (`id_tienda`) REFERENCES `tiendas` (`id_tienda`),
   ADD CONSTRAINT `productos_ibfk_1` FOREIGN KEY (`id_tienda`) REFERENCES `tiendas` (`id_tienda`),
   ADD CONSTRAINT `productos_ibfk_2` FOREIGN KEY (`id_almacen`) REFERENCES `almacenes` (`id_almacen`);
 COMMIT;
