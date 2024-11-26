@@ -450,13 +450,13 @@ public class ControladorIndex implements Initializable {
     
     //pg almacen selec: elmentos
     @FXML
-    private Text texIdAlmacenSelec;
+    private Label texIdAlmacenSelec;
     @FXML
-    private Text textNombreAlmacenSelec;
+    private Label textNombreAlmacenSelec;
     @FXML
-    private Text textTelAlmacenSelec;
+    private Label textTelAlmacenSelec;
     @FXML
-    private Text textlDirAlmacenSelec;
+    private Label textDirAlmacenSelec;
     @FXML
     private TableView<HorarioAlmacen> tablaHorarioAlmacenSelec;
     @FXML
@@ -474,9 +474,9 @@ public class ControladorIndex implements Initializable {
     @FXML
     private TableColumn<Almacenes, String> columnDHorarioAlmacenSelec;
     @FXML
-    private Text textCiudadAlmacenSelec;
+    private Label textCiudadAlmacenSelec;
     @FXML
-    private Text textPaisAlmacenSelec;
+    private Label textPaisAlmacenSelec;
     @FXML
     private Canvas barraCapacidad;
     //? acabar barrcaCapacidad
@@ -953,7 +953,7 @@ public class ControladorIndex implements Initializable {
     private void rellenarAlmacenSelec(Almacenes almacenSelec){
         texIdAlmacenSelec.setText(almacenSelec.getId_almacen());
         textNombreAlmacenSelec.setText(almacenSelec.getNombre());
-        textlDirAlmacenSelec.setText(almacenSelec.getDireccion());
+        textDirAlmacenSelec.setText(almacenSelec.getDireccion());
         textTelAlmacenSelec.setText(Integer.toString(almacenSelec.getTelefono()));
         textCiudadAlmacenSelec.setText(almacenSelec.getCiudad());
         textPaisAlmacenSelec.setText(almacenSelec.getPais());
