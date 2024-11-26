@@ -25,6 +25,10 @@ dependencies {
 
     //para el uso de json
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
+    
+    //para uso de validadores como GraphicValidationDecoration
+    implementation group: 'org.controlsfx', name: 'controlsfx', version: '11.2.1'
+
 }
 
 

@@ -13,34 +13,46 @@ import javafx.stage.Stage;
 public class ControladorModalAlerta implements Initializable{
 
     @FXML
+    private Button btnAceptar;
+    @FXML
     private Button btnCancelar;
     @FXML
     private Button btnCerrarAlerta;
     @FXML
     private FlowPane modalAjustes;
     @FXML
-    private Pane paneCreditos;
+    private Pane paneModalAlerta;
     @FXML
-    private Label textCreditos;
+    private Label textPreguntaOperacion;
+    
+    private boolean operacionAceptada = false; 
 
     @FXML
     void aceptarOperacion() {
-
+        operacionAceptada = true;
+        cerrarModal();
     }
 
     @FXML
     void cancelarOperacion() {
-
+        operacionAceptada = false; 
+        cerrarModal();
     }
 
     @FXML
     void cerrarModalAlerta() {
-
+        operacionAceptada = false; 
+        cerrarModal();
     }    
+    
+    private void cerrarModal(){
+        Stage stage = (Stage) btnCerrarAlerta.getScene().getWindow();
+        stage.close();
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       paneCreditos.setVisible(false);
+       
     }
 
 }

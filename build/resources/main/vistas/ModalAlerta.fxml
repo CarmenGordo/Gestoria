@@ -7,12 +7,12 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<FlowPane fx:id="modalAjustes" alignment="CENTER" columnHalignment="CENTER" hgap="10" orientation="VERTICAL" prefHeight="121.0" prefWidth="334.0" vgap="10" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.ControladorModalAjustes">
+<FlowPane fx:id="modalAjustes" alignment="CENTER" columnHalignment="CENTER" hgap="10" orientation="VERTICAL" prefHeight="121.0" prefWidth="334.0" vgap="10" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.ControladorModalAlerta">
     
-    <Pane fx:id="paneCreditos" prefHeight="124.0" prefWidth="324.0">
+    <Pane fx:id="paneModalAlerta" prefHeight="124.0" prefWidth="324.0">
       <VBox alignment="CENTER" prefHeight="124.0" prefWidth="324.0">
          <children>
-              <Label fx:id="textPreguntaOperacion" alignment="CENTER" prefHeight="0.0" prefWidth="328.0" text="¿Seguro que quieres realizar el cambio?" textAlignment="CENTER" />
+              <Label fx:id="textPreguntaOperacion" alignment="CENTER" prefHeight="0.0" prefWidth="328.0" text="¿Estas seguro de que quieres borrarlo?" textAlignment="CENTER" />
             <HBox alignment="CENTER" prefHeight="61.0" prefWidth="324.0">
                <children>
                   <Button fx:id="btnAceptar" onAction="#aceptarOperacion" text="_Aceptar" />
