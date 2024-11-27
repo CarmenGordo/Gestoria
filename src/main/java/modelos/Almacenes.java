@@ -1,8 +1,10 @@
 package modelos;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import javafx.collections.ObservableList;
+import org.checkerframework.checker.units.qual.Length;
 
 /**
  *
@@ -33,7 +35,7 @@ public class Almacenes {
         this.ciudad = ciudad;
         this.pais = pais;
         this.telefono = telefono;
-        this.horario = new HashMap<>();
+        this.horario = new LinkedHashMap<>();
         this.capacidad_ocupada = capacidad_ocupada;
         this.capacidad_total = capacidad_total;
         this.id_tienda = id_tienda;
@@ -119,13 +121,15 @@ public class Almacenes {
         this.id_tienda = id_tienda;
     }
     
+    //Map<String, Map<String, String>> horarios = new LinkedHashMap<>();
+    //horarios.put("lunes", Map.of("apertura", "10:00", "cierre", "18:00"));
     
     public String recogerHorario() {
         
         if (horario == null || horario.isEmpty()) {
             return "No disponible";
         }
-
+        
         StringBuilder horarioString = new StringBuilder();
 
         for (Map.Entry<String, Map<String, String>> dia : horario.entrySet()) {
