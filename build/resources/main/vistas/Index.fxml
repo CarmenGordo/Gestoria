@@ -347,8 +347,8 @@
                                                 </HBox>
                                                 <HBox fx:id="footerAñProducto" alignment="CENTER" prefHeight="51.0" prefWidth="632.0">
                                                    <children>
-                                                      <Button fx:id="btnAceptarAñProducto" mnemonicParsing="false" onAction="#aceptarAñProducto" text="Aceptar" />
-                                                      <Button fx:id="btnCancelarAñProducto" mnemonicParsing="false" onAction="#cancelarAñProducto" text="Cancelar">
+                                                      <Button fx:id="btnAceptarAñProducto" mnemonicParsing="false" text="Aceptar" />
+                                                      <Button fx:id="btnCancelarAñProducto" mnemonicParsing="false" text="Cancelar">
                                                          <HBox.margin>
                                                             <Insets left="15.0" />
                                                          </HBox.margin></Button>
@@ -657,7 +657,7 @@
                         </TabPane>
                      </children>
                   </Pane>
-                  <Pane fx:id="paneAñadirAlmacen" prefHeight="396.0" prefWidth="650.0">
+                  <Pane fx:id="paneAñadirAlmacen" prefHeight="396.0" prefWidth="650.0" visible="false">
                      <children>
                         <TabPane prefHeight="396.0" prefWidth="650.0" tabClosingPolicy="UNAVAILABLE">
                            <tabs>
@@ -673,15 +673,15 @@
                                                          <children>
                                                             <HBox alignment="BASELINE_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="332.0" spacing="5">
                                                                <children>
-                                                                  <Label fx:id="labelNombreAñAlmacen1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="115.0" text="Nombre:" />
-                                                                  <TextField fx:id="textoNombreAñAlmacen" prefHeight="25.0" prefWidth="137.0" />
+                                                                  <Label fx:id="labelNombreAñAlmacen" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="115.0" text="Nombre:" />
+                                                                  <TextField fx:id="textNombreAñAlmacen" prefHeight="25.0" prefWidth="137.0" />
                                                                   <Label fx:id="iconoValiNombreAñAlmacen" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="9.0" />
                                                                </children>
                                                             </HBox>
                                                             <HBox alignment="BASELINE_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="333.0" spacing="5">
                                                                <children>
                                                                   <Label fx:id="labelDirAñAlmacen" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="115.0" text="Direccion: " />
-                                                                  <TextField fx:id="textoDirAñAlmacen1" prefHeight="25.0" prefWidth="137.0" />
+                                                                  <TextField fx:id="textDirAñAlmacen" prefHeight="25.0" prefWidth="137.0" />
                                                                   <Label fx:id="iconoValiDirAñAlmacen" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="10.0" />
                                                                </children>
                                                             </HBox>
@@ -702,21 +702,21 @@
                                                             <HBox alignment="BASELINE_LEFT" prefHeight="25.0" spacing="5">
                                                                <children>
                                                                   <Label fx:id="labelTelAñAlmacen" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="114.0" text="Telefono:" />
-                                                                  <TextField fx:id="textoTelAñAlmacen" prefHeight="25.0" prefWidth="137.0" />
+                                                                  <TextField fx:id="textTelAñAlmacen" prefHeight="25.0" prefWidth="137.0" />
                                                                   <Label fx:id="iconoValiTelAñAlmacen" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="5.0" />
                                                                </children>
                                                             </HBox>
                                                             <HBox alignment="BASELINE_LEFT" prefHeight="25.0" spacing="5">
                                                                <children>
                                                                   <Label fx:id="labelCapTotalAñAlmacen" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="114.0" text="Capacidad total:" />
-                                                                  <TextField fx:id="textoCapTotalAñAlmacen" prefHeight="25.0" prefWidth="137.0" />
+                                                                  <TextField fx:id="textCapTotalAñAlmacen" prefHeight="25.0" prefWidth="137.0" />
                                                                   <Label fx:id="iconoValiCapTotalAñAlmacen" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="8.0" />
                                                                </children>
                                                             </HBox>
                                                             <HBox alignment="BASELINE_LEFT" prefHeight="25.0" prefWidth="334.0" spacing="5">
                                                                <children>
                                                                   <Label fx:id="labelIdTiendaAñAlmacen" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="114.0" text="Tienda relacionada:" />
-                                                                  <TextField fx:id="textoIdTiendaAñAlmacen" prefHeight="25.0" prefWidth="137.0" />
+                                                                  <TextField fx:id="textIdTiendaAñAlmacen" prefHeight="25.0" prefWidth="137.0" />
                                                                   <Label fx:id="iconoValiIdTiendaAñAlmacen" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="11.0" />
                                                                </children>
                                                             </HBox>
@@ -735,7 +735,7 @@
                                                       <HBox prefHeight="100.0" prefWidth="200.0">
                                                          <children>
                                                             <Label fx:id="labelHorarioAñAlmacen" text="Horario:" />
-                                                            <Label fx:id="iconoValiIdTiendaAñAlmacen">
+                                                            <Label fx:id="iconoValiHorarioAñAlmacen">
                                                                <HBox.margin>
                                                                   <Insets left="5.0" />
                                                                </HBox.margin>
@@ -858,8 +858,18 @@
                                                 </VBox>
                                                 <HBox fx:id="footerAñAlmacen" alignment="CENTER" prefHeight="51.0" prefWidth="632.0">
                                                    <children>
-                                                      <Button fx:id="btnAceptarAñAlmacen" mnemonicParsing="false" onAction="#aceptarAñProducto" text="Aceptar" />
-                                                      <Button fx:id="btnCancelarAñAlmacen" mnemonicParsing="false" onAction="#cancelarAñProducto" text="Cancelar">
+                                                      <Button fx:id="btnAceptarAñAlmacen" mnemonicParsing="false" onAction="#aceptarAñAlmacen" text="Aceptar Añ" />
+                                                      <Button fx:id="btnCancelarAñAlmacen" mnemonicParsing="false" onAction="#cancelarAñAlmacen" text="Cancelar Añ">
+                                                         <HBox.margin>
+                                                            <Insets left="15.0" />
+                                                         </HBox.margin>
+                                                      </Button>
+                                                   </children>
+                                                </HBox>
+                                                <HBox fx:id="footerEdAlmacen" alignment="CENTER" prefHeight="51.0" prefWidth="632.0">
+                                                   <children>
+                                                      <Button fx:id="btnAceptarEdAlmacen" mnemonicParsing="false" onAction="#aceptarEdAlmacen" text="Aceptar Ed" />
+                                                      <Button fx:id="btnCancelarEdAlmacen" mnemonicParsing="false" onAction="#cancelarEdAlmacen" text="Cancelar Ed">
                                                          <HBox.margin>
                                                             <Insets left="15.0" />
                                                          </HBox.margin>

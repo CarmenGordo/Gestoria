@@ -669,32 +669,13 @@ public class ControladorIndex implements Initializable {
             
         }else if (paneContenidoListaAlmacenes.isVisible() || paneContenidoAlmacenSelec.isVisible()){
             mostrarPane(paneAñadirAlmacen);
+            footerEdAlmacen.setVisible(false);
             
             comboBoxCiudadAñAlmacen.getItems().addAll(ciudadesEspaña);
             comboBoxPaisAñAlmacen.getItems().addAll(paisesEu);
             
-            String nombreAlmacen = textNombreAñAlmacen.getText();
-            String dirAlmacen = textDirAñAlmacen.getText();
-            String ciudadAlmacen = comboBoxCiudadAñAlmacen.getValue().toString();
-            String paisAlmacen = comboBoxPaisAñAlmacen.getValue().toString(); 
-            int telefonoAlmacen = Integer.parseInt(textTelAñAlmacen.getText());
-            int capacidadTotalAlmacen = Integer.parseInt(textCapTotalAñAlmacen.getText());
-            //? hacer que el buscador este en idTiendaAlmacen
-            String idTiendaAlmacen = textIdTiendaAñAlmacen.getText();
-
-            Map<String, Map<String, String>> horario = recogerHorario();
+            comprobarValidaciones();
             
-            //comprobarDatosAlmacen(nombreAlmacen, dirAlmacen, ciudadAlmacen, paisAlmacen, telefonoAlmacen, horario, capacidadTotalAlmacen, idTiendaAlmacen);
-            
-            
-            //para coger las validaciones segun foco:
-            textNombreAñAlmacen.focusedProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue) {
-                } else {
-                    System.out.println("textNombreAñAlmacen pierde foco");
-                    comprobarDatosAlmacen(nombreAlmacen, dirAlmacen, ciudadAlmacen, paisAlmacen, telefonoAlmacen, horario, capacidadTotalAlmacen, idTiendaAlmacen);
-                }
-            });
            
         }
         
@@ -735,23 +716,32 @@ public class ControladorIndex implements Initializable {
     
     
     @FXML
-    private void aceptarAñProducto(){
-        
+    private void aceptarAñAlmacen(){
+        System.out.println("Almacen añadido");
+       
         String nombreAlmacen = textNombreAñAlmacen.getText();
         String dirAlmacen = textDirAñAlmacen.getText();
         String ciudadAlmacen = comboBoxCiudadAñAlmacen.getValue().toString();
         String paisAlmacen = comboBoxPaisAñAlmacen.getValue().toString();
-        int telefonoAlmacen = Integer.parseInt(textTelAñAlmacen.getText());
-        int capacidadTotalAlmacen = Integer.parseInt(textCapTotalAñAlmacen.getText());
+        String telefonoAlmacenS = textTelAñAlmacen.getText();
+        String capacidadTotalAlmacenS = textCapTotalAñAlmacen.getText();
         String idTiendaAlmacen = textIdTiendaAñAlmacen.getText();
         Map<String, Map<String, String>> horario = recogerHorario();
-       
         
-        añadirAlmacen(nombreAlmacen, dirAlmacen, ciudadAlmacen, paisAlmacen, telefonoAlmacen, horario, capacidadTotalAlmacen, idTiendaAlmacen);
+        
+        if(!nombreAlmacen.isEmpty() && !dirAlmacen.isEmpty() && !ciudadAlmacen.isEmpty() && !paisAlmacen.isEmpty() && !telefonoAlmacenS.isEmpty() && !capacidadTotalAlmacenS.isEmpty() && !idTiendaAlmacen.isEmpty() && !horario.isEmpty()){
+        
+            int telefonoAlmacen = Integer.parseInt(telefonoAlmacenS);
+            int capacidadTotalAlmacen = Integer.parseInt(capacidadTotalAlmacenS);
+
+            añadirAlmacen(nombreAlmacen, dirAlmacen, ciudadAlmacen, paisAlmacen, telefonoAlmacen, horario, capacidadTotalAlmacen, idTiendaAlmacen);
+        
+        }
+       
     }
     @FXML
-    private void cancelarAñProducto(){
-        
+    private void cancelarAñAlmacen(){
+        mostrarPane(paneContenidoListaAlmacenes);
     }
     
     
@@ -760,6 +750,10 @@ public class ControladorIndex implements Initializable {
     private HBox footerModificarProductoSelect;
     @FXML
     private TabPane tabPaneProductos;
+    @FXML
+    private HBox footerAñAlmacen;
+    @FXML
+    private HBox footerEdAlmacen;
     @FXML
     public void editar(){
         
@@ -786,10 +780,8 @@ public class ControladorIndex implements Initializable {
                     editarProducto(true);
                 } 
             }
-        }
+        } else if (tablaListaTiendas.getSelectionModel().getSelectedItem() != null){
         /*
-        else if (tablaListaTiendas.getSelectionModel().getSelectedItem() != null){
-        
             for (int i = 0; i < tiendas.size(); i++) {
                 Tiendas tienda = tiendas.get(i);
                 
@@ -798,19 +790,61 @@ public class ControladorIndex implements Initializable {
                     mostrarPane(paneContenidoProductoSelec);
                 } 
             }
-        }else if(tablaListaProductos.getSelectionModel().getSelectedItem() != null){
+            */
+        }else if(tablaListaAlmacenes.getSelectionModel().getSelectedItem() != null){
+            Almacenes almacenSelec = tablaListaAlmacenes.getSelectionModel().getSelectedItem();
+            
+            mostrarPane(paneAñadirAlmacen);
+            footerAñAlmacen.setVisible(false);
+            footerAñAlmacen.setPrefHeight(0);
+            footerEdAlmacen.setVisible(true);
+            
+            
+            textNombreAñAlmacen.setText(almacenSelec.getNombre());
+            textDirAñAlmacen.setText(almacenSelec.getDireccion());
+            comboBoxPaisAñAlmacen.setValue(almacenSelec.getPais());
+            comboBoxCiudadAñAlmacen.setValue(almacenSelec.getCiudad());
+            //textTelAñAlmacen.setText(Integer.parseInt(almacenSelec.getTelefono().toString()));
+            //textCapTotalAñAlmacen.setText(almacenSelec.getNombre());
+            textIdTiendaAñAlmacen.setText(almacenSelec.getId_tienda());
+            
+            textAperLHorarioAñAlmacen.setText(almacenSelec.getNombre());
+            textCieLHorarioAñAlmacen.setText(almacenSelec.getNombre());
+            textAperMHorarioAñAlmacen.setText(almacenSelec.getNombre());
+            textCieMHorarioAñAlmacen.setText(almacenSelec.getNombre());
+            textAperXHorarioAñAlmacen.setText(almacenSelec.getNombre());
+            textCieXHorarioAñAlmacen.setText(almacenSelec.getNombre());
+            textAperJHorarioAñAlmacen.setText(almacenSelec.getNombre());
+            textCieJHorarioAñAlmacen.setText(almacenSelec.getNombre());
+            textAperVHorarioAñAlmacen.setText(almacenSelec.getNombre());
+            textCieVHorarioAñAlmacen.setText(almacenSelec.getNombre());
+            textAperSHorarioAñAlmacen.setText(almacenSelec.getNombre());
+            textCieSHorarioAñAlmacen.setText(almacenSelec.getNombre());
+            textAperDHorarioAñAlmacen.setText(almacenSelec.getNombre());
+            textCieDHorarioAñAlmacen.setText(almacenSelec.getNombre());
+            
         
-            for (int i = 0; i < almacenes.size(); i++) {
-                Almacenes almacen = almacenes.get(i);
-
-                if (id == almacen.getId_almacen()) {
-
-                    mostrarPane(paneContenidoProductoSelec);
-                } 
-            }
+            
         }
-        */
 
+    }
+    @FXML
+    private void aceptarEdAlmacen(){
+        String nombreAlmacen = textNombreAñAlmacen.getText();
+        String dirAlmacen = textDirAñAlmacen.getText();
+        String ciudadAlmacen = comboBoxCiudadAñAlmacen.getValue().toString();
+        String paisAlmacen = comboBoxPaisAñAlmacen.getValue().toString();
+        int telefonoAlmacen = Integer.parseInt(textTelAñAlmacen.getText());
+        int capacidadTotalAlmacen = Integer.parseInt(textCapTotalAñAlmacen.getText());
+        String idTiendaAlmacen = textIdTiendaAñAlmacen.getText();
+        Map<String, Map<String, String>> horario = recogerHorario();
+        
+
+        editarAlmacen(nombreAlmacen, dirAlmacen, ciudadAlmacen, paisAlmacen, telefonoAlmacen, horario, capacidadTotalAlmacen, idTiendaAlmacen);        
+    }
+    @FXML
+    private void cancelarEdAlmacen(){
+        mostrarPane(paneContenidoListaAlmacenes);
     }
             
     @FXML
@@ -1526,7 +1560,7 @@ public class ControladorIndex implements Initializable {
     
     
     
-    //AÑADIR en bd:
+    //CRUD en bd: añadir, editar/update y borrar
     //comporbar el ultimo id de las tabalas
     private String obtenerUltimoId(String tabla, String columnaId) {
         String ultimoId = null;
@@ -1649,6 +1683,51 @@ public class ControladorIndex implements Initializable {
             System.err.println("No se pudo conectar a la base de datos");
         }
     }
+    private void editarAlmacen(String nombre, String direccion, String ciudad, String pais, int telefono, 
+                           Map<String, Map<String, String>> horario, int capacidadTotal, String idTienda) {
+        if (conexion != null) {
+      
+            String query = "UPDATE almacenes SET nombre = ?, direccion = ?, ciudad = ?, pais = ?, telefono = ?, horario = ?, capacidad_total = ?, id_tienda = ? WHERE id_almacen = ? ";
+            
+            try {
+                //convertir el mapa de horario a JSON
+                String horarioJson = null;
+                if (horario != null && !horario.isEmpty()) {
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    horarioJson = objectMapper.writeValueAsString(horario);
+                }
+
+                PreparedStatement ps = conexion.prepareStatement(query);
+
+                ps.setString(1, nombre);
+                ps.setString(2, direccion);
+                ps.setString(3, ciudad);
+                ps.setString(4, pais);
+                ps.setInt(5, telefono);
+                ps.setString(6, horarioJson);
+                ps.setInt(7, capacidadTotal);
+                ps.setString(8, idTienda);
+
+                int rowsInserted = ps.executeUpdate();
+
+                //? cambiar texto segun idioma
+                if (rowsInserted > 0) {
+                    System.out.println("Almacen editado!");
+                    mostrarAlerta(Alert.AlertType.INFORMATION, "Operacion exitosa", "Almacen editado! :)");
+                } else {
+                    System.err.println("No se ha añadido el almacen");
+                    mostrarAlerta(Alert.AlertType.ERROR, "Error", "No se ha podido editar el almacen :(");
+                }
+                
+            } catch (SQLException | JsonProcessingException e) {
+                System.err.println("--error añadir almacen: " + e.getMessage());
+                mostrarAlerta(Alert.AlertType.ERROR, "Error", "No se ha podido editar el almacen, revisa los campos" + e.getMessage());
+            }
+            
+        } else {
+            System.err.println("No se pudo conectar a la base de datos");
+        }
+    }
     private boolean borrarAlmacen(String idAlmacen) {
         if (conexion != null) {
             String query = "DELETE FROM almacenes WHERE id_almacen = ?";
@@ -1686,9 +1765,38 @@ public class ControladorIndex implements Initializable {
     
     
     //Validaciones:
-    public void comprobarDatosAlmacen(String nombre, String direccion, String ciudad, String pais, int telefono, 
-                           Map<String, Map<String, String>> horario, int capacidadTotal, String idTienda) {
-        
+    public void comprobarValidaciones(){
+        ImageView iconoOk = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream("img/ok_icon.png")));
+        ImageView iconoErr = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream("img/error_icon.png")));
+        iconoOk.setFitHeight(16);
+        iconoOk.setFitWidth(16);
+        iconoErr.setFitHeight(16);
+        iconoErr.setFitWidth(16);
+        /*
+        GraphicValidationDecoration decorador = new GraphicValidationDecoration() {
+           
+            @Override
+            
+            public void applyValidationDecoration(ValidationMessage message) {
+                super.applyValidationDecoration(message);
+                System.out.println("Mensaje:" + message);
+                if (message.getSeverity() == Severity.ERROR || message.getSeverity() == Severity.WARNING) {
+                    textNombreAñAlmacen.setGraphic(iconoValiNombreAñAlmacen); 
+                    etiqNombre.setContentDisplay(ContentDisplay.LEFT);
+                    textNombreAñAlmacen.setGraphic(iconoErr);
+                    
+                } else if (message.getSeverity() == Severity.INFO) {
+                    etiqNombre.setGraphic(null);//Desactiva ICONO
+                    etiqIconoNombre.setGraphic(iconoOk);//ICONO OK
+                }
+            }
+
+        };
+*/
+
+
+    }
+    public void comprobarNombreAlmacen(String nombre){
         
         if (nombre == null || nombre.isEmpty()) {
             textNombreAñAlmacen.setTooltip(new Tooltip("Validacion: El nombre no puede estar vacio"));
@@ -1709,112 +1817,7 @@ public class ControladorIndex implements Initializable {
                 usarIconosValidacion(iconoValiNombreAñAlmacen, true, null);
             }    
         }
-        
-        
-
-        if (direccion == null || direccion.isEmpty()) {
-            textDirAñAlmacen.setTooltip(new Tooltip("La dirección del almacén no debe estar vacía."));
-            System.out.println("Validacion: Direccion vacia");
-            usarIconosValidacion(iconoValiDirAñAlmacen, false, null);
-            
-        }else{
-            //no permite /
-            String regex = "^[A-Za-z0-9\\sºª,\\-\"\\\\]*$";
-
-            if (!direccion.matches(regex)) {
-                textDirAñAlmacen.setTooltip(new Tooltip("La dirección contiene caracteres no permitidos. Solo se permiten letras, numeros, y ciertos caracteres especiales"));
-                System.out.println("Validacion: Dirección con caracteres no permitidos.");
-                usarIconosValidacion(iconoValiDirAñAlmacen, false, null);
-            }
-            usarIconosValidacion(iconoValiDirAñAlmacen, true, null);
-        }
-
-        
-        if (ciudad == null || ciudad.isEmpty()) {
-            comboBoxCiudadAñAlmacen.setTooltip(new Tooltip("La ciudad no debe estar vacia"));
-            System.out.println("Validacion: Ciudad vacia");
-            usarIconosValidacion(iconoValiCiudaadAñAlmacen, false, null);
-            
-        }else{
-            System.out.println("Validacion: Ciudad valida");
-            usarIconosValidacion(iconoValiCiudaadAñAlmacen, true, null);
-        }
-
-        
-        if (pais == null || pais.isEmpty()) {
-            comboBoxPaisAñAlmacen.setTooltip(new Tooltip("El pais no debe estar vacio"));
-            System.out.println("Validacion fallida: Pais vacio.");
-            usarIconosValidacion(iconoValiPaisAñAlmacen, false, null);
-            
-        }else{
-            System.out.println("Validacion: Pais valida");
-            usarIconosValidacion(iconoValiPaisAñAlmacen, true, null);
-        }
-        
-        
-        String telString = Integer.toString(telefono);
-        if (telString.isEmpty()) {
-            textTelAñAlmacen.setTooltip(new Tooltip("El teléfono del almacén no debe estar vacío."));
-            System.out.println("Validación: Teléfono vacío.");
-            usarIconosValidacion(iconoValiTelAñAlmacen, false, null);
-
-        } else {
-            String regex = "^\\d{9}$";
-            
-            if (!telString.matches(regex)) {
-                textTelAñAlmacen.setTooltip(new Tooltip("El telefono tiene que tener 9 numeros"));
-                System.out.println("Validacion: Telefono NO valido");
-                usarIconosValidacion(iconoValiTelAñAlmacen, false, null);
-            } else {
-                System.out.println("Validacion: Telefono valido");
-                usarIconosValidacion(iconoValiTelAñAlmacen, true, null);
-            }
-        }
-        
-        
-        String capTotalString = Integer.toString(capacidadTotal);
-        if (capacidadTotal == 0) {
-            textCapTotalAñAlmacen.setTooltip(new Tooltip("La capacidad no puede ser 0."));
-            System.out.println("Validación: Capacidad igual a 0.");
-            usarIconosValidacion(iconoValiCapTotalAñAlmacen, false, null);
-            
-        } else {
-            //ni caract especial ni nada
-            String regex = "^\\d+$";
-
-            if (!capTotalString.matches(regex)) {
-                
-                textCapTotalAñAlmacen.setTooltip(new Tooltip("La capacidad debe ser un número válido."));
-                System.out.println("Validación: Capacidad con caracteres no permitidos.");
-                usarIconosValidacion(iconoValiCapTotalAñAlmacen, false, null);
-                
-            } else {
-                usarIconosValidacion(iconoValiCapTotalAñAlmacen, true, null);
-            }
-        }
-        
-        
-        if (idTienda == null || idTienda.isEmpty()) {
-            
-            textIdTiendaAñAlmacen.setTooltip(new Tooltip("El ID de la tienda no puede estar vacío."));
-            System.out.println("Validación: ID tienda vacío.");
-            usarIconosValidacion(iconoValiIdTiendaAñAlmacen, false, null);
-        } else {
-            if (!verificarTiendaExistente(idTienda)) {
-                
-                textIdTiendaAñAlmacen.setTooltip(new Tooltip("No existe ninguna tienda con ese ID."));
-                System.out.println("Validación: No existe ninguna tienda con ese ID.");
-                usarIconosValidacion(iconoValiIdTiendaAñAlmacen, false, null);
-                
-            } else {
-                usarIconosValidacion(iconoValiIdTiendaAñAlmacen, true, null);
-            }
-        }
-        
-        
-        
     }
-    
     
     //iconos validacion
     private void usarIconosValidacion(Label label, boolean correcto, ValidationMessage message) {
