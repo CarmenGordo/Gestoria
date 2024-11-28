@@ -265,7 +265,7 @@
                                                                <children>
                                                                   <Text fx:id="labelNombreProductoSelec1" text="Nombre:" wrappingWidth="96.0" />
                                                                   <TextField fx:id="textoNombreAñProducto" prefHeight="25.0" prefWidth="137.0" />
-                                                                  <Label fx:id="labelNombreAñProducto" prefHeight="17.0" prefWidth="103.0">
+                                                                  <Label fx:id="iconoValiNombreAñProducto" prefHeight="17.0" prefWidth="103.0">
                                                                      <HBox.margin>
                                                                         <Insets left="5.0" />
                                                                      </HBox.margin>
@@ -276,21 +276,21 @@
                                                                <children>
                                                                   <Text fx:id="labelTipoProductoSelec1" text="Categoria:" wrappingWidth="96.0" />
                                                                   <ChoiceBox fx:id="choiceBoxTipoAñProducto" prefHeight="26.0" prefWidth="137.0" />
-                                                                  <Label fx:id="labelTipoAñProducto" prefHeight="17.0" prefWidth="103.0" />
+                                                                  <Label fx:id="iconoValiTipoAñProducto" prefHeight="17.0" prefWidth="103.0" />
                                                                </children>
                                                             </HBox>
                                                             <HBox prefHeight="25.0" prefWidth="275.0" spacing="5">
                                                                <children>
                                                                   <Text fx:id="labelSubTipoProductoSelec1" text="Sub categoria:" wrappingWidth="96.0" />
                                                                   <ChoiceBox fx:id="choiceBoxSubTipoAñProducto" prefHeight="26.0" prefWidth="137.0" />
-                                                                  <Label fx:id="labelSubTipoAñProducto" prefHeight="17.0" prefWidth="103.0" />
+                                                                  <Label fx:id="iconoValiSupTipoAñProducto" prefHeight="17.0" prefWidth="103.0" />
                                                                </children>
                                                             </HBox>
                                                             <HBox prefHeight="25.0" prefWidth="275.0" spacing="5">
                                                                <children>
                                                                   <Text fx:id="labelTallaProductoSelec1" text="Tallas:" wrappingWidth="96.0" />
                                                                   <ComboBox fx:id="comboBoxTallasAñProducto" prefHeight="26.0" prefWidth="137.0" />
-                                                                  <Label fx:id="labelTallaAñProducto" prefHeight="17.0" prefWidth="103.0" />
+                                                                  <Label fx:id="iconoValiTallaAñProducto" prefHeight="17.0" prefWidth="103.0" />
                                                                </children>
                                                             </HBox>
                                                             <HBox prefHeight="25.0" prefWidth="275.0" spacing="5">
@@ -298,7 +298,7 @@
                                                                   <Text fx:id="labelPrecioProductoSelec1" text="Precio:" wrappingWidth="96.0" />
                                                                   <TextField fx:id="textoPrecioAñProducto" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="72.0" />
                                                                   <ChoiceBox fx:id="choiceBoxTipoPrecioAñProducto" prefHeight="25.0" prefWidth="59.0" />
-                                                                  <Label fx:id="labelPrecioAñProducto" prefHeight="17.0" prefWidth="103.0" />
+                                                                  <Label fx:id="iconoValiPrecioAñProducto" prefHeight="17.0" prefWidth="103.0" />
                                                                </children>
                                                             </HBox>
                                                          </children>
@@ -313,7 +313,7 @@
                                                             <HBox alignment="BASELINE_LEFT" prefHeight="29.0" prefWidth="307.0">
                                                                <children>
                                                                   <TextField fx:id="textElegirTienda1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="168.0" />
-                                                                  <Label prefHeight="17.0" prefWidth="116.0">
+                                                                  <Label fx:id="iconoValiIdTiendaAñProducto" prefHeight="17.0" prefWidth="116.0">
                                                                      <HBox.margin>
                                                                         <Insets left="5.0" />
                                                                      </HBox.margin>
@@ -331,7 +331,7 @@
                                                             <HBox alignment="BASELINE_LEFT" prefHeight="29.0" prefWidth="315.0">
                                                                <children>
                                                                   <TextField fx:id="textElegirTienda11" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="168.0" />
-                                                                  <Label prefHeight="17.0" prefWidth="101.0">
+                                                                  <Label fx:id="iconoValiIdAlmacenAñProducto" prefHeight="17.0" prefWidth="101.0">
                                                                      <HBox.margin>
                                                                         <Insets left="5.0" />
                                                                      </HBox.margin>
@@ -356,47 +356,6 @@
                                                 </HBox>
                                              </children>
                                           </FlowPane>
-                                       </children>
-                                    </AnchorPane>
-                                 </content>
-                              </Tab>
-                              <Tab fx:id="tabTiendasProducto1" text="Tiendas">
-                                 <content>
-                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="322.0" prefWidth="572.0">
-                                       <children>
-                                          <TableView fx:id="tablaTiendasProducto1" layoutX="10.0" layoutY="14.0" prefHeight="337.0" prefWidth="630.0">
-                                             <columns>
-                                                <TableColumn fx:id="columnIdProductoSelecTiendas1" prefWidth="54.0" text="Id" />
-                                                <TableColumn fx:id="columnNombreProductoSelecTiendas1" prefWidth="97.0" text="Nombre" />
-                                                <TableColumn fx:id="columnTipoProductoSelecTiendas1" prefWidth="67.0" text="Tipo" />
-                                                <TableColumn fx:id="columnDirProductoSelecTiendas1" prefWidth="78.0" text="Direccion" />
-                                                <TableColumn fx:id="columnCiudadProductoSelecTiendas1" text="Ciudad" />
-                                                <TableColumn fx:id="columnPaisProductoSelecTiendas1" prefWidth="87.0" text="Pais" />
-                                                <TableColumn fx:id="columnTelProductoSelecTiendas1" prefWidth="77.0" text="Telefono" />
-                                                <TableColumn fx:id="columnStockProductoSelecTiendas1" prefWidth="89.0" text="Stock" />
-                                             </columns>
-                                          </TableView>
-                                       </children>
-                                    </AnchorPane>
-                                 </content>
-                              </Tab>
-                              <Tab fx:id="tabAlmacenesProducto1" text="Almacenes">
-                                 <content>
-                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="365.0" prefWidth="650.0">
-                                       <children>
-                                          <TableView fx:id="tablaAlmacenesProductoSelec1" layoutX="10.0" layoutY="13.0" prefHeight="342.0" prefWidth="630.0">
-                                             <columns>
-                                                <TableColumn fx:id="columnIdAlmacenesSelecProducto1" prefWidth="41.0" text="Id" />
-                                                <TableColumn fx:id="columnNombreAlmacenesSelecProducto1" prefWidth="87.0" text="Nombre" />
-                                                <TableColumn fx:id="columnDirAlmacenesSelecProducto1" prefWidth="78.0" text="Direccion" />
-                                                <TableColumn fx:id="columnCiudadAlmacenesSelecProducto1" minWidth="0.0" prefWidth="53.0" text="Ciudad" />
-                                                <TableColumn fx:id="columnPaisAlmacenesSelecProducto1" minWidth="0.0" prefWidth="46.0" text="Pais" />
-                                                <TableColumn fx:id="columnTelAlmacenesSelecProducto1" prefWidth="63.0" text="Telefono" />
-                                                <TableColumn fx:id="columnHoarioAlmacenesSelecProducto1" prefWidth="97.0" text="Horario" />
-                                                <TableColumn fx:id="columnCapOcupadaAlmacenesSelecProducto1" prefWidth="82.0" text="Cap. Ocupada" />
-                                                <TableColumn fx:id="columnCapTotalAlmacenesSelecProducto1" prefWidth="82.0" text="Cap. Total" />
-                                             </columns>
-                                          </TableView>
                                        </children>
                                     </AnchorPane>
                                  </content>
@@ -437,25 +396,84 @@
                      <children>
                         <TabPane prefHeight="396.0" prefWidth="650.0" tabClosingPolicy="UNAVAILABLE">
                           <tabs>
-                            <Tab fx:id="tabInfoTienda" text="Tienda">
+                            <Tab fx:id="tabInfoTiendaSelec" text="Tienda">
                               <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
-                                          <TableView fx:id="tablaTiendaSelec" layoutX="10.0" layoutY="14.0" prefHeight="69.0" prefWidth="630.0">
-                                            <columns>
-                                              <TableColumn fx:id="columnIdTiendaSelec" prefWidth="44.0" text="Id" />
-                                                <TableColumn fx:id="columnNombreTiendaSelec" text="Nombre" />
-                                                <TableColumn fx:id="columnTipoTiendaSelec" prefWidth="81.0" text="Tipo" />
-                                                <TableColumn fx:id="columnDirTiendaSelec" prefWidth="74.0" text="Direccion" />
-                                                <TableColumn fx:id="columnCiudadTiendaSelec" prefWidth="77.0" text="Ciudad" />
-                                                <TableColumn fx:id="columnPaisTiendaSelec" prefWidth="67.0" text="Pais" />
-                                                <TableColumn fx:id="columnTelTiendaSelec" prefWidth="71.0" text="Telefono" />
-                                                <TableColumn fx:id="columnHorarioTiendaSelec" prefWidth="135.0" text="Horario" />
-                                            </columns>
-                                          </TableView>
+                                          <FlowPane layoutX="8.0" layoutY="9.0" prefHeight="348.0" prefWidth="628.0">
+                                             <children>
+                                                <HBox prefHeight="177.0" prefWidth="577.0">
+                                                   <children>
+                                                      <VBox prefHeight="184.0" prefWidth="330.0">
+                                                         <children>
+                                                            <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="250.0" spacing="5">
+                                                               <children>
+                                                                  <Label fx:id="labelIdTiendaSelec" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="114.0" text="ID:" />
+                                                                  <Label fx:id="texIdTiendaSelec" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="115.0" />
+                                                               </children>
+                                                            </HBox>
+                                                            <HBox prefHeight="25.0" spacing="5">
+                                                               <children>
+                                                                  <Label fx:id="labelNombreTiendaSelec" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="114.0" text="Nombre:" />
+                                                                  <Label fx:id="textNombreTiendaSelec" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="114.0" />
+                                                               </children>
+                                                            </HBox>
+                                                            <HBox prefHeight="25.0" spacing="5">
+                                                               <children>
+                                                                  <Label fx:id="labelTipoTiendaSelec" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="114.0" text="Categoria:" />
+                                                                  <Label fx:id="textTipoTiendaSelec" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="114.0" />
+                                                               </children>
+                                                            </HBox>
+                                                            <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="250.0" spacing="5">
+                                                               <children>
+                                                                  <Label fx:id="labelDirTiendaSelec" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="114.0" text="Direccion: " />
+                                                                  <Label fx:id="textDirTiendaSelec" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="111.0" />
+                                                               </children>
+                                                            </HBox>
+                                                            <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="254.0" spacing="5">
+                                                               <children>
+                                                                  <Label fx:id="labelPaisTiendaSelec" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="114.0" text="Pais:" />
+                                                                  <Label fx:id="textPaisTiendaSelec" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="114.0" />
+                                                               </children>
+                                                            </HBox>
+                                                            <HBox prefHeight="25.0" spacing="5">
+                                                               <children>
+                                                                  <Label fx:id="labelCiudadTiendaSelec" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="114.0" text="Ciudad:" />
+                                                                  <Label fx:id="textCiudadTiendaSelec" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="114.0" />
+                                                               </children>
+                                                            </HBox>
+                                                            <HBox prefHeight="25.0" spacing="5">
+                                                               <children>
+                                                                  <Label fx:id="labelTelTiendaSelec" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="114.0" text="Telefono:" />
+                                                                  <Label fx:id="textTelTiendaSelec" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="114.0" />
+                                                               </children>
+                                                            </HBox>
+                                                         </children>
+                                                      </VBox>
+                                                      
+                                                   </children>
+                                                </HBox>
+                                                <VBox prefHeight="111.0" prefWidth="422.0">
+                                                   <children>
+                                                      <Label fx:id="labelHorarioTiendaSelec" text="Horario:" />
+                                                      <TableView fx:id="tablaHorarioTiendaSelec" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="94.0" prefWidth="422.0">
+                                                         <columns>
+                                                            <TableColumn fx:id="columnLHorarioTiendaSelec" prefWidth="60.0" text="Lunes" />
+                                                            <TableColumn fx:id="columnMHorarioTiendaSelec" prefWidth="60.0" text="Martes" />
+                                                            <TableColumn fx:id="columnXHorarioTiendaSelec" prefWidth="60.0" text="Miercoles" />
+                                                            <TableColumn fx:id="columnJHorarioTiendaSelec" prefWidth="60.0" text="Jueves" />
+                                                            <TableColumn fx:id="columnVHorarioTiendaSelec" prefWidth="60.0" text="Viernes" />
+                                                            <TableColumn fx:id="columnSHorarioTiendaelec" prefWidth="60.0" text="Sabado" />
+                                                            <TableColumn fx:id="columnDHorarioTiendaSelec" prefWidth="60.0" text="Domingo" />
+                                                         </columns>
+                                                      </TableView>
+                                                   </children>
+                                                </VBox>
+                                             </children>
+                                          </FlowPane>
                                        </children>
                                     </AnchorPane>
-                              </content>
+                                 </content>
                             </Tab>
                             <Tab fx:id="tabProductosTienda" text="Productos">
                               <content>
@@ -531,7 +549,7 @@
                         </TabPane>
                      </children>
                   </Pane>
-                  <Pane fx:id="paneContenidoAlmacenSelec" prefHeight="396.0" prefWidth="650.0" visible="false">
+                  <Pane fx:id="paneContenidoAlmacenSelec" prefHeight="396.0" prefWidth="650.0">
                      <children>
                         <TabPane prefHeight="396.0" prefWidth="650.0" tabClosingPolicy="UNAVAILABLE">
                            <tabs>
@@ -547,7 +565,7 @@
                                                          <children>
                                                             <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="250.0" spacing="5">
                                                                <children>
-                                                                  <Label fx:id="labelIdAlmacenSelec" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="126.0" text="ID:" />
+                                                                  <Label fx:id="labelIdAlmacenSelec" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="114.0" text="ID:" />
                                                                   <Label fx:id="texIdAlmacenSelec" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="115.0" />
                                                                </children>
                                                             </HBox>
@@ -559,13 +577,13 @@
                                                             </HBox>
                                                             <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="250.0" spacing="5">
                                                                <children>
-                                                                  <Label fx:id="labelDirAlmacenSelec" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="130.0" text="Direccion: " />
+                                                                  <Label fx:id="labelDirAlmacenSelec" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="114.0" text="Direccion: " />
                                                                   <Label fx:id="textDirAlmacenSelec" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="115.0" />
                                                                </children>
                                                             </HBox>
                                                             <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="254.0" spacing="5">
                                                                <children>
-                                                                  <Label fx:id="labelPaisAlmacenSelec" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="134.0" text="Pais:" />
+                                                                  <Label fx:id="labelPaisAlmacenSelec" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="114.0" text="Pais:" />
                                                                   <Label fx:id="textPaisAlmacenSelec" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="114.0" />
                                                                </children>
                                                             </HBox>
@@ -657,7 +675,7 @@
                         </TabPane>
                      </children>
                   </Pane>
-                  <Pane fx:id="paneAñadirAlmacen" prefHeight="396.0" prefWidth="650.0">
+                  <Pane fx:id="paneAñadirAlmacen" prefHeight="396.0" prefWidth="650.0" visible="false">
                      <children>
                         <TabPane prefHeight="396.0" prefWidth="650.0" tabClosingPolicy="UNAVAILABLE">
                            <tabs>

@@ -35,6 +35,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import javafx.application.Platform;
@@ -85,12 +86,15 @@ public class ControladorIndex implements Initializable {
     ObservableList<Almacenes> listaAlmacenes = FXCollections.observableArrayList();
     ObservableList<HorarioAlmacen> horarioAlmacen = FXCollections.observableArrayList();
     ObservableList<Productos> listaProductos = FXCollections.observableArrayList();
-    //? cambiar a libreria para conseguir paises y ciudades
+    
+    //? cambiar a libreria para conseguir paises y ciudade     
+    //PARA MAPA VISUAL MIRAR: mapa control fx
     ObservableList<String> ciudadesEspaña = FXCollections.observableArrayList("","Sevilla", "Málaga", "Granada", "Córdoba", "Almería", "Cádiz","Jaén", "Huelva","Zaragoza", "Huesca", "Teruel","Oviedo", "Gijón", "Avilés","Santander","Toledo", "Albacete", "Ciudad Real","Guadalajara", "Cuenca","Barcelona");
     ObservableList<String> paisesEu = FXCollections.observableArrayList("","España", "Francia", "Alemania", "Italia", "Portugal", "Reino Unido", "Irlanda","Suecia");
     
     
     //general pane: cabeceras
+
     @FXML
     private AnchorPane anchorPaneContenedor;
     @FXML
@@ -377,23 +381,35 @@ public class ControladorIndex implements Initializable {
     
     //pg tienda selec, tabla tienda:
     @FXML
-    private TableView tablaTiendaSelec;
+    private Label texIdTiendaSelec;
     @FXML
-    private TableColumn<Tiendas, String> columnIdTiendaSelec;
+    private Label textNombreTiendaSelec;
     @FXML
-    private TableColumn<Tiendas, String> columnNombreTiendaSelec;
+    private Label textTelTiendaSelec;
     @FXML
-    private TableColumn<Tiendas, String> columnCiudadTiendaSelec;
+    private Label textTipoTiendaSelec;
     @FXML
-    private TableColumn<Tiendas, String> columnDirTiendaSelec;
+    private Label textDirTiendaSelec;
     @FXML
-    private TableColumn<Tiendas, Map> columnHorarioTiendaSelec;
+    private TableView<HorarioAlmacen> tablaHorarioTiendaSelec;
     @FXML
-    private TableColumn<Tiendas, String> columnPaisTiendaSelec;
+    private TableColumn<Tiendas, String> columnLHorarioTiendaSelec;
     @FXML
-    private TableColumn<Tiendas, Integer> columnTelTiendaSelec;
+    private TableColumn<Tiendas, String> columnMHorarioTiendaSelec;
     @FXML
-    private TableColumn<Tiendas, Tiendas.TipoTienda> columnTipoTiendaSelec;
+    private TableColumn<Tiendas, String> columnXHorarioTiendaSelec;
+    @FXML
+    private TableColumn<Tiendas, String> columnJHorarioTiendaSelec;
+    @FXML
+    private TableColumn<Tiendas, String> columnVHorarioTiendaSelec;
+    @FXML
+    private TableColumn<Tiendas, String> columnSHorarioTiendaelec;
+    @FXML
+    private TableColumn<Tiendas, String> columnDHorarioTiendaSelec;
+    @FXML
+    private Label textCiudadTiendaSelec;
+    @FXML
+    private Label textPaisTiendaSelec;
     
     //pg tienda selec, tabla productos:
     @FXML
@@ -654,27 +670,28 @@ public class ControladorIndex implements Initializable {
                     choiceBoxSubTipoAñProducto.setItems(ropaOpciones);
                     choiceBoxSubTipoAñProducto.setDisable(false);
                     
-                    //labelTipoAñProducto.setText("Ropa");
+                
                 } else if (choiceBoxTipoAñProducto.getValue() == Productos.TipoProducto.Accesorios) {
                     ObservableList<Productos.SubTipoAccProducto> accesoriosOpciones = FXCollections.observableArrayList(Productos.SubTipoAccProducto.values());
                     choiceBoxSubTipoAñProducto.setItems(accesoriosOpciones);
                     choiceBoxSubTipoAñProducto.setDisable(false);
-                    
-                    //labelTipoAñProducto.setText("Accesorios");
+                   
                 } else {
                     choiceBoxSubTipoAñProducto.setItems(FXCollections.observableArrayList());
-                    labelTipoAñProducto.setText("Zapatillas");
+                    choiceBoxSubTipoAñProducto.setDisable(true);
                 }
-                //labelSubTipoAñProducto.setText(choiceBoxSubTipoAñProducto.getValue().toString());
 
             });
-            choiceBoxSubTipoAñProducto.setDisable(true);
+            //choiceBoxSubTipoAñProducto.setDisable(true);
             comboBoxTallasAñProducto.setItems(opcTalla);
             
             choiceBoxTipoPrecioAñProducto.getItems().addAll("€", "£");
             choiceBoxTipoPrecioAñProducto.getSelectionModel().selectFirst();
             
+            //comprobarValidacionesAñProducto();
+            
         }else if (paneContenidoListaTiendas.isVisible() || paneContenidoTiendaSelec.isVisible()){
+            //mostrarPane(paneAñadirTienda);
             
         }else if (paneContenidoListaAlmacenes.isVisible() || paneContenidoAlmacenSelec.isVisible()){
             mostrarPane(paneAñadirAlmacen);
@@ -959,24 +976,7 @@ public class ControladorIndex implements Initializable {
             } 
         }
     }
-    /*
-    private void mostrarModalAlerta(){
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-
-    // Establecer el título y el mensaje del modal
-    alert.setTitle("Confirmar Operacion");
-    alert.setHeaderText("¿seguro quieres conformar?");
-    
-    Button btnYes = new Button("Aceptar");
-    Button btnNo = new Button("Cancelar");
-
-    Scene scene = new Scene(vbox, 300, 150);
-    modalStage.setScene(scene);
-
-    // Mostrar el modal y esperar la respuesta
-    modalStage.showAndWait();
-    }
-    */
+   
     
     
     @FXML
@@ -1150,19 +1150,36 @@ public class ControladorIndex implements Initializable {
     
     //pg tienda selec:
     private void rellenarTablaTiendaSelec(Tiendas tiendaSelec){
-        ObservableList<Tiendas> listaTiendaSelec = FXCollections.observableArrayList();
-        listaTiendaSelec.add(tiendaSelec); 
+        texIdTiendaSelec.setText(tiendaSelec.getId_tienda());
+        textNombreTiendaSelec.setText(tiendaSelec.getNombre());
+        textTipoTiendaSelec.setText(tiendaSelec.getTipo().name());
+        textDirTiendaSelec.setText(tiendaSelec.getDireccion());
+        textTelTiendaSelec.setText(Integer.toString(tiendaSelec.getTelefono()));
+        textCiudadTiendaSelec.setText(tiendaSelec.getCiudad());
+        textPaisTiendaSelec.setText(tiendaSelec.getPais());
         
-        tablaTiendaSelec.setItems(listaTiendaSelec);
+        //para el horario:
+        Map<String, Map<String, String>> horarios = new LinkedHashMap<>();
+        Map<String, String> horarioL = new LinkedHashMap<>();
+        String sumHorarioL = horarioL.get("apertura")+" : "+horarioL.get("cierre");
+        //horarios.get("lunes").get("apertura");
+        System.out.println("horario "+sumHorarioL);
 
-        columnIdTiendaSelec.setCellValueFactory(new PropertyValueFactory<>("id_tienda"));
-        columnNombreTiendaSelec.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-        columnCiudadTiendaSelec.setCellValueFactory(new PropertyValueFactory<>("tipo"));
-        columnDirTiendaSelec.setCellValueFactory(new PropertyValueFactory<>("direccion"));
-        columnHorarioTiendaSelec.setCellValueFactory(new PropertyValueFactory<>("horario"));
-        columnPaisTiendaSelec.setCellValueFactory(new PropertyValueFactory<>("pais"));
-        columnTelTiendaSelec.setCellValueFactory(new PropertyValueFactory<>("telefono"));
-        columnTipoTiendaSelec.setCellValueFactory(new PropertyValueFactory<>("tipo"));
+        HorarioAlmacen horario = new HorarioAlmacen(horarios);
+        ObservableList<HorarioAlmacen> listaHorarios = FXCollections.observableArrayList();
+        listaHorarios.add(horario);
+
+        columnLHorarioTiendaSelec.setCellValueFactory(new PropertyValueFactory<>("lunes"));
+        columnMHorarioTiendaSelec.setCellValueFactory(new PropertyValueFactory<>("martes"));
+        columnXHorarioTiendaSelec.setCellValueFactory(new PropertyValueFactory<>("miercoles"));
+        columnJHorarioTiendaSelec.setCellValueFactory(new PropertyValueFactory<>("jueves"));
+        columnVHorarioTiendaSelec.setCellValueFactory(new PropertyValueFactory<>("viernes"));
+        columnSHorarioTiendaelec.setCellValueFactory(new PropertyValueFactory<>("sabado"));
+        columnDHorarioTiendaSelec.setCellValueFactory(new PropertyValueFactory<>("domingo"));
+
+        tablaHorarioTiendaSelec.setItems(listaHorarios);
+        
+       
     }
     private void rellenarProductosTiendaSelec(String idTienda) {
         listaProductos.clear();
@@ -1347,7 +1364,7 @@ public class ControladorIndex implements Initializable {
     
     
 
-    
+    ArrayList<GraphicValidationDecoration> decoradores;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //cargar los idiomas
@@ -1356,6 +1373,73 @@ public class ControladorIndex implements Initializable {
         btnCambioIdioma.setOnAction(e -> cambiarIdioma());
         
         setearPaneInicio();
+        
+        
+        //validadores = new ArrayList<>();
+        //decoradores = new ArrayList<>();
+        //comprobarValidacionesAñAlmacen();
+        //validadores.addAll(Arrays.asList(nombreAl, dirAl, paisAl, ciudadAl, telAl, capTotalAl, idTiendaAl));
+        System.out.println("111 .  "+validadores);
+        
+        /*
+        for (ValidationSupport validador : validadores){
+            System.out.println("1validadores "+validadores);
+            GraphicValidationDecoration decorador = new GraphicValidationDecoration() {
+                @Override
+                public void applyValidationDecoration(ValidationMessage message) {
+                    super.applyValidationDecoration(message);
+                    System.out.println("Mensaje:" + message);
+                    if (message.getSeverity() == Severity.ERROR || message.getSeverity() == Severity.WARNING) {
+                        
+                        /*
+                        if(validador.equals(nombreAl)){
+                            iconoValiNombreAñAlmacen.setGraphic(usarIcono(false));
+                        }
+                        
+                        
+                        iconoValiDirAñAlmacen.setGraphic(usarIcono(false));
+
+                        iconoValiPaisAñAlmacen.setGraphic(usarIcono(false));
+                        iconoValiCiudaadAñAlmacen.setGraphic(usarIcono(false));
+                        iconoValiTelAñAlmacen.setGraphic(usarIcono(false));
+                        iconoValiCapTotalAñAlmacen.setGraphic(usarIcono(false));
+                        iconoValiIdTiendaAñAlmacen.setGraphic(usarIcono(false));
+                        iconoValiHorarioAñAlmacen.setGraphic(usarIcono(false));
+
+                     
+
+                    } else if (message.getSeverity() == Severity.INFO) {
+
+                        // Añadir almacen
+                        iconoValiNombreAñAlmacen.setGraphic(usarIcono(true));
+                        /*
+                        iconoValiDirAñAlmacen.setGraphic(usarIcono(true));
+                        iconoValiPaisAñAlmacen.setGraphic(usarIcono(true));
+                        iconoValiCiudaadAñAlmacen.setGraphic(usarIcono(true));
+                        iconoValiTelAñAlmacen.setGraphic(usarIcono(true));
+                        iconoValiCapTotalAñAlmacen.setGraphic(usarIcono(true));
+                        iconoValiIdTiendaAñAlmacen.setGraphic(usarIcono(true));
+                        iconoValiHorarioAñAlmacen.setGraphic(usarIcono(true));
+                        
+
+                    }
+                }
+                
+            };
+            
+            decoradores.add(decorador);
+            //}
+            Platform.runLater(() -> {
+                for (int i = 0; i < validadores.size(); i++) {
+                    validadores.get(i).setValidationDecorator(decoradores.get(i));
+                    validadores.get(i).initInitialDecoration();
+                    System.out.println("validadores "+validadores.get(i));
+                    System.out.println("decoradores validadores "+decoradores.get(i));
+                }
+            });
+        */
+                
+        //decoradores.addAll(Arrays.asList(decoradorNombre, decoradorDir));
         
        
         try {
@@ -1649,6 +1733,192 @@ public class ControladorIndex implements Initializable {
         return String.format("%s001", prefijo);
     }
     
+    private void añadirProducto(String nombre, String imagen, Enum tipo, Enum subtipoRopa, Enum subtipoAccesorios, Enum talla, 
+        double precio, int stock, String idTienda, String idAlmacen) {
+        if (conexion != null) {
+            //valores por defecto
+            String nuevoIdProducto = obtenerUltimoId("productos", "id_producto");
+            int capacidadOcupada = 0;
+            
+            String query = "INSERT INTO productos (nombre, imagen, tipo, subtipo_ropa, subtipo_accesorios, talla, precio, stock, id_tienda, id_almacen) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            
+            try {
+
+                PreparedStatement ps = conexion.prepareStatement(query);
+                
+                ps.setString(1, nuevoIdProducto);
+                ps.setString(2, nombre);
+                // .name() recoge lo selec devolviendolo como un string para q lo coja
+                ps.setString(3, tipo.name());
+                ps.setString(4, subtipoRopa.name());
+                ps.setString(5, subtipoAccesorios.name());
+                ps.setString(6, talla.name());
+                ps.setDouble(7, precio);
+                ps.setInt(8, stock);
+                ps.setString(9, idTienda);
+                ps.setString(10, idAlmacen);
+
+                int rowsInserted = ps.executeUpdate();
+
+                //? cambiar texto segun idioma
+                if (rowsInserted > 0) {
+                    System.out.println("Producto añadido!");
+                    mostrarAlerta(Alert.AlertType.INFORMATION, "Operacion exitosa", "Producto añadido! :)");
+                } else {
+                    System.err.println("No se ha añadido el producto");
+                    mostrarAlerta(Alert.AlertType.ERROR, "Error", "No se ha podido añadir el producto :(");
+                }
+                
+            } catch (SQLException e) {
+                System.err.println("--error añadir producto: " + e.getMessage());
+                mostrarAlerta(Alert.AlertType.ERROR, "Error", "No se ha podido añadir el producto, revisa los campos" + e.getMessage());
+            }
+            
+        } else {
+            System.err.println("No se pudo conectar a la base de datos");
+        }
+    }
+    private void editarProducto(String idProducto, String nombre, String imagen, Enum tipo, Enum subtipoRopa, Enum subtipoAccesorios, Enum talla, 
+                            double precio, int stock, String idTienda, String idAlmacen) {
+        if (conexion != null) {
+      
+            String query = "UPDATE productos " +
+                       "SET nombre = ?, imagen = ?, tipo = ?, subtipo_ropa = ?, subtipo_accesorios = ?, talla = ?, precio = ?, stock = ? " +
+                       "WHERE id_producto = ? AND id_tienda = ? AND id_almacen = ?";
+
+            
+            try {
+
+                PreparedStatement ps = conexion.prepareStatement(query);
+
+                ps.setString(1, nombre);
+                ps.setString(2, imagen);
+                // .name() recoge lo selec devolviendolo como un string para q lo coja
+                ps.setString(3, tipo.name());
+                ps.setString(4, subtipoRopa.name());
+                ps.setString(5, subtipoAccesorios.name());
+                ps.setString(6, talla.name());
+                ps.setDouble(7, precio);
+                ps.setInt(8, stock);
+                ps.setString(9, idProducto);
+                ps.setString(10, idTienda);
+                ps.setString(11, idAlmacen);
+
+
+                int rowsInserted = ps.executeUpdate();
+
+                //? cambiar texto segun idioma
+                if (rowsInserted > 0) {
+                    System.out.println("Producto editado!");
+                    mostrarAlerta(Alert.AlertType.INFORMATION, "Operacion exitosa", "Producto editado! :)");
+                } else {
+                    System.err.println("No se ha editar el producto");
+                    mostrarAlerta(Alert.AlertType.ERROR, "Error", "No se ha podido editar el producto :(");
+                }
+                
+            } catch (SQLException e) {
+                System.err.println("--error editar producto: " + e.getMessage());
+                mostrarAlerta(Alert.AlertType.ERROR, "Error", "No se ha podido editar el producto, revisa los campos" + e.getMessage());
+            }
+            
+        } else {
+            System.err.println("No se pudo conectar a la base de datos");
+        }
+    }
+    
+    
+    private void añadirTienda(String idTienda, String nombre, String tipo, String direccion, String ciudad, String pais, int telefono, 
+                           Map<String, Map<String, String>> horario) {
+        if (conexion != null) {
+            //valores por defecto
+            String nuevoIdAlmacen = obtenerUltimoId("tiendas", "id_tienda");
+            
+            String query = "INSERT INTO tienda (id_tienda, nombre, tipo, direccion, ciudad, pais, telefono, horario) " +
+                           "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            
+            try {
+                //convertir el mapa de horario a JSON
+                String horarioJson = null;
+                if (horario != null && !horario.isEmpty()) {
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    horarioJson = objectMapper.writeValueAsString(horario);
+                }
+
+                PreparedStatement ps = conexion.prepareStatement(query);
+                ps.setString(1, idTienda);
+                ps.setString(2, nombre);
+                ps.setString(3, tipo);
+                ps.setString(4, direccion);
+                ps.setString(5, ciudad);
+                ps.setString(6, pais);
+                ps.setInt(7, telefono);
+                ps.setString(8, horarioJson);
+             
+
+                int rowsInserted = ps.executeUpdate();
+
+                //? cambiar texto segun idioma
+                if (rowsInserted > 0) {
+                    System.out.println("Tienda añadida!");
+                    mostrarAlerta(Alert.AlertType.INFORMATION, "Operacion exitosa", "Tienda añadida! :)");
+                } else {
+                    System.err.println("No se ha añadida la tienda");
+                    mostrarAlerta(Alert.AlertType.ERROR, "Error", "No se ha podido añadir la tienda :(");
+                }
+                
+            } catch (SQLException | JsonProcessingException e) {
+                System.err.println("--error añadir tienda: " + e.getMessage());
+                mostrarAlerta(Alert.AlertType.ERROR, "Error", "No se ha podido añadir la tienda, revisa los campos" + e.getMessage());
+            }
+            
+        } else {
+            System.err.println("No se pudo conectar a la base de datos");
+        }
+    }
+    private void editarTienda(String idTienda, String nombre, String direccion, String ciudad, String pais, int telefono, 
+                           Map<String, Map<String, String>> horario) {
+        if (conexion != null) {
+      
+            String query = "UPDATE tiendas SET nombre = ?, direccion = ?, ciudad = ?, pais = ?, telefono = ?, horario = ? WHERE id_tienda = ?";
+            
+            try {
+                //convertir el mapa de horario a JSON
+                String horarioJson = null;
+                if (horario != null && !horario.isEmpty()) {
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    horarioJson = objectMapper.writeValueAsString(horario);
+                }
+
+                PreparedStatement ps = conexion.prepareStatement(query);
+
+                ps.setString(1, nombre);
+                ps.setString(2, direccion);
+                ps.setString(3, ciudad);
+                ps.setString(4, pais);
+                ps.setInt(5, telefono);
+                ps.setString(6, horarioJson);
+                ps.setString(7, idTienda);
+
+                int rowsInserted = ps.executeUpdate();
+
+                //? cambiar texto segun idioma
+                if (rowsInserted > 0) {
+                    System.out.println("Tienda editada!");
+                    mostrarAlerta(Alert.AlertType.INFORMATION, "Operacion exitosa", "Tienda editada! :)");
+                } else {
+                    System.err.println("No se ha añadido la tienda");
+                    mostrarAlerta(Alert.AlertType.ERROR, "Error", "No se ha podido editar la tienda :(");
+                }
+                
+            } catch (SQLException | JsonProcessingException e) {
+                System.err.println("--error añadir tienda: " + e.getMessage());
+                mostrarAlerta(Alert.AlertType.ERROR, "Error", "No se ha podido editar la tienda, revisa los campos" + e.getMessage());
+            }
+            
+        } else {
+            System.err.println("No se pudo conectar a la base de datos");
+        }
+    }
     private boolean borrarTienda(String idTienda) {
         if (conexion != null) {
             String query = "DELETE FROM tiendas WHERE id_tienda = ?";
@@ -1805,7 +2075,7 @@ public class ControladorIndex implements Initializable {
     }
     
     
-    ArrayList<ValidationSupport> validadores;
+    
     //Validaciones:
     public ImageView usarIcono(boolean valido){
         ImageView iconoOk = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream("iconos/ok_icon.png")));
@@ -1822,45 +2092,9 @@ public class ControladorIndex implements Initializable {
         }
     }
 
+    ArrayList<ValidationSupport> validadores;
     public void comprobarValidacionesAñAlmacen(){
     
-        GraphicValidationDecoration decorador = new GraphicValidationDecoration() {
-            @Override
-            public void applyValidationDecoration(ValidationMessage message) {
-                super.applyValidationDecoration(message);
-                System.out.println("Mensaje:" + message);
-                if (message.getSeverity() == Severity.ERROR || message.getSeverity() == Severity.WARNING) {
-                   
-                    // Añadir almacen
-                    iconoValiNombreAñAlmacen.setGraphic(usarIcono(false));
-                    iconoValiDirAñAlmacen.setGraphic(usarIcono(false));
-                    iconoValiPaisAñAlmacen.setGraphic(usarIcono(false));
-                    iconoValiCiudaadAñAlmacen.setGraphic(usarIcono(false));
-                    iconoValiTelAñAlmacen.setGraphic(usarIcono(false));
-                    iconoValiCapTotalAñAlmacen.setGraphic(usarIcono(false));
-                    iconoValiIdTiendaAñAlmacen.setGraphic(usarIcono(false));
-                    iconoValiHorarioAñAlmacen.setGraphic(usarIcono(false));
-                    
-                    
-                           
-                    
-                } else if (message.getSeverity() == Severity.INFO) {
-              
-                    // Añadir almacen
-                    iconoValiNombreAñAlmacen.setGraphic(usarIcono(true));
-                    iconoValiDirAñAlmacen.setGraphic(usarIcono(true));
-                    iconoValiPaisAñAlmacen.setGraphic(usarIcono(true));
-                    iconoValiCiudaadAñAlmacen.setGraphic(usarIcono(true));
-                    iconoValiTelAñAlmacen.setGraphic(usarIcono(true));
-                    iconoValiCapTotalAñAlmacen.setGraphic(usarIcono(true));
-                    iconoValiIdTiendaAñAlmacen.setGraphic(usarIcono(true));
-                    iconoValiHorarioAñAlmacen.setGraphic(usarIcono(true));
-                }
-            }
-        };
-               
-        
-        
         ValidationSupport nombreAl = new ValidationSupport();
         Validator<String> nombreVal = (Control c, String texto) -> {
             if (texto == null || texto.isEmpty()) {
@@ -1973,19 +2207,17 @@ public class ControladorIndex implements Initializable {
         
         Platform.runLater(() -> {
             for (ValidationSupport validationSupport : validadores) {
+                
+                //System.out.println("validador "+validationSupport);
                 validationSupport.initInitialDecoration();
+                //validationSupport.setValidationDecorator(decoradores);
+                //System.out.println("validador decorador   "+decoradores);
+                
             }
-            
-            nombreAl.setValidationDecorator(decorador);
-            dirAl.setValidationDecorator(decorador);
-            paisAl.setValidationDecorator(decorador);
-            ciudadAl.setValidationDecorator(decorador);
-            telAl.setValidationDecorator(decorador);
-            capTotalAl.setValidationDecorator(decorador);
-            idTiendaAl.setValidationDecorator(decorador);
-            
+            //nombreAl.setValidationDecorator(decoradorNombre);
           
         });
+        
 
     }
     
