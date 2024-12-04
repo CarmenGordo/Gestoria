@@ -129,21 +129,24 @@ public class Almacenes {
         if (horario == null || horario.isEmpty()) {
             return "No disponible";
         }
-        
+
         StringBuilder horarioString = new StringBuilder();
 
-        for (Map.Entry<String, Map<String, String>> dia : horario.entrySet()) {
-            String diaSemana = dia.getKey();
-            Map<String, String> horas = dia.getValue();
-            String apertura = horas.get("apertura");
-            String cierre = horas.get("cierre");
+        String[] diasSemana = {"lunes", "martes", "miercoles", "jueves", "viernes", "sabado", "domingo"};
+
+        for (String diaSemana : diasSemana) {
+            Map<String, String> horas = horario.get(diaSemana);  // Obtenemos las horas de cada día
+
+            // Comprobamos si tenemos datos de apertura y cierre para este día
+            String apertura = (horas != null) ? horas.get("apertura") : null;
+            String cierre = (horas != null) ? horas.get("cierre") : null;
 
             horarioString.append(ponerLetraMayus(diaSemana)).append(": ");
+
+            // Si tenemos datos de apertura y cierre, los mostramos
             if (apertura != null && cierre != null) {
                 horarioString.append(apertura).append(" - ").append(cierre);
-            } else {
-                horarioString.append("Cerrado");
-            }
+            } 
             horarioString.append(", ");
         }
 

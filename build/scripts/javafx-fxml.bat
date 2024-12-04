@@ -13,6 +13,8 @@
 @rem See the License for the specific language governing permissions and
 @rem limitations under the License.
 @rem
+@rem SPDX-License-Identifier: Apache-2.0
+@rem
 
 @if "%DEBUG%"=="" @echo off
 @rem ##########################################################################
@@ -68,7 +70,7 @@ goto fail
 :execute
 @rem Setup the command line
 
-set CLASSPATH=%APP_HOME%\lib\javafx-fxml.jar;%APP_HOME%\lib\mariadb-java-client-3.1.2.jar;%APP_HOME%\lib\logback-classic-1.2.11.jar;%APP_HOME%\lib\jackson-annotations-2.15.2.jar;%APP_HOME%\lib\jackson-core-2.15.2.jar;%APP_HOME%\lib\jackson-databind-2.15.2.jar;%APP_HOME%\lib\controlsfx-11.2.1.jar;%APP_HOME%\lib\javafx-fxml-23-mac-aarch64.jar;%APP_HOME%\lib\javafx-controls-23-mac-aarch64.jar;%APP_HOME%\lib\javafx-media-23-mac-aarch64.jar;%APP_HOME%\lib\javafx-swing-23-mac-aarch64.jar;%APP_HOME%\lib\javafx-graphics-23-mac-aarch64.jar;%APP_HOME%\lib\javafx-base-23-mac-aarch64.jar;%APP_HOME%\lib\waffle-jna-3.2.0.jar;%APP_HOME%\lib\logback-core-1.2.11.jar;%APP_HOME%\lib\jcl-over-slf4j-1.7.36.jar;%APP_HOME%\lib\slf4j-api-1.7.36.jar;%APP_HOME%\lib\jna-platform-5.12.1.jar;%APP_HOME%\lib\jna-5.12.1.jar;%APP_HOME%\lib\caffeine-2.9.3.jar;%APP_HOME%\lib\checker-qual-3.23.0.jar;%APP_HOME%\lib\error_prone_annotations-2.10.0.jar
+set CLASSPATH=%APP_HOME%\lib\javafx-fxml.jar;%APP_HOME%\lib\mariadb-java-client-3.1.2.jar;%APP_HOME%\lib\logback-classic-1.2.11.jar;%APP_HOME%\lib\jackson-annotations-2.15.2.jar;%APP_HOME%\lib\jackson-core-2.15.2.jar;%APP_HOME%\lib\jackson-databind-2.15.2.jar;%APP_HOME%\lib\controlsfx-11.2.1.jar;%APP_HOME%\lib\tilesfx-11.48.jar;%APP_HOME%\lib\javafx-fxml-23-mac-aarch64.jar;%APP_HOME%\lib\javafx-web-23-mac-aarch64.jar;%APP_HOME%\lib\javafx-controls-23-mac-aarch64.jar;%APP_HOME%\lib\javafx-media-23-mac-aarch64.jar;%APP_HOME%\lib\javafx-swing-23-mac-aarch64.jar;%APP_HOME%\lib\javafx-graphics-23-mac-aarch64.jar;%APP_HOME%\lib\javafx-base-23-mac-aarch64.jar;%APP_HOME%\lib\waffle-jna-3.2.0.jar;%APP_HOME%\lib\logback-core-1.2.11.jar;%APP_HOME%\lib\jcl-over-slf4j-1.7.36.jar;%APP_HOME%\lib\slf4j-api-1.7.36.jar;%APP_HOME%\lib\jna-platform-5.12.1.jar;%APP_HOME%\lib\jna-5.12.1.jar;%APP_HOME%\lib\caffeine-2.9.3.jar;%APP_HOME%\lib\checker-qual-3.23.0.jar;%APP_HOME%\lib\error_prone_annotations-2.10.0.jar
 
 
 @rem Execute javafx-fxml

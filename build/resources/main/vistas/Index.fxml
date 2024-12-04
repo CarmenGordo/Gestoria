@@ -520,6 +520,226 @@
                         </TabPane>
                      </children>
                   </Pane>
+                  <Pane fx:id="paneAñadirTienda" prefHeight="396.0" prefWidth="650.0" visible="false">
+                     <children>
+                        <TabPane prefHeight="396.0" prefWidth="650.0" tabClosingPolicy="UNAVAILABLE">
+                           <tabs>
+                              <Tab fx:id="tabAñTienda" text="Tiendas">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <FlowPane layoutX="8.0" layoutY="9.0" prefHeight="348.0" prefWidth="628.0">
+                                             <children>
+                                                <HBox prefHeight="184.0" prefWidth="577.0">
+                                                   <children>
+                                                      <VBox prefHeight="210.0" prefWidth="422.0">
+                                                         <children>
+                                                            <HBox alignment="BASELINE_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="332.0" spacing="5">
+                                                               <children>
+                                                                  <Label fx:id="labelNombreAñTienda" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="115.0" text="Nombre:" />
+                                                                  <TextField fx:id="textNombreAñTienda" prefHeight="25.0" prefWidth="137.0" />
+                                                                  <Label fx:id="iconoValiNombreAñTienda" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="9.0" />
+                                                               </children>
+                                                            </HBox>
+                                                            <HBox alignment="BASELINE_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="334.0" spacing="5">
+                                                               <children>
+                                                                  <Label fx:id="labelTipoAñTienda" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="114.0" text="Tipo:" />
+                                                                  <ComboBox fx:id="comboBoxTipoAñTienda" prefHeight="25.0" prefWidth="137.0" />
+                                                                  <Label fx:id="iconoValiTipoAñTienda" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="7.0" />
+                                                               </children>
+                                                            </HBox>
+                                                            <HBox alignment="BASELINE_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="333.0" spacing="5">
+                                                               <children>
+                                                                  <Label fx:id="labelDirAñTienda" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="115.0" text="Direccion: " />
+                                                                  <TextField fx:id="textDirAñTienda" prefHeight="25.0" prefWidth="137.0" />
+                                                                  <Label fx:id="iconoValiDirAñTienda" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="10.0" />
+                                                               </children>
+                                                            </HBox>
+                                                            <HBox alignment="BASELINE_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="334.0" spacing="5">
+                                                               <children>
+                                                                  <Label fx:id="labelPaisAñTienda" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="114.0" text="Pais:" />
+                                                                  <ComboBox fx:id="comboBoxPaisAñTienda" prefHeight="25.0" prefWidth="137.0" />
+                                                                  <Label fx:id="iconoValiPaisAñTienda" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="7.0" />
+                                                               </children>
+                                                            </HBox>
+                                                            <HBox alignment="BASELINE_LEFT" prefHeight="25.0" spacing="5">
+                                                               <children>
+                                                                  <Label fx:id="labelCiudadAñTienda" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="114.0" text="Ciudad:" />
+                                                                  <ComboBox fx:id="comboBoxCiudadAñTienda" prefHeight="25.0" prefWidth="137.0" />
+                                                                  <Label fx:id="iconoValiCiudaadAñTienda" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="6.0" />
+                                                               </children>
+                                                               <VBox.margin>
+                                                                  <Insets bottom="5.0" top="5.0" />
+                                                               </VBox.margin>
+                                                            </HBox>
+                                                            <HBox alignment="BASELINE_LEFT" prefHeight="25.0" spacing="5">
+                                                               <children>
+                                                                  <Label fx:id="labelTelAñTienda" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="114.0" text="Telefono:" />
+                                                                  <TextField fx:id="textTelAñTienda" prefHeight="25.0" prefWidth="137.0" />
+                                                                  <Label fx:id="iconoValiTelAñTienda" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="5.0" />
+                                                               </children>
+                                                            </HBox>
+                                                         </children>
+                                                      </VBox>
+                                                      
+                                                   </children>
+                                                </HBox>
+                                                <VBox prefHeight="113.0" prefWidth="633.0">
+                                                   <children>
+                                                      <HBox prefHeight="100.0" prefWidth="200.0">
+                                                         <children>
+                                                            <Label fx:id="labelHorarioAñTienda" text="Horario:" />
+                                                            <Label fx:id="iconoValiHorarioAñTienda">
+                                                               <HBox.margin>
+                                                                  <Insets left="5.0" />
+                                                               </HBox.margin>
+                                                            </Label>
+                                                         </children>
+                                                      </HBox>
+                                                      <HBox fx:id="tablaHorarioAñTienda" prefHeight="100.0" prefWidth="200.0">
+                                                         <children>
+                                                            <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="96.0" prefWidth="51.0">
+                                                               <children>
+                                                                  <Label text="Apertura:" />
+                                                                  <Label text="Cierre:">
+                                                                     <padding>
+                                                                        <Insets top="20.0" />
+                                                                     </padding>
+                                                                  </Label>
+                                                               </children>
+                                                            </VBox>
+                                                            <VBox fx:id="columnLHorarioAñTienda" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="96.0" prefWidth="78.0">
+                                                               <children>
+                                                                  <Label text="Lunes" />
+                                                                  <TextField fx:id="textAperLHorarioAñTienda" />
+                                                                  <TextField fx:id="textCieLHorarioAñTienda">
+                                                                     <VBox.margin>
+                                                                        <Insets top="15.0" />
+                                                                     </VBox.margin>
+                                                                  </TextField>
+                                                               </children>
+                                                               <HBox.margin>
+                                                                  <Insets left="5.0" />
+                                                               </HBox.margin>
+                                                            </VBox>
+                                                            <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="96.0" prefWidth="78.0">
+                                                               <children>
+                                                                  <Label text="Martes" />
+                                                                  <TextField fx:id="textAperMHorarioAñTienda" />
+                                                                  <TextField fx:id="textCieMHorarioAñTienda">
+                                                                     <VBox.margin>
+                                                                        <Insets top="15.0" />
+                                                                     </VBox.margin>
+                                                                  </TextField>
+                                                               </children>
+                                                               <HBox.margin>
+                                                                  <Insets left="5.0" />
+                                                               </HBox.margin>
+                                                            </VBox>
+                                                            <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="96.0" prefWidth="78.0">
+                                                               <children>
+                                                                  <Label text="Miercoles" />
+                                                                  <TextField fx:id="textAperXHorarioAñTienda" />
+                                                                  <TextField fx:id="textCieXHorarioAñTienda">
+                                                                     <VBox.margin>
+                                                                        <Insets top="15.0" />
+                                                                     </VBox.margin>
+                                                                  </TextField>
+                                                               </children>
+                                                               <HBox.margin>
+                                                                  <Insets left="5.0" />
+                                                               </HBox.margin>
+                                                            </VBox>
+                                                            <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="96.0" prefWidth="78.0">
+                                                               <children>
+                                                                  <Label text="Jueves" />
+                                                                  <TextField fx:id="textAperJHorarioAñTienda" />
+                                                                  <TextField fx:id="textCieJHorarioAñTienda">
+                                                                     <VBox.margin>
+                                                                        <Insets top="15.0" />
+                                                                     </VBox.margin>
+                                                                  </TextField>
+                                                               </children>
+                                                               <HBox.margin>
+                                                                  <Insets left="5.0" />
+                                                               </HBox.margin>
+                                                            </VBox>
+                                                            <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="96.0" prefWidth="78.0">
+                                                               <children>
+                                                                  <Label text="Viernes" />
+                                                                  <TextField fx:id="textAperVHorarioAñTienda" />
+                                                                  <TextField fx:id="textCieVHorarioAñTienda">
+                                                                     <VBox.margin>
+                                                                        <Insets top="15.0" />
+                                                                     </VBox.margin>
+                                                                  </TextField>
+                                                               </children>
+                                                               <HBox.margin>
+                                                                  <Insets left="5.0" />
+                                                               </HBox.margin>
+                                                            </VBox>
+                                                            <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="96.0" prefWidth="78.0">
+                                                               <children>
+                                                                  <Label text="Sabado" />
+                                                                  <TextField fx:id="textAperSHorarioAñTienda" />
+                                                                  <TextField fx:id="textCieSHorarioAñTienda">
+                                                                     <VBox.margin>
+                                                                        <Insets top="15.0" />
+                                                                     </VBox.margin>
+                                                                  </TextField>
+                                                               </children>
+                                                               <HBox.margin>
+                                                                  <Insets left="5.0" />
+                                                               </HBox.margin>
+                                                            </VBox>
+                                                            <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="96.0" prefWidth="78.0">
+                                                               <children>
+                                                                  <Label text="Domingo" />
+                                                                  <TextField fx:id="textAperDHorarioAñTienda" />
+                                                                  <TextField fx:id="textCieDHorarioAñTienda">
+                                                                     <VBox.margin>
+                                                                        <Insets top="15.0" />
+                                                                     </VBox.margin>
+                                                                  </TextField>
+                                                               </children>
+                                                               <HBox.margin>
+                                                                  <Insets left="5.0" />
+                                                               </HBox.margin>
+                                                            </VBox>
+                                                         </children>
+                                                      </HBox>
+                                                   </children>
+                                                </VBox>
+                                                <HBox fx:id="footerAñTienda" alignment="CENTER" prefHeight="51.0" prefWidth="632.0">
+                                                   <children>
+                                                      <Button fx:id="btnAceptarAñTienda" mnemonicParsing="false" onAction="#aceptarAñTienda" text="Aceptar Añ" />
+                                                      <Button fx:id="btnCancelarAñTienda" mnemonicParsing="false" onAction="#cancelarAñTienda" text="Cancelar Añ">
+                                                         <HBox.margin>
+                                                            <Insets left="15.0" />
+                                                         </HBox.margin>
+                                                      </Button>
+                                                   </children>
+                                                </HBox>
+                                                <HBox fx:id="footerEdTienda" alignment="CENTER" prefHeight="51.0" prefWidth="632.0">
+                                                   <children>
+                                                      <Button fx:id="btnAceptarEdTienda" mnemonicParsing="false" onAction="#aceptarEdTienda" text="Aceptar Ed" />
+                                                      <Button fx:id="btnCancelarEdTienda" mnemonicParsing="false" onAction="#cancelarEdTienda" text="Cancelar Ed">
+                                                         <HBox.margin>
+                                                            <Insets left="15.0" />
+                                                         </HBox.margin>
+                                                      </Button>
+                                                   </children>
+                                                </HBox>
+                                             </children>
+                                          </FlowPane>
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                              </Tab>
+                           </tabs>
+                        </TabPane>
+                     </children>
+                  </Pane>
                   <Pane fx:id="paneContenidoListaAlmacenes" prefHeight="91.0" prefWidth="650.0" visible="false">
                      <children>
                         <TabPane prefHeight="396.0" prefWidth="650.0" tabClosingPolicy="UNAVAILABLE">
@@ -549,7 +769,7 @@
                         </TabPane>
                      </children>
                   </Pane>
-                  <Pane fx:id="paneContenidoAlmacenSelec" prefHeight="396.0" prefWidth="650.0">
+                  <Pane fx:id="paneContenidoAlmacenSelec" prefHeight="396.0" prefWidth="650.0" visible="false">
                      <children>
                         <TabPane prefHeight="396.0" prefWidth="650.0" tabClosingPolicy="UNAVAILABLE">
                            <tabs>
@@ -743,9 +963,8 @@
                                                             </HBox>
                                                          </children>
                                                       </VBox>
-                                                      <VBox alignment="top_left" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="177.0" prefWidth="247.0" spacing="10">
+                                                      <VBox fx:id="barraProgresoAñAlmacen" alignment="top_left" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="177.0" prefWidth="247.0" spacing="10">
                                                          <children>
-                                                            <Canvas fx:id="barraCapacidadAñAlmacen" height="176.0" style="-fx-background-color: D9D9D9;" width="212.0" />
                                                             <Region prefHeight="6.0" prefWidth="541.0" />
                                                          </children>
                                                       </VBox>

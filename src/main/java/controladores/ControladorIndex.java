@@ -2,6 +2,8 @@ package controladores;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import eu.hansolo.tilesfx.Tile;
+import eu.hansolo.tilesfx.TileBuilder;
 import java.awt.Color;
 import java.io.File;
 
@@ -89,7 +91,7 @@ public class ControladorIndex implements Initializable {
     
     //? cambiar a libreria para conseguir paises y ciudade     
     //PARA MAPA VISUAL MIRAR: mapa control fx
-    ObservableList<String> ciudadesEspaña = FXCollections.observableArrayList("","Sevilla", "Málaga", "Granada", "Córdoba", "Almería", "Cádiz","Jaén", "Huelva","Zaragoza", "Huesca", "Teruel","Oviedo", "Gijón", "Avilés","Santander","Toledo", "Albacete", "Ciudad Real","Guadalajara", "Cuenca","Barcelona");
+    ObservableList<String> ciudadesEs = FXCollections.observableArrayList("","Sevilla", "Málaga", "Granada", "Córdoba", "Almería", "Cádiz","Jaén", "Huelva","Zaragoza", "Huesca", "Teruel","Oviedo", "Gijón", "Avilés","Santander","Toledo", "Albacete", "Ciudad Real","Guadalajara", "Cuenca","Barcelona");
     ObservableList<String> paisesEu = FXCollections.observableArrayList("","España", "Francia", "Alemania", "Italia", "Portugal", "Reino Unido", "Irlanda","Suecia");
     
     
@@ -119,6 +121,8 @@ public class ControladorIndex implements Initializable {
     private Pane paneContenidoListaTiendas;
     @FXML
     private Pane paneContenidoTiendaSelec;
+    @FXML
+    private Pane paneAñadirTienda;
     @FXML
     private Pane paneContenidoListaAlmacenes;
     @FXML
@@ -590,8 +594,65 @@ public class ControladorIndex implements Initializable {
   
    
     
-    //elementos de tiendas:
-    //elementos de almacenes:
+    //elementos de añadir tiendas:
+    @FXML
+    private TextField textNombreAñTienda;
+    @FXML
+    private Label iconoValiNombreAñTienda;
+    @FXML
+    private ComboBox comboBoxTipoAñTienda;
+    @FXML
+    private Label iconoValiTipoAñTienda;
+    @FXML
+    private TextField textDirAñTienda;
+    @FXML
+    private Label iconoValiDirAñTienda;
+    @FXML
+    private ComboBox<String> comboBoxPaisAñTienda;
+    @FXML
+    private Label iconoValiPaisAñTienda;
+    @FXML
+    private ComboBox<String> comboBoxCiudadAñTienda;
+    @FXML
+    private Label iconoValiCiudaadAñTienda;
+    @FXML
+    private TextField textTelAñTienda;
+    @FXML
+    private Label iconoValiTelAñTienda;
+    @FXML
+    private HBox tablaHorarioAñTienda;
+    @FXML
+    private Label iconoValiHorarioAñTienda;
+    @FXML
+    private TextField textAperLHorarioAñTienda;
+    @FXML
+    private TextField textCieLHorarioAñTienda;
+    @FXML
+    private TextField textAperMHorarioAñTienda;
+    @FXML
+    private TextField textCieMHorarioAñTienda;
+    @FXML
+    private TextField textAperXHorarioAñTienda;
+    @FXML
+    private TextField textCieXHorarioAñTienda;
+    @FXML
+    private TextField textAperJHorarioAñTienda;
+    @FXML
+    private TextField textCieJHorarioAñTienda;
+    @FXML
+    private TextField textAperVHorarioAñTienda;
+    @FXML
+    private TextField textCieVHorarioAñTienda;
+    @FXML
+    private TextField textAperSHorarioAñTienda;
+    @FXML
+    private TextField textCieSHorarioAñTienda;
+    @FXML
+    private TextField textAperDHorarioAñTienda;
+    @FXML
+    private TextField textCieDHorarioAñTienda;
+
+    //elementos de añadir almacenes:
     @FXML
     private TextField textNombreAñAlmacen;
     @FXML
@@ -653,9 +714,11 @@ public class ControladorIndex implements Initializable {
     @FXML
     private TextField textCieDHorarioAñAlmacen;
     @FXML
+    private VBox barraProgresoAñAlmacen;
+  
+    @FXML
     private void añadir(){
         limpiarPaneAñAlmacen();
-        //tablaListaAlmacenes.getSelectionModel().clearSelection();
 
         if (paneContenidoListaProductos.isVisible() || paneContenidoProductoSelec.isVisible()) {
             mostrarPane(paneAñadirProducto);
@@ -691,27 +754,40 @@ public class ControladorIndex implements Initializable {
             //comprobarValidacionesAñProducto();
             
         }else if (paneContenidoListaTiendas.isVisible() || paneContenidoTiendaSelec.isVisible()){
-            //mostrarPane(paneAñadirTienda);
+            mostrarPane(paneAñadirTienda);
+            footerAñTienda.setVisible(true);
+            footerEdTienda.setVisible(false);
+            
+            ObservableList<Tiendas.TipoTienda> opcTipo = FXCollections.observableArrayList(Tiendas.TipoTienda.values());
+            comboBoxTipoAñTienda.setItems(opcTipo);
+            comboBoxCiudadAñTienda.getItems().addAll(ciudadesEs);
+            comboBoxCiudadAñTienda.getSelectionModel().selectFirst();
+            comboBoxPaisAñTienda.getItems().addAll(paisesEu);
+            comboBoxPaisAñTienda.getSelectionModel().selectFirst();
+            
+            comprobarValidacionesAñTienda();
+            
             
         }else if (paneContenidoListaAlmacenes.isVisible() || paneContenidoAlmacenSelec.isVisible()){
             mostrarPane(paneAñadirAlmacen);
             footerAñAlmacen.setVisible(true);
             footerEdAlmacen.setVisible(false);
             
-            comboBoxCiudadAñAlmacen.getItems().addAll(ciudadesEspaña);
+            comboBoxCiudadAñAlmacen.getItems().addAll(ciudadesEs);
             comboBoxCiudadAñAlmacen.getSelectionModel().selectFirst();
             comboBoxPaisAñAlmacen.getItems().addAll(paisesEu);
             comboBoxPaisAñAlmacen.getSelectionModel().selectFirst();
-            
-            
-            comprobarValidacionesAñAlmacen();
-            
+    
+
+            comprobarValidacionesAñAlmacen(); 
         }
         
     }
     
     //Recoger todo el horario:
-    private Map<String, String> obtenerHorarioDia(TextField aperturaField, TextField cierreField) {
+    
+    private Map<String, String> obtenerHorarioDia(TextField aperturaField, TextField cierreField, Map<String, String> horarioDia) {
+        /*
         //LinkedHashMap mejor q map porque este mantiene el orden
         Map<String, String> horarioDia = new LinkedHashMap<>();
 
@@ -729,21 +805,89 @@ public class ControladorIndex implements Initializable {
         horarioDia.put("cierre", cierre);
 
         return horarioDia;
+*/
+        String apertura = aperturaField.getText();
+        String cierre = cierreField.getText();
+
+        // Si los campos están vacíos y ya tenemos datos de la base de datos, no los sobrescribimos
+        if (apertura.isEmpty()) {
+            apertura = horarioDia != null && horarioDia.containsKey("apertura") ? horarioDia.get("apertura") : "obtenerHorarioDia a";
+        }
+        if (cierre.isEmpty()) {
+            cierre = horarioDia != null && horarioDia.containsKey("cierre") ? horarioDia.get("cierre") : "obtenerHorarioDia c";
+        }
+
+        // Guardamos los valores de apertura y cierre
+        Map<String, String> horarioDiaModificado = new LinkedHashMap<>();
+        horarioDiaModificado.put("apertura", apertura);
+        horarioDiaModificado.put("cierre", cierre);
+
+        return horarioDiaModificado;
     }
     private Map<String, Map<String, String>> recogerHorario(){
         Map<String, Map<String, String>> horario = new LinkedHashMap<>();
   
-        horario.put("lunes", obtenerHorarioDia(textAperLHorarioAñAlmacen, textCieLHorarioAñAlmacen));
-        horario.put("martes", obtenerHorarioDia(textAperMHorarioAñAlmacen, textCieMHorarioAñAlmacen));
-        horario.put("miércoles", obtenerHorarioDia(textAperXHorarioAñAlmacen, textCieXHorarioAñAlmacen));
-        horario.put("jueves", obtenerHorarioDia(textAperJHorarioAñAlmacen, textCieJHorarioAñAlmacen));
-        horario.put("viernes", obtenerHorarioDia(textAperVHorarioAñAlmacen, textCieVHorarioAñAlmacen));
-        horario.put("sábado", obtenerHorarioDia(textAperSHorarioAñAlmacen, textCieSHorarioAñAlmacen));
-        horario.put("domingo", obtenerHorarioDia(textAperDHorarioAñAlmacen, textCieDHorarioAñAlmacen));
+        horario.put("lunes", obtenerHorarioDia(textAperLHorarioAñAlmacen, textCieLHorarioAñAlmacen, horario.get("lunes")));
+        horario.put("martes", obtenerHorarioDia(textAperMHorarioAñAlmacen, textCieMHorarioAñAlmacen, horario.get("martes")));
+        horario.put("miercoles", obtenerHorarioDia(textAperXHorarioAñAlmacen, textCieXHorarioAñAlmacen, horario.get("miercoles")));
+        horario.put("jueves", obtenerHorarioDia(textAperJHorarioAñAlmacen, textCieJHorarioAñAlmacen, horario.get("jueves")));
+        horario.put("viernes", obtenerHorarioDia(textAperVHorarioAñAlmacen, textCieVHorarioAñAlmacen, horario.get("viernes")));
+        horario.put("sabado", obtenerHorarioDia(textAperSHorarioAñAlmacen, textCieSHorarioAñAlmacen, horario.get("sabado")));
+        horario.put("domingo", obtenerHorarioDia(textAperDHorarioAñAlmacen, textCieDHorarioAñAlmacen, horario.get("domingo")));
 
         return horario;
     }
     
+    
+    @FXML
+    private void aceptarAñTienda(){
+        System.out.println("Tienda añadida");
+        
+        String nombreTienda = textNombreAñTienda.getText();
+        String tipoTienda = comboBoxTipoAñTienda.getValue().toString();
+        String dirTienda = textDirAñTienda.getText();
+        String ciudadTienda = comboBoxCiudadAñTienda.getValue().toString();
+        String paisTienda = comboBoxPaisAñTienda.getValue().toString();
+        String telefonoTiendaS = textTelAñTienda.getText();
+        Map<String, Map<String, String>> horario = recogerHorario();
+        
+        int telefonoTienda = Integer.parseInt(telefonoTiendaS);
+        //? aaaaaaaa
+        if(comprobarDatosTienda()){
+            System.out.println("-- aceptarTienda -- comprobarDatosTienda");
+            añadirTienda(nombreTienda, tipoTienda, dirTienda, ciudadTienda, paisTienda, telefonoTienda, horario);
+            limpiarPaneAñAlmacen();
+        }
+    }
+    @FXML
+    private void cancelarAñTienda(){
+        mostrarPane(paneContenidoListaTiendas);
+        limpiarPaneAñTienda();
+    }
+    private void limpiarPaneAñTienda() {
+        tablaListaTiendas.getSelectionModel().clearSelection();
+        textNombreAñTienda.clear();
+        comboBoxTipoAñTienda.getSelectionModel().clearSelection();
+        textDirAñTienda.clear();
+        comboBoxPaisAñTienda.getSelectionModel().clearSelection();
+        comboBoxCiudadAñTienda.getSelectionModel().clearSelection();
+        textTelAñTienda.clear();
+
+        textAperLHorarioAñTienda.clear();
+        textCieLHorarioAñTienda.clear();
+        textAperMHorarioAñTienda.clear();
+        textCieMHorarioAñTienda.clear();
+        textAperXHorarioAñTienda.clear();
+        textCieXHorarioAñTienda.clear();
+        textAperJHorarioAñTienda.clear();
+        textCieJHorarioAñTienda.clear();
+        textAperVHorarioAñTienda.clear();
+        textCieVHorarioAñTienda.clear();
+        textAperSHorarioAñTienda.clear();
+        textCieSHorarioAñTienda.clear();
+        textAperDHorarioAñTienda.clear();
+        textCieDHorarioAñTienda.clear();
+    }
     
     @FXML
     private void aceptarAñAlmacen(){
@@ -760,7 +904,6 @@ public class ControladorIndex implements Initializable {
         
         int telefonoAlmacen = Integer.parseInt(telefonoAlmacenS);
         int capacidadTotalAlmacen = Integer.parseInt(capacidadTotalAlmacenS);
-        System.out.println("-- aceptarAñAlmacen");
         
         if(comprobarDatosAlmacen()){
             System.out.println("-- aceptarAñAlmacen -- comprobarDatosAlmacen");
@@ -808,6 +951,10 @@ public class ControladorIndex implements Initializable {
     @FXML
     private TabPane tabPaneProductos;
     @FXML
+    private HBox footerAñTienda;
+    @FXML
+    private HBox footerEdTienda;
+    @FXML
     private HBox footerAñAlmacen;
     @FXML
     private HBox footerEdAlmacen;
@@ -838,16 +985,46 @@ public class ControladorIndex implements Initializable {
                 } 
             }
         } else if (tablaListaTiendas.getSelectionModel().getSelectedItem() != null){
-        /*
-            for (int i = 0; i < tiendas.size(); i++) {
-                Tiendas tienda = tiendas.get(i);
-                
-                if (id == tienda.getId_tienda()) {
+            Tiendas tiendaSelec = tablaListaTiendas.getSelectionModel().getSelectedItem();
+            ObservableList<Tiendas.TipoTienda> opcTipo = FXCollections.observableArrayList(Tiendas.TipoTienda.values());
 
-                    mostrarPane(paneContenidoProductoSelec);
-                } 
-            }
-            */
+            mostrarPane(paneAñadirTienda);
+            footerAñTienda.setVisible(false);
+            footerAñTienda.setPrefHeight(0);
+            footerEdTienda.setVisible(true);
+            
+            idObjSelecEd = tiendaSelec.getId_tienda();
+            System.out.println("almacenSelec idAlam"+idObjSelecEd);
+            
+            textNombreAñTienda.setText(tiendaSelec.getNombre());
+            comboBoxTipoAñTienda.setValue(tiendaSelec.getTipo());
+            textDirAñTienda.setText(tiendaSelec.getDireccion());
+            comboBoxPaisAñTienda.setValue(tiendaSelec.getPais());
+            comboBoxCiudadAñTienda.setValue(tiendaSelec.getCiudad());
+            textTelAñTienda.setText(Integer.toString(tiendaSelec.getTelefono()));
+            
+            //? mostrar el horario real
+            textAperLHorarioAñTienda.setText(tiendaSelec.getNombre());
+            textCieLHorarioAñTienda.setText(tiendaSelec.getNombre());
+            textAperMHorarioAñTienda.setText(tiendaSelec.getNombre());
+            textCieMHorarioAñTienda.setText(tiendaSelec.getNombre());
+            textAperXHorarioAñTienda.setText(tiendaSelec.getNombre());
+            textCieXHorarioAñTienda.setText(tiendaSelec.getNombre());
+            textAperJHorarioAñTienda.setText(tiendaSelec.getNombre());
+            textCieJHorarioAñTienda.setText(tiendaSelec.getNombre());
+            textAperVHorarioAñTienda.setText(tiendaSelec.getNombre());
+            textCieVHorarioAñTienda.setText(tiendaSelec.getNombre());
+            textAperSHorarioAñTienda.setText(tiendaSelec.getNombre());
+            textCieSHorarioAñTienda.setText(tiendaSelec.getNombre());
+            textAperDHorarioAñTienda.setText(tiendaSelec.getNombre());
+            textCieDHorarioAñTienda.setText(tiendaSelec.getNombre());
+            
+            //para q salgan las demas op
+            comboBoxTipoAñTienda.setItems(opcTipo);
+            comboBoxPaisAñTienda.getItems().addAll(paisesEu);
+            comboBoxCiudadAñTienda.getItems().addAll(ciudadesEs);
+            
+            
         }else if(tablaListaAlmacenes.getSelectionModel().getSelectedItem() != null){
             
             Almacenes almacenSelec = tablaListaAlmacenes.getSelectionModel().getSelectedItem();
@@ -884,8 +1061,34 @@ public class ControladorIndex implements Initializable {
             textAperDHorarioAñAlmacen.setText(almacenSelec.getNombre());
             textCieDHorarioAñAlmacen.setText(almacenSelec.getNombre());
             
+            //para q salgan las demas op
+            comboBoxPaisAñAlmacen.getItems().addAll(paisesEu);
+            comboBoxCiudadAñAlmacen.getItems().addAll(ciudadesEs);
+            
         }
 
+    }
+    @FXML
+    private void aceptarEdTienda(){
+        String idTiendaSelec = idObjSelecEd;
+        String nombreTienda = textNombreAñTienda.getText();
+        String tipoTienda = comboBoxTipoAñTienda.getValue().toString();
+        String dirTienda = textDirAñTienda.getText();
+        String ciudadTienda = comboBoxCiudadAñTienda.getValue().toString();
+        String paisTienda = comboBoxPaisAñTienda.getValue().toString();
+        int telefonoTienda = Integer.parseInt(textTelAñTienda.getText());
+        
+        Map<String, Map<String, String>> horario = recogerHorario();
+        
+
+        editarTienda(idTiendaSelec,nombreTienda, tipoTienda, dirTienda, ciudadTienda, paisTienda, telefonoTienda, horario);
+        
+        limpiarPaneAñTienda();
+    }
+    @FXML
+    private void cancelarEdTienda(){
+        mostrarPane(paneContenidoListaTiendas);
+        limpiarPaneAñTienda();
     }
     @FXML
     private void aceptarEdAlmacen(){
@@ -1364,7 +1567,9 @@ public class ControladorIndex implements Initializable {
     
     
 
-    ArrayList<GraphicValidationDecoration> decoradores;
+    GraphicValidationDecoration decorador;
+    int maxValueAñAlmacen;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //cargar los idiomas
@@ -1374,11 +1579,21 @@ public class ControladorIndex implements Initializable {
         
         setearPaneInicio();
         
+        //barra de progreso
+        Tile barraProgreso = TileBuilder.create()
+            .skinType(Tile.SkinType.CIRCULAR_PROGRESS)
+            .unit("Un.")
+            .value(50)
+            .minValue(0)
+            .maxValue(maxValueAñAlmacen) 
+            .barColor(javafx.scene.paint.Color.RED) 
+            .build();
+
+        //barraProgreso.setMaxValue();
+        barraProgresoAñAlmacen.getChildren().add(barraProgreso);
+    
         
-        //validadores = new ArrayList<>();
-        //decoradores = new ArrayList<>();
-        //comprobarValidacionesAñAlmacen();
-        //validadores.addAll(Arrays.asList(nombreAl, dirAl, paisAl, ciudadAl, telAl, capTotalAl, idTiendaAl));
+       
         System.out.println("111 .  "+validadores);
         
         /*
@@ -1440,7 +1655,22 @@ public class ControladorIndex implements Initializable {
         */
                 
         //decoradores.addAll(Arrays.asList(decoradorNombre, decoradorDir));
-        
+        decorador = new GraphicValidationDecoration() {
+            @Override
+            public void applyValidationDecoration(ValidationMessage message) {
+                super.applyValidationDecoration(message);
+
+                Control control = message.getTarget();
+
+                ImageView icono = null;
+                if (message.getSeverity() == Severity.ERROR) {
+                    icono = usarIcono(false);
+                } else if (message.getSeverity() == Severity.INFO) {
+                    icono = usarIcono(true);
+                }
+            }
+        };
+       
        
         try {
             conexion = ConexionBD.getConexion();  
@@ -1827,13 +2057,13 @@ public class ControladorIndex implements Initializable {
     }
     
     
-    private void añadirTienda(String idTienda, String nombre, String tipo, String direccion, String ciudad, String pais, int telefono, 
+    private void añadirTienda(String nombre, String tipo, String direccion, String ciudad, String pais, int telefono, 
                            Map<String, Map<String, String>> horario) {
         if (conexion != null) {
             //valores por defecto
-            String nuevoIdAlmacen = obtenerUltimoId("tiendas", "id_tienda");
+            String nuevoIdTienda = obtenerUltimoId("tiendas", "id_tienda");
             
-            String query = "INSERT INTO tienda (id_tienda, nombre, tipo, direccion, ciudad, pais, telefono, horario) " +
+            String query = "INSERT INTO tiendas (id_tienda, nombre, tipo, direccion, ciudad, pais, telefono, horario) " +
                            "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             
             try {
@@ -1845,7 +2075,7 @@ public class ControladorIndex implements Initializable {
                 }
 
                 PreparedStatement ps = conexion.prepareStatement(query);
-                ps.setString(1, idTienda);
+                ps.setString(1, nuevoIdTienda);
                 ps.setString(2, nombre);
                 ps.setString(3, tipo);
                 ps.setString(4, direccion);
@@ -1875,7 +2105,7 @@ public class ControladorIndex implements Initializable {
             System.err.println("No se pudo conectar a la base de datos");
         }
     }
-    private void editarTienda(String idTienda, String nombre, String direccion, String ciudad, String pais, int telefono, 
+    private void editarTienda(String idTienda, String nombre, String tipo, String direccion, String ciudad, String pais, int telefono, 
                            Map<String, Map<String, String>> horario) {
         if (conexion != null) {
       
@@ -2093,6 +2323,114 @@ public class ControladorIndex implements Initializable {
     }
 
     ArrayList<ValidationSupport> validadores;
+    public void comprobarValidacionesAñTienda(){
+        ValidationSupport nombreAl = new ValidationSupport();
+        Validator<String> nombreVal = (Control c, String texto) -> {
+            if (texto == null || texto.isEmpty()) {
+                return ValidationResult.fromError(c, "El nombre no puede estar vacio");
+                
+            } else{
+                String regex = ".*\\d.*";
+                if (texto.matches(regex)) {
+                    return ValidationResult.fromError(c, "El nombre NO puede contener numeros");
+                } else {
+                    return ValidationResult.fromInfo(c, "Nombre valido!");
+                }    
+            }
+        };
+        nombreAl.registerValidator(textNombreAñTienda, false, nombreVal);
+        
+        ValidationSupport tipoAl = new ValidationSupport();
+        Validator<Tiendas.TipoTienda> tipoVal = Validator.createPredicateValidator(
+                tipo -> tipo != null,
+                "Hay que asignarle un tipo",
+                Severity.ERROR
+        );
+        tipoAl.registerValidator(comboBoxTipoAñTienda, false, tipoVal);
+        
+        ValidationSupport dirAl = new ValidationSupport();
+        Validator<String> dirVal = (Control c, String texto) -> {
+            if (texto == null || texto.isEmpty()) {
+                return ValidationResult.fromError(c, "Direccion vacia");
+            }else{
+                //no permite \ , pero si /
+                String regex = "^[A-Za-z0-9\\sºª,\\-\"/]*$";
+                if (!texto.matches(regex)) {
+                    return ValidationResult.fromError(c, "Direccion con caracteres no permitidos");
+                }
+                return ValidationResult.fromInfo(c, "Direccion valida!");
+            }
+
+        };
+        dirAl.registerValidator(textDirAñTienda, false, dirVal);
+        
+        ValidationSupport paisAl = new ValidationSupport();
+        Validator<String> paisVal = Validator.createPredicateValidator(
+                texto -> !("".equals(texto)),
+                "Hay que elegir un pais!",
+                Severity.ERROR
+        );
+        paisAl.registerValidator(comboBoxPaisAñTienda, false, paisVal);
+        
+        
+        ValidationSupport ciudadAl = new ValidationSupport();
+        Validator<String> ciudadVal = Validator.createPredicateValidator(
+                texto -> !("".equals(texto)),
+                "Hay que elegir una ciudad!",
+                Severity.ERROR
+        );
+        ciudadAl.registerValidator(comboBoxCiudadAñTienda, false, ciudadVal);
+        
+        
+        ValidationSupport telAl = new ValidationSupport();
+        Validator<String> telVal = (Control c, String texto) -> {
+            if (texto.isEmpty()) {
+                return ValidationResult.fromError(c, "Telefono vacio");
+
+            } else {
+                //contien 9 num si o si
+                String regex = "^\\d{9}$";
+
+                if (!texto.matches(regex)) {
+                    return ValidationResult.fromError(c, "El telefono tiene que tener 9 numeros");
+                } else {
+                    return ValidationResult.fromInfo(c, "Telefono valido");
+                }
+            }
+        };
+        telAl.registerValidator(textTelAñTienda, false, telVal);
+        
+        
+        validadores = new ArrayList<>();
+        validadores.addAll(Arrays.asList(nombreAl, tipoAl, dirAl, paisAl, ciudadAl, telAl));
+        
+        
+        Platform.runLater(() -> {
+            for (ValidationSupport validador : validadores) {
+                validador.setValidationDecorator(decorador);
+                validador.initInitialDecoration();  
+            }
+           
+          
+        });
+        
+    }
+    
+    private boolean comprobarDatosTienda(){
+        for (ValidationSupport validationSupport : validadores) {
+            ValidationResult resultados = validationSupport.getValidationResult();
+            System.out.println("Validador Errores: " + resultados.getErrors());
+            System.out.println("Validador Infos: " + resultados.getInfos());
+        }
+        
+        boolean todoOK = true;
+        for (ValidationSupport validationSupport : validadores) {
+            todoOK = (todoOK && validationSupport.getValidationResult().getErrors().isEmpty());
+            return true;
+        }
+        return false;   
+    }
+    
     public void comprobarValidacionesAñAlmacen(){
     
         ValidationSupport nombreAl = new ValidationSupport();
@@ -2178,11 +2516,16 @@ public class ControladorIndex implements Initializable {
                 if (!texto.matches(regex)) {
                     return ValidationResult.fromError(c, "La capacidad debe ser un numero valido");
                 } else {
+                    maxValueAñAlmacen = Integer.parseInt(textCapTotalAñAlmacen.getText().toString());
+                    System.out.println("--maxValueAñAlmacen "+textCapTotalAñAlmacen.getText());
+                    //barraProgreso.setMaxValue(maxValueAñAlmacen);
+                    
                     return ValidationResult.fromInfo(c, "Capacidad total valida!");
                 }
             }
         };
         capTotalAl.registerValidator(textCapTotalAñAlmacen, false, capTotalVal);
+        
         
         
         ValidationSupport idTiendaAl = new ValidationSupport();
@@ -2206,10 +2549,10 @@ public class ControladorIndex implements Initializable {
         
         
         Platform.runLater(() -> {
-            for (ValidationSupport validationSupport : validadores) {
-                
+            for (ValidationSupport validador : validadores) {
+                validador.setValidationDecorator(decorador);
                 //System.out.println("validador "+validationSupport);
-                validationSupport.initInitialDecoration();
+                validador.initInitialDecoration();
                 //validationSupport.setValidationDecorator(decoradores);
                 //System.out.println("validador decorador   "+decoradores);
                 
@@ -2233,8 +2576,7 @@ public class ControladorIndex implements Initializable {
             todoOK = (todoOK && validationSupport.getValidationResult().getErrors().isEmpty());
             return true;
         }
-        return false;
-        
+        return false;   
     }
     
     private boolean verificarTiendaExistente(String tienda) {
