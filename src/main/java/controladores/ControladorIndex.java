@@ -212,6 +212,8 @@ public class ControladorIndex implements Initializable {
         quitarPaneCabecera(false);
         visiblePaneCabecera(false);
         mostrarPane(paneContenidoListaTiendas);
+        
+        actualizar();
     }
     private void cambiarPaneTiendaSelec(){
         quitarPaneCabecera(false);
@@ -224,6 +226,8 @@ public class ControladorIndex implements Initializable {
         quitarPaneCabecera(false);
         visiblePaneCabecera(false);
         mostrarPane(paneContenidoListaAlmacenes);
+        
+        actualizar();
     }
     @FXML
     private Button btnProductos;
@@ -232,6 +236,8 @@ public class ControladorIndex implements Initializable {
         quitarPaneCabecera(false);
         visiblePaneCabecera(false);
         mostrarPane(paneContenidoListaProductos);
+        
+        actualizar();
     }
     private void mostrarPane(Pane paneMostrar) {
         paneContenidoInicio.setVisible(false);
@@ -572,28 +578,41 @@ public class ControladorIndex implements Initializable {
     
     
     //Botones pane botonera:
-    //btn añadir y sus elementos de productos:
+    //elementos de añadir productos:
     @FXML
-    private Label labelNombreAñProducto;
+    private TextField textNombreAñProducto;
+    @FXML
+    private Label iconoValiNombreAñProducto;
     @FXML
     private ChoiceBox<Productos.TipoProducto> choiceBoxTipoAñProducto;
     @FXML
-    private Label labelTipoAñProducto;
+    private Label iconoValiTipoAñProducto;
     @FXML
     private ChoiceBox choiceBoxSubTipoAñProducto;
     @FXML
-    private Label labelSubTipoAñProducto;
+    private Label iconoValiSupTipoAñProducto;
     @FXML
     private ComboBox<Productos.TallaProducto> comboBoxTallasAñProducto;
     @FXML
-    private Label labelTallaAñProducto;
+    private Label iconoValiTallaAñProducto;
     @FXML
-    private ChoiceBox choiceBoxTipoPrecioAñProducto;
+    private TextField textPrecioAñProducto;
     @FXML
-    private Label labelPrecioAñProducto;
+    private Label iconoValiPrecioAñProducto;
+    @FXML
+    private TextField textStockAñProducto;
+    @FXML
+    private Label iconoValiStockAñProducto;
+    @FXML
+    private ComboBox comboBoxElegirTiendaAñProd;
+    @FXML
+    private Label iconoValiIdTiendaAñProducto;
+    @FXML
+    private ComboBox comboBoxElegirAlmacenAñProd;
+    @FXML
+    private Label iconoValiIdAlmacenAñProducto;
   
-   
-    
+
     //elementos de añadir tiendas:
     @FXML
     private TextField textNombreAñTienda;
@@ -719,6 +738,7 @@ public class ControladorIndex implements Initializable {
     @FXML
     private void añadir(){
         limpiarPaneAñAlmacen();
+        ObservableList<Tiendas> tiendasPro = darListaTiendas();
 
         if (paneContenidoListaProductos.isVisible() || paneContenidoProductoSelec.isVisible()) {
             mostrarPane(paneAñadirProducto);
@@ -745,13 +765,13 @@ public class ControladorIndex implements Initializable {
                 }
 
             });
-            //choiceBoxSubTipoAñProducto.setDisable(true);
+       
             comboBoxTallasAñProducto.setItems(opcTalla);
+  
+            //comboBoxElegirTiendaAñProd.setItems(obtenerNombresTiendas());
+            comboBoxElegirAlmacenAñProd.setItems(obtenerNombresAlmacenes());
             
-            choiceBoxTipoPrecioAñProducto.getItems().addAll("€", "£");
-            choiceBoxTipoPrecioAñProducto.getSelectionModel().selectFirst();
-            
-            //comprobarValidacionesAñProducto();
+            comprobarValidacionesAñProducto();
             
         }else if (paneContenidoListaTiendas.isVisible() || paneContenidoTiendaSelec.isVisible()){
             mostrarPane(paneAñadirTienda);
@@ -838,6 +858,69 @@ public class ControladorIndex implements Initializable {
         return horario;
     }
     
+    @FXML
+    private void aceptarAñProducto(){
+        System.out.println("Producto añadido");
+        
+        String nombreProd = textNombreAñTienda.getText();
+        Enum tipoProd = choiceBoxTipoAñProducto.getValue();
+        Enum subProd = null;
+        
+        if (tipoProd == Productos.TipoProducto.Ropa) {
+            subProd = (Productos.SubTipoRopaProducto) choiceBoxSubTipoAñProducto.getValue();
+            
+        } else if (tipoProd == Productos.TipoProducto.Accesorios) {
+            subProd = (Productos.SubTipoAccProducto) choiceBoxSubTipoAñProducto.getValue();
+            
+        } else {
+            subProd = null;
+        }
+        
+        Enum tallaProd = comboBoxTallasAñProducto.getValue();
+        double precioProd = Double.parseDouble(textPrecioAñProducto.getText());
+        int stockProd = Integer.parseInt(textStockAñProducto.getText());
+        //String tiendaProd = comboBoxElegirTiendaAñProd.getSelectionModel().toString();
+        String tiendaProd = comboBoxElegirTiendaAñProd.getSelectionModel().toString();
+        System.out.println("---tiendaProd "+tiendaProd);
+        String almacenProd = comboBoxElegirAlmacenAñProd.getSelectionModel().toString();
+
+        
+        if(comprobarDatosProducto()){
+            System.out.println("-- aceptarProducto -- comprobarDatosProducto");
+            //? añadir img
+            añadirProducto(nombreProd, tipoProd, subProd, tallaProd, precioProd, stockProd, tiendaProd, almacenProd);
+            limpiarPaneAñProducto();
+        }
+    }
+    @FXML
+    private void cancelarAñProducto(){
+        mostrarPane(paneContenidoListaProductos);
+        limpiarPaneAñProducto();
+    }
+    private void limpiarPaneAñProducto() {
+        tablaListaTiendas.getSelectionModel().clearSelection();
+        textNombreAñTienda.clear();
+        comboBoxTipoAñTienda.getSelectionModel().clearSelection();
+        textDirAñTienda.clear();
+        comboBoxPaisAñTienda.getSelectionModel().clearSelection();
+        comboBoxCiudadAñTienda.getSelectionModel().clearSelection();
+        textTelAñTienda.clear();
+
+        textAperLHorarioAñTienda.clear();
+        textCieLHorarioAñTienda.clear();
+        textAperMHorarioAñTienda.clear();
+        textCieMHorarioAñTienda.clear();
+        textAperXHorarioAñTienda.clear();
+        textCieXHorarioAñTienda.clear();
+        textAperJHorarioAñTienda.clear();
+        textCieJHorarioAñTienda.clear();
+        textAperVHorarioAñTienda.clear();
+        textCieVHorarioAñTienda.clear();
+        textAperSHorarioAñTienda.clear();
+        textCieSHorarioAñTienda.clear();
+        textAperDHorarioAñTienda.clear();
+        textCieDHorarioAñTienda.clear();
+    }
     
     @FXML
     private void aceptarAñTienda(){
@@ -856,7 +939,7 @@ public class ControladorIndex implements Initializable {
         if(comprobarDatosTienda()){
             System.out.println("-- aceptarTienda -- comprobarDatosTienda");
             añadirTienda(nombreTienda, tipoTienda, dirTienda, ciudadTienda, paisTienda, telefonoTienda, horario);
-            limpiarPaneAñAlmacen();
+            limpiarPaneAñTienda();
         }
     }
     @FXML
@@ -897,13 +980,11 @@ public class ControladorIndex implements Initializable {
         String dirAlmacen = textDirAñAlmacen.getText();
         String ciudadAlmacen = comboBoxCiudadAñAlmacen.getValue().toString();
         String paisAlmacen = comboBoxPaisAñAlmacen.getValue().toString();
-        String telefonoAlmacenS = textTelAñAlmacen.getText();
-        String capacidadTotalAlmacenS = textCapTotalAñAlmacen.getText();
+        int telefonoAlmacen = Integer.parseInt(textTelAñAlmacen.getText());
+        int capacidadTotalAlmacen = Integer.parseInt(textCapTotalAñAlmacen.getText());
         String idTiendaAlmacen = textIdTiendaAñAlmacen.getText();
         Map<String, Map<String, String>> horario = recogerHorario();
         
-        int telefonoAlmacen = Integer.parseInt(telefonoAlmacenS);
-        int capacidadTotalAlmacen = Integer.parseInt(capacidadTotalAlmacenS);
         
         if(comprobarDatosAlmacen()){
             System.out.println("-- aceptarAñAlmacen -- comprobarDatosAlmacen");
@@ -967,23 +1048,28 @@ public class ControladorIndex implements Initializable {
         ObservableList<Almacenes> almacenes = darListaAlmacenes();
         
         if(tablaListaProductos.getSelectionModel().getSelectedItem() != null){
-           
-           //cambiar vista de pg productos para elegir su tienda y almacen enlazados
-           tabPaneProductos.setPrefHeight(330);
-           footerModificarProductoSelect.setVisible(true);
+            Productos productoSelec = tablaListaProductos.getSelectionModel().getSelectedItem();
+
+            mostrarPane(paneAñadirProducto);
+            footerAñTienda.setVisible(false);
+            footerAñTienda.setPrefHeight(0);
+            footerEdTienda.setVisible(true);
+            tabPaneProductos.setPrefHeight(330);
             
-           Productos productoSelec = tablaListaProductos.getSelectionModel().getSelectedItem();
-           String id = productoSelec.getId_producto();
-           System.out.println("ver seleccion-- "+ productoSelec.getId_producto());
-            for (int i = 0; i < productos.size(); i++) {
-                Productos producto = productos.get(i);
-
-                if (id == producto.getId_producto()) {
-
-                    mostrarPane(paneContenidoProductoSelec);
-                    editarProducto(true);
-                } 
-            }
+            idObjSelecEd = productoSelec.getId_producto();
+            System.out.println("productoSelec idAlam"+idObjSelecEd);
+            
+            textNombreAñProducto.setText(productoSelec.getNombre());
+            choiceBoxTipoAñProducto.setValue(productoSelec.getTipo());
+            choiceBoxSubTipoAñProducto.setValue(productoSelec.getTipo());
+            //comboBoxTallasAñProducto.setValue(productoSelec.getTalla());
+            textPrecioAñProducto.setText(String.valueOf(productoSelec.getPrecio()));
+            textStockAñProducto.setText(String.valueOf(productoSelec.getStock()));
+            
+            //? corregir tienda y almacen
+            
+            
+            
         } else if (tablaListaTiendas.getSelectionModel().getSelectedItem() != null){
             Tiendas tiendaSelec = tablaListaTiendas.getSelectionModel().getSelectedItem();
             ObservableList<Tiendas.TipoTienda> opcTipo = FXCollections.observableArrayList(Tiendas.TipoTienda.values());
@@ -1113,7 +1199,7 @@ public class ControladorIndex implements Initializable {
         limpiarPaneAñAlmacen();
     }
             
-    @FXML
+@FXML
     private void actualizar(){
         
         if (paneContenidoListaProductos.isVisible()) {
@@ -1122,7 +1208,7 @@ public class ControladorIndex implements Initializable {
             if (productosActualizados != null && !productosActualizados.isEmpty()) {
                 tablaListaProductos.setItems(productosActualizados);
                 tablaListaProductos.refresh();
-                System.out.println("Tabla de almacenes actualizada");
+                System.out.println("Tabla prodcutos actualizada");
             } 
             
         }else if (paneContenidoListaTiendas.isVisible()) {
@@ -1131,7 +1217,7 @@ public class ControladorIndex implements Initializable {
             if (tiendasActualizadas != null && !tiendasActualizadas.isEmpty()) {
                 tablaListaTiendas.setItems(tiendasActualizadas);
                 tablaListaTiendas.refresh();
-                System.out.println("Tabla de almacenes actualizada");
+                System.out.println("Tabla tiendas actualizada");
             } 
             
         } else if (paneContenidoListaAlmacenes.isVisible()) {
@@ -1140,7 +1226,7 @@ public class ControladorIndex implements Initializable {
             if (almacenesActualizados != null && !almacenesActualizados.isEmpty()) {
                 tablaListaAlmacenes.setItems(almacenesActualizados);
                 tablaListaAlmacenes.refresh();
-                System.out.println("Tabla de almacenes actualizada");
+                System.out.println("Tabla almacenes actualizada");
             } 
         }
     }
@@ -1154,7 +1240,24 @@ public class ControladorIndex implements Initializable {
         //? poner mensaje para asegurarse de que se quiere borrar
         
         if(tablaListaProductos.getSelectionModel().getSelectedItem() != null){
-            //mostrarModalAlerta(tablaListaProductos.getSelectionModel().getSelectedItem());
+            Productos productoSelec = tablaListaProductos.getSelectionModel().getSelectedItem();
+            String idProducto = productoSelec.getId_producto();
+            String idTienda = productoSelec.getId_tienda();
+            String idAlmacen = productoSelec.getId_almacen();
+            
+            if(!verificarTiendaExistente(idTienda)){
+                System.out.println("La tienda con id o nombre "+idTienda+" , NO existe para el producto "+idProducto);
+            }else if (!verificarAlmacenExistente(idAlmacen)){
+                System.out.println("El almacen con id o nombre "+idAlmacen+" , NO existe para el producto "+idProducto);
+            }
+
+            boolean eliminado = borrarProducto(idProducto,idTienda,idAlmacen);
+
+            System.out.println("eliminado"+eliminado);
+            if (eliminado) {
+                mostrarAlerta(Alert.AlertType.INFORMATION, "Exito", "La producto ha sido borrado");
+                actualizar();
+            } 
         
         } else if(tablaListaTiendas.getSelectionModel().getSelectedItem() != null){
             Tiendas tiendaSelec = tablaListaTiendas.getSelectionModel().getSelectedItem();
@@ -1163,7 +1266,7 @@ public class ControladorIndex implements Initializable {
             boolean eliminado = borrarTienda(idTienda);
 
             if (eliminado) {
-                mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "La tienda ha sido borrada");
+                mostrarAlerta(Alert.AlertType.INFORMATION, "Exito", "La tienda ha sido borrada");
                 actualizar();
             } 
             
@@ -1174,7 +1277,7 @@ public class ControladorIndex implements Initializable {
             boolean eliminado = borrarAlmacen(idAlmacen);
 
             if (eliminado) {
-                mostrarAlerta(Alert.AlertType.INFORMATION, "Éxito", "El almacén ha sido borrado");
+                mostrarAlerta(Alert.AlertType.INFORMATION, "Exito", "El almacén ha sido borrado");
                 actualizar();
             } 
         }
@@ -1963,47 +2066,103 @@ public class ControladorIndex implements Initializable {
         return String.format("%s001", prefijo);
     }
     
-    private void añadirProducto(String nombre, String imagen, Enum tipo, Enum subtipoRopa, Enum subtipoAccesorios, Enum talla, 
-        double precio, int stock, String idTienda, String idAlmacen) {
+    //? añadir img
+    private void añadirProducto(String nombre, Enum tipo, Enum subtipo, Enum talla, double precio, int stock, String idTienda, String idAlmacen) {
+        
         if (conexion != null) {
             //valores por defecto
             String nuevoIdProducto = obtenerUltimoId("productos", "id_producto");
-            int capacidadOcupada = 0;
             
-            String query = "INSERT INTO productos (nombre, imagen, tipo, subtipo_ropa, subtipo_accesorios, talla, precio, stock, id_tienda, id_almacen) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    
             
-            try {
-
-                PreparedStatement ps = conexion.prepareStatement(query);
+            // si se llama igual a otro pero con diferentes ids, se le agrega el mismo id_producto
+            if(verificarProductoExistente(nombre)){
                 
-                ps.setString(1, nuevoIdProducto);
-                ps.setString(2, nombre);
-                // .name() recoge lo selec devolviendolo como un string para q lo coja
-                ps.setString(3, tipo.name());
-                ps.setString(4, subtipoRopa.name());
-                ps.setString(5, subtipoAccesorios.name());
-                ps.setString(6, talla.name());
-                ps.setDouble(7, precio);
-                ps.setInt(8, stock);
-                ps.setString(9, idTienda);
-                ps.setString(10, idAlmacen);
+                String query = "SELECT id_producto FROM productos WHERE nombre = ?";
+                try (PreparedStatement ps = conexion.prepareStatement(query)) {
+                    ps.setString(1, nombre);
+            
+                    ResultSet rs = ps.executeQuery();
+                    if (rs.next()) {
+                        // Si el producto existe, devolvemos el id_producto
+                        rs.getString("id_producto");
+                    }
+                    System.out.println("La tienda existe con el mismo nombre");
 
-                int rowsInserted = ps.executeUpdate();
-
-                //? cambiar texto segun idioma
-                if (rowsInserted > 0) {
-                    System.out.println("Producto añadido!");
-                    mostrarAlerta(Alert.AlertType.INFORMATION, "Operacion exitosa", "Producto añadido! :)");
-                } else {
-                    System.err.println("No se ha añadido el producto");
-                    mostrarAlerta(Alert.AlertType.ERROR, "Error", "No se ha podido añadir el producto :(");
+                } catch (SQLException e) {
+                    System.err.println("No existe la tienda que has indicado" + e.getMessage());
                 }
                 
-            } catch (SQLException e) {
-                System.err.println("--error añadir producto: " + e.getMessage());
-                mostrarAlerta(Alert.AlertType.ERROR, "Error", "No se ha podido añadir el producto, revisa los campos" + e.getMessage());
+                
+                
+            // si se llama igual a otro y con mismos ids, no se puede crear
+            }else if(verificarProductoExistenteIgualIds(nombre, idTienda, idAlmacen)){
+                    System.err.println("--error añadir producto: DATOS REPETIDOS de PRODUCTO");
+                    mostrarAlerta(Alert.AlertType.ERROR, "Error", "Ya hay un producto con el mismo nombre y asignado a la misma tienda y almacen");
+                
+                
+            // si no se llama igual a otro prod, se le pone un id_producto nuevo
+            } else {
+                
+                String query = "INSERT INTO productos (id_producto, nombre, tipo, subtipo_ropa, subtipo_accesorios, talla, precio, stock, id_tienda, id_almacen) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                
+                try {
+
+                    PreparedStatement ps = conexion.prepareStatement(query);
+
+                    ps.setString(1, nuevoIdProducto);
+                    ps.setString(2, nombre);
+                    // .name() recoge lo selec devolviendolo como un string para q lo coja
+                    ps.setString(3, tipo.name());
+                    System.out.println("---------------- tipoS "+tipo.name());
+                
+                    
+                    if (tipo == Productos.TipoProducto.Ropa) {
+                        if (subtipo != null) {
+                            ps.setString(4, ((Productos.SubTipoRopaProducto) subtipo).name());
+                        } else {
+                            ps.setString(4, null);
+                        }
+                        ps.setString(5, null);
+
+                    } else if (tipo == Productos.TipoProducto.Accesorios) {
+                        ps.setString(4, null);
+                        
+                        if (subtipo != null) {
+                            ps.setString(5, ((Productos.SubTipoAccProducto) subtipo).name());
+                        } else {
+                            ps.setString(5, null);
+                        }
+
+                    } else {
+                        ps.setString(4, null);
+                        ps.setString(5, null);
+                    }
+                    
+                    ps.setString(6, talla.name());
+                    ps.setDouble(7, precio);
+                    ps.setInt(8, stock);
+                    ps.setString(9, idTienda);
+                    ps.setString(10, idAlmacen);
+
+                    int rowsInserted = ps.executeUpdate();
+
+                    //? cambiar texto segun idioma
+                    if (rowsInserted > 0) {
+                        System.out.println("Producto añadido!");
+                        mostrarAlerta(Alert.AlertType.INFORMATION, "Operacion exitosa", "Producto añadido! :)");
+                    } else {
+                        System.err.println("No se ha añadido el producto");
+                        mostrarAlerta(Alert.AlertType.ERROR, "Error", "No se ha podido añadir el producto :(");
+                    }
+
+                } catch (SQLException e) {
+                    System.err.println("--error añadir producto: " + e.getMessage());
+                    mostrarAlerta(Alert.AlertType.ERROR, "Error", "No se ha podido añadir el producto, revisa los campos" + e.getMessage());
+                }
             }
             
+        
         } else {
             System.err.println("No se pudo conectar a la base de datos");
         }
@@ -2054,6 +2213,31 @@ public class ControladorIndex implements Initializable {
         } else {
             System.err.println("No se pudo conectar a la base de datos");
         }
+    }
+    private boolean borrarProducto(String idProducto, String idTienda, String idAlmacen) {
+        if (conexion != null) {
+            String query = "DELETE FROM productos WHERE id_producto = ? AND id_tienda = ? AND id_almacen = ?";
+
+            try {
+
+                PreparedStatement ps = conexion.prepareStatement(query);
+                ps.setString(1, idProducto);
+                ps.setString(2, idTienda);
+                ps.setString(3, idAlmacen);
+
+                int filaBorrada = ps.executeUpdate();
+
+                if (filaBorrada > 0) {
+                    System.out.println("Producto borrado");
+                    mostrarAlerta(Alert.AlertType.INFORMATION, "Operacion exitosa", "Has eliminado el producto de esa tienda y almacen!");
+                }
+                
+            } catch (SQLException e) {
+                System.err.println("--error borrar producto: " + e.getMessage());
+                mostrarAlerta(Alert.AlertType.ERROR, "Error", "No se ha podido borrar el prodcuto asociado a esa tienda y almacen" + e.getMessage());
+            }
+        }
+        return false;
     }
     
     
@@ -2323,6 +2507,162 @@ public class ControladorIndex implements Initializable {
     }
 
     ArrayList<ValidationSupport> validadores;
+    public void comprobarValidacionesAñProducto(){
+        ValidationSupport nombreAl = new ValidationSupport();
+        Validator<String> nombreVal = (Control c, String texto) -> {
+            if (texto == null || texto.isEmpty()) {
+                return ValidationResult.fromError(c, "El nombre no puede estar vacio");
+                
+            } else{
+                String regex = ".*\\d.*";
+                if (texto.matches(regex)) {
+                    return ValidationResult.fromError(c, "El nombre NO puede contener numeros");
+                } else {
+                    return ValidationResult.fromInfo(c, "Nombre valido!");
+                }    
+            }
+        };
+        nombreAl.registerValidator(textNombreAñProducto, false, nombreVal);
+        
+        /*
+        ValidationSupport tipoAl = new ValidationSupport();
+        Validator<Productos.TipoProducto> tipoVal = Validator.createPredicateValidator(
+                tipo -> tipo != null,
+                "Hay que asignarle un tipo",
+                Severity.ERROR
+        );
+        tipoAl.registerValidator(choiceBoxTipoAñProducto, false, tipoVal);
+        
+        
+        ValidationSupport subTipoAccAl = new ValidationSupport();
+        Validator<Productos.SubTipoAccProducto> subTipoAccVal = Validator.createPredicateValidator(
+                tipo -> tipo != null,
+                "Hay que asignarle un tipo",
+                Severity.ERROR
+        );
+        subTipoAccAl.registerValidator(choiceBoxTipoAñProducto, false, subTipoAccVal);
+        
+        
+        ValidationSupport subTipoRopaAl = new ValidationSupport();
+        Validator<Productos.SubTipoRopaProducto> subTipoRopaVal = Validator.createPredicateValidator(
+                tipo -> tipo != null,
+                "Hay que asignarle un tipo",
+                Severity.ERROR
+        );
+        subTipoRopaAl.registerValidator(choiceBoxTipoAñProducto, false, subTipoRopaVal);
+        
+        
+        ValidationSupport tallaAl = new ValidationSupport();
+        Validator<Productos.SubTipoRopaProducto> tallaVal = Validator.createPredicateValidator(
+                tipo -> tipo != null,
+                "Hay que asignarle un tipo",
+                Severity.ERROR
+        );
+        tallaAl.registerValidator(comboBoxTallasAñProducto, false, tallaVal);
+        */
+        
+        ValidationSupport precioAl = new ValidationSupport();
+        Validator<String> precioVal = (Control c, String texto) -> {
+            if (texto.isEmpty()) {
+                return ValidationResult.fromError(c, "El precio no puede estar vacio");
+            } else {
+                //puede ser de 1 a 4 num con '.' o ','
+                String regex = "^[\\d.,]{1,4}$";
+
+                if (!texto.matches(regex)) {
+                    return ValidationResult.fromError(c, "Solo se permiten de 1 a 4 números, incluyendo '.' o ','");
+                } else {
+                    return ValidationResult.fromInfo(c, "Precio valido");
+                }
+            }
+        };
+        precioAl.registerValidator(textPrecioAñProducto, false, precioVal);
+        
+        
+        ValidationSupport stockAl = new ValidationSupport();
+        Validator<String> stockVal = (Control c, String texto) -> {
+            if (texto.isEmpty()) {
+                return ValidationResult.fromError(c, "El stock no puede estar vacio");
+            } else {
+                //solo 3 num
+                String regex = "^[\\d.,]{1,4}$";
+
+                if (!texto.matches(regex)) {
+                    return ValidationResult.fromError(c, "Solo se permiten hasta 3 num");
+                } else {
+                    return ValidationResult.fromInfo(c, "Precio valido");
+                }
+            }
+        };
+        stockAl.registerValidator(textStockAñProducto, false, stockVal);
+        
+        /*
+        ValidationSupport idTiendaAl = new ValidationSupport();
+        Validator<ComboBox> idTiendaVal = (Control c, String texto) -> {
+             if (texto.isEmpty()) {
+                return ValidationResult.fromError(c, "La tienda asociada no puede estar vacia");
+
+            } else {
+                if (!verificarTiendaExistente(textElegirTiendaAñProd.get {
+                    return ValidationResult.fromError(c, "La tienda no se encuentra");
+                } else {
+                    return ValidationResult.fromInfo(c, "La tienda es valida!");
+                }
+            }
+        };
+        idTiendaAl.registerValidator(textElegirTiendaAñProd, false, idTiendaVal);
+      
+        
+        ValidationSupport idAlmacenAl = new ValidationSupport();
+        Validator<String> idAlmacenVal = (Control c, String texto) -> {
+             if (texto.isEmpty()) {
+                return ValidationResult.fromError(c, "La tienda asociada no puede estar vacia");
+
+            } else {
+                if (!verificarAlmacenExistente(textElegirAlmacenAñProd.getText())) {
+                    return ValidationResult.fromError(c, "La tienda no se encuentra");
+                } else {
+                    return ValidationResult.fromInfo(c, "La tienda es valida!");
+                }
+            }
+        };
+        idAlmacenAl.registerValidator(textElegirAlmacenAñProd, false, idAlmacenVal);
+          */
+        
+        validadores = new ArrayList<>();
+        validadores.addAll(Arrays.asList(nombreAl, 
+                //tipoAl, subTipoAccAl, subTipoRopaAl, tallaAl, 
+                stockAl, precioAl
+                //, idTiendaAl, idAlmacenAl
+        ));
+        
+        
+        Platform.runLater(() -> {
+            for (ValidationSupport validador : validadores) {
+                validador.setValidationDecorator(decorador);
+                validador.initInitialDecoration();  
+            }
+           
+          
+        });
+        
+    }
+    
+    private boolean comprobarDatosProducto(){
+        for (ValidationSupport validationSupport : validadores) {
+            ValidationResult resultados = validationSupport.getValidationResult();
+            System.out.println("Validador Errores: " + resultados.getErrors());
+            System.out.println("Validador Infos: " + resultados.getInfos());
+        }
+        
+        boolean todoOK = true;
+        for (ValidationSupport validationSupport : validadores) {
+            todoOK = (todoOK && validationSupport.getValidationResult().getErrors().isEmpty());
+            return true;
+        }
+        return false;   
+    }
+    
     public void comprobarValidacionesAñTienda(){
         ValidationSupport nombreAl = new ValidationSupport();
         Validator<String> nombreVal = (Control c, String texto) -> {
@@ -2564,6 +2904,8 @@ public class ControladorIndex implements Initializable {
 
     }
     
+    
+    
     private boolean comprobarDatosAlmacen(){
         for (ValidationSupport validationSupport : validadores) {
             ValidationResult resultados = validationSupport.getValidationResult();
@@ -2577,6 +2919,47 @@ public class ControladorIndex implements Initializable {
             return true;
         }
         return false;   
+    }
+    
+    private boolean verificarProductoExistente(String nombreProducto) {
+        if (conexion != null) {
+            String query = "SELECT COUNT(*) AS count FROM productos WHERE nombre = ?";
+            try (PreparedStatement ps = conexion.prepareStatement(query)) {
+                ps.setString(1, nombreProducto);
+                
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+                    return rs.getInt("count") > 0;
+                }
+                System.out.println("La tienda existe con el mismo nombre");
+
+            } catch (SQLException e) {
+                System.err.println("No existe la tienda que has indicado" + e.getMessage());
+            }
+        }
+        return false;
+    }
+    
+    private boolean verificarProductoExistenteIgualIds(String nombre, String idTienda, String idAlmacen) {
+        if (conexion != null) {
+            String query = "SELECT COUNT(*) AS count FROM productos WHERE nombre = ? AND id_tienda = ? AND id_almacen = ?";
+            try (PreparedStatement ps = conexion.prepareStatement(query)) {
+                ps.setString(1, nombre);
+                ps.setString(2, idTienda);
+                ps.setString(3, idAlmacen);
+
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+                    return rs.getInt("count") > 0;
+                }
+                
+                System.out.println("Ya existe la tienda con el mismo nombre y los mismos ids");
+
+            } catch (SQLException e) {
+                System.err.println("No existe la tienda que has indicado" + e.getMessage());
+            }
+        }
+        return false;
     }
     
     private boolean verificarTiendaExistente(String tienda) {
@@ -2596,8 +2979,53 @@ public class ControladorIndex implements Initializable {
         return false;
     }
     
+    private boolean verificarAlmacenExistente(String almacen) {
+        if (conexion != null) {
+            String query = "SELECT COUNT(*) AS count FROM almacenes WHERE id_almacen = ? OR nombre = ?";
+            try (PreparedStatement ps = conexion.prepareStatement(query)) {
+                ps.setString(1, almacen);
+                ps.setString(2, almacen);
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+                    return rs.getInt("count") > 0;
+                }
+            } catch (SQLException e) {
+                System.err.println("No existe el almacen que has indicado" + e.getMessage());
+            }
+        }
+        return false;
+    }
     
+    
+    //private Map<String, String> mapaTiendas = new LinkedHashMap<>();
+    
+    private ObservableList<String> obtenerNombresTiendas() {
+        ObservableList<String> idTiendas = FXCollections.observableArrayList();
+        ObservableList<Tiendas> listaTiendas = darListaTiendas();
 
+        //mapaTiendas.clear();
+        
+        for (Tiendas tienda : listaTiendas) {
+            //mapaTiendas.put(tienda.getNombre(), tienda.getId_tienda());
+            idTiendas.add(tienda.getId_tienda());
+        }
+
+        //nombresTiendas.addAll(mapaTiendas.keySet());
+        return idTiendas;
+    }
+    
+    private ObservableList<String> obtenerNombresAlmacenes() {
+        ObservableList<String> nombresAlmacenes = FXCollections.observableArrayList();
+        ObservableList<Almacenes> listaAlmacenes = darListaAlmacenes();
+
+        for (Almacenes almacen : listaAlmacenes) {
+        
+            nombresAlmacenes.add(almacen.getNombre());
+        }
+
+        return nombresAlmacenes;
+    }
+    
     
     
 }

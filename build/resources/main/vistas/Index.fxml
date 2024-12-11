@@ -56,7 +56,7 @@
                <children>
                   <Button fx:id="btnAñadir" contentDisplay="CENTER" graphicTextGap="2.0" layoutX="230.0" layoutY="9.0" onAction="#añadir" prefHeight="26.0" prefWidth="73.0" text="_Añadir" />
                   <Button fx:id="btnEditar" contentDisplay="CENTER" graphicTextGap="2.0" layoutX="318.0" layoutY="9.0" onAction="#editar" prefHeight="26.0" prefWidth="73.0" text="_Editar" />
-                  <Button fx:id="btnActualizar" contentDisplay="CENTER" graphicTextGap="2.0" layoutX="402.0" layoutY="9.0" onAction="#actualizar" prefHeight="26.0" prefWidth="73.0" text="Act_ualizar" />
+                  <Button fx:id="btnActualizar" contentDisplay="CENTER" graphicTextGap="2.0" layoutX="402.0" layoutY="9.0" prefHeight="26.0" prefWidth="73.0" />
                   <Button fx:id="btnBorrar" contentDisplay="CENTER" graphicTextGap="2.0" layoutX="490.0" layoutY="9.0" onAction="#borrar" prefHeight="26.0" prefWidth="73.0" text="B_orrar" />
                   <Text fx:id="textoDatosProcutos" layoutX="14.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Informacion:" />
                   <Button fx:id="btnVer" contentDisplay="CENTER" graphicTextGap="2.0" layoutX="599.0" layoutY="11.0" onAction="#verSeleccion" prefHeight="26.0" prefWidth="37.0" text="_Ver" />
@@ -241,7 +241,7 @@
                         </TabPane>
                      </children>
                   </Pane>
-                  <Pane fx:id="paneAñadirProducto" prefHeight="396.0" prefWidth="650.0" visible="false">
+                  <Pane fx:id="paneAñadirProducto" prefHeight="396.0" prefWidth="650.0">
                      <children>
                         <TabPane prefHeight="396.0" prefWidth="650.0" tabClosingPolicy="UNAVAILABLE">
                            <tabs>
@@ -263,8 +263,8 @@
                                                          <children>
                                                             <HBox prefHeight="25.0" prefWidth="177.0" spacing="5">
                                                                <children>
-                                                                  <Text fx:id="labelNombreProductoSelec1" text="Nombre:" wrappingWidth="96.0" />
-                                                                  <TextField fx:id="textoNombreAñProducto" prefHeight="25.0" prefWidth="137.0" />
+                                                                  <Text fx:id="labelNombreAñProducto" text="Nombre:" wrappingWidth="96.0" />
+                                                                  <TextField fx:id="textNombreAñProducto" prefHeight="25.0" prefWidth="137.0" />
                                                                   <Label fx:id="iconoValiNombreAñProducto" prefHeight="17.0" prefWidth="103.0">
                                                                      <HBox.margin>
                                                                         <Insets left="5.0" />
@@ -274,50 +274,57 @@
                                                             </HBox>
                                                             <HBox prefHeight="25.0" prefWidth="275.0" spacing="5">
                                                                <children>
-                                                                  <Text fx:id="labelTipoProductoSelec1" text="Categoria:" wrappingWidth="96.0" />
+                                                                  <Text fx:id="labelTipoAñProducto" text="Categoria:" wrappingWidth="96.0" />
                                                                   <ChoiceBox fx:id="choiceBoxTipoAñProducto" prefHeight="26.0" prefWidth="137.0" />
                                                                   <Label fx:id="iconoValiTipoAñProducto" prefHeight="17.0" prefWidth="103.0" />
                                                                </children>
                                                             </HBox>
                                                             <HBox prefHeight="25.0" prefWidth="275.0" spacing="5">
                                                                <children>
-                                                                  <Text fx:id="labelSubTipoProductoSelec1" text="Sub categoria:" wrappingWidth="96.0" />
+                                                                  <Text fx:id="labelSubTipoAñProducto" text="Sub categoria:" wrappingWidth="96.0" />
                                                                   <ChoiceBox fx:id="choiceBoxSubTipoAñProducto" prefHeight="26.0" prefWidth="137.0" />
                                                                   <Label fx:id="iconoValiSupTipoAñProducto" prefHeight="17.0" prefWidth="103.0" />
                                                                </children>
                                                             </HBox>
                                                             <HBox prefHeight="25.0" prefWidth="275.0" spacing="5">
                                                                <children>
-                                                                  <Text fx:id="labelTallaProductoSelec1" text="Tallas:" wrappingWidth="96.0" />
+                                                                  <Text fx:id="labelTallaAñProducto" text="Tallas:" wrappingWidth="96.0" />
                                                                   <ComboBox fx:id="comboBoxTallasAñProducto" prefHeight="26.0" prefWidth="137.0" />
                                                                   <Label fx:id="iconoValiTallaAñProducto" prefHeight="17.0" prefWidth="103.0" />
                                                                </children>
                                                             </HBox>
                                                             <HBox prefHeight="25.0" prefWidth="275.0" spacing="5">
                                                                <children>
-                                                                  <Text fx:id="labelPrecioProductoSelec1" text="Precio:" wrappingWidth="96.0" />
-                                                                  <TextField fx:id="textoPrecioAñProducto" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="72.0" />
-                                                                  <ChoiceBox fx:id="choiceBoxTipoPrecioAñProducto" prefHeight="25.0" prefWidth="59.0" />
+                                                                  <Text fx:id="labelPrecioAñProducto" text="Precio:" wrappingWidth="96.0" />
+                                                                  <TextField fx:id="textPrecioAñProducto" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="72.0" />
                                                                   <Label fx:id="iconoValiPrecioAñProducto" prefHeight="17.0" prefWidth="103.0" />
+                                                               </children>
+                                                            </HBox>
+                                                            <HBox prefHeight="25.0" prefWidth="275.0" spacing="5">
+                                                               <children>
+                                                                  <Text fx:id="labelStockAñProducto" text="Stock:" wrappingWidth="96.0" />
+                                                                  <TextField fx:id="textStockAñProducto" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="72.0" />
+                                                                  <Label fx:id="iconoValiStockAñProducto" prefHeight="17.0" prefWidth="103.0" />
                                                                </children>
                                                             </HBox>
                                                          </children>
                                                       </VBox>
                                                    </children>
                                                 </HBox>
-                                                <HBox fx:id="footerModificarProductoSelect1" prefHeight="51.0" prefWidth="632.0">
+                                                <HBox fx:id="footerModificarProductoAñProducto" prefHeight="51.0" prefWidth="632.0">
                                                    <children>
                                                       <VBox prefHeight="48.0" prefWidth="307.0">
                                                          <children>
-                                                            <Label prefHeight="17.0" prefWidth="242.0" text="Elige una tienda enlazada:" />
+                                                            <Label fx:id="labelElegirTiendaAñProd" prefHeight="17.0" prefWidth="242.0" text="Elige una tienda enlazada:" />
                                                             <HBox alignment="BASELINE_LEFT" prefHeight="29.0" prefWidth="307.0">
                                                                <children>
-                                                                  <TextField fx:id="textElegirTienda1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="168.0" />
+                                                                  <ComboBox fx:id="comboBoxElegirTiendaAñProd" prefHeight="26.0" prefWidth="169.0" />
                                                                   <Label fx:id="iconoValiIdTiendaAñProducto" prefHeight="17.0" prefWidth="116.0">
                                                                      <HBox.margin>
                                                                         <Insets left="5.0" />
                                                                      </HBox.margin>
                                                                   </Label>
+                                                                  <TextField fx:id="textElegirTiendaAñProd" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="168.0" />
                                                                </children>
                                                             </HBox>
                                                          </children>
@@ -327,10 +334,10 @@
                                                       </VBox>
                                                       <VBox prefHeight="51.0" prefWidth="325.0">
                                                          <children>
-                                                            <Label text="Elige un almacen enlazado:" />
+                                                            <Label fx:id="labelElegirAlmacenAñProd" text="Elige un almacen enlazado:" />
                                                             <HBox alignment="BASELINE_LEFT" prefHeight="29.0" prefWidth="315.0">
                                                                <children>
-                                                                  <TextField fx:id="textElegirTienda11" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="168.0" />
+                                                                  <TextField fx:id="textElegirAlmacenAñProd" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="168.0" />
                                                                   <Label fx:id="iconoValiIdAlmacenAñProducto" prefHeight="17.0" prefWidth="101.0">
                                                                      <HBox.margin>
                                                                         <Insets left="5.0" />
@@ -347,8 +354,17 @@
                                                 </HBox>
                                                 <HBox fx:id="footerAñProducto" alignment="CENTER" prefHeight="51.0" prefWidth="632.0">
                                                    <children>
-                                                      <Button fx:id="btnAceptarAñProducto" mnemonicParsing="false" text="Aceptar" />
-                                                      <Button fx:id="btnCancelarAñProducto" mnemonicParsing="false" text="Cancelar">
+                                                      <Button fx:id="btnAceptarAñProducto" mnemonicParsing="false" onAction="#aceptarAñProducto" text="Aceptar Añ" />
+                                                      <Button fx:id="btnCancelarAñProducto" mnemonicParsing="false" onAction="#cancelarAñProducto" text="Cancelar Añ">
+                                                         <HBox.margin>
+                                                            <Insets left="15.0" />
+                                                         </HBox.margin></Button>
+                                                   </children>
+                                                </HBox>
+                                                <HBox fx:id="footerEdProducto" alignment="CENTER" prefHeight="51.0" prefWidth="632.0" visible="false">
+                                                   <children>
+                                                      <Button fx:id="btnAceptarEdProducto" mnemonicParsing="false" text="Aceptar Ed" />
+                                                      <Button fx:id="btnCancelarEdProducto" mnemonicParsing="false" text="Cancelar Ed">
                                                          <HBox.margin>
                                                             <Insets left="15.0" />
                                                          </HBox.margin></Button>

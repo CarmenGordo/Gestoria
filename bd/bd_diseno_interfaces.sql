@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 25-11-2024 a las 12:16:43
+-- Tiempo de generación: 08-12-2024 a las 13:33:06
 -- Versión del servidor: 5.7.35-0ubuntu0.18.04.2
 -- Versión de PHP: 8.0.10
 
@@ -45,13 +45,16 @@ CREATE TABLE `almacenes` (
 --
 
 INSERT INTO `almacenes` (`id_almacen`, `nombre`, `direccion`, `ciudad`, `pais`, `telefono`, `capacidad_ocupada`, `capacidad_total`, `horario`, `id_tienda`) VALUES
-('A001', 'Almacén Barcelona', 'Carrer de Pau Claris, 30', 'Barcelona', 'España', 932345679, 164, 500, '{\"lunes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"jueves\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"martes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"viernes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"miércoles\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}}', 'T001'),
+('A001', 'Almacén Barcelona', 'Carrer de Pau Claris, 30', 'Barcelona', 'España', 932345679, 287, 500, '{\"lunes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"jueves\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"martes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"viernes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"miércoles\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}}', 'T001'),
 ('A002', 'Almacén Madrid', 'Calle de Vallehermoso, 85', 'Madrid', 'España', 912345679, 163, 600, '{\"lunes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"jueves\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"martes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"viernes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"miércoles\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}}', 'T002'),
 ('A003', 'Almacén Londres', 'Oxford Street, 40', 'Londres', 'Reino Unido', 203456790, 144, 700, '{\"lunes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"jueves\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"martes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"viernes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"miércoles\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}}', 'T003'),
 ('A004', 'Almacén Los Ángeles', 'Hollywood Boulevard, 140', 'Los Ángeles', 'EE.UU.', 213456790, 217, 400, '{\"lunes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"jueves\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"martes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"viernes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"miércoles\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}}', 'T004'),
 ('A005', 'Almacén Tokio', 'Shibuya, 5', 'Tokio', 'Japón', 312345679, 116, 650, '{\"lunes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"jueves\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"martes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"viernes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"miércoles\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}}', 'T005'),
 ('A006', 'Almacén París', 'Avenue des Champs-Élysées, 60', 'París', 'Francia', 142345679, 125, 700, '{\"lunes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"jueves\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"martes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"viernes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"miércoles\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}}', 'T006'),
-('A007', 'Almacén Berlín', 'Kurfürstendamm, 120', 'Berlín', 'Alemania', 302345679, 45, 450, '{\"lunes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"jueves\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"martes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"viernes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"miércoles\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}}', 'T007');
+('A007', 'Almacén Berlín', 'Kurfürstendamm, 120', 'Berlín', 'Alemania', 302345679, 45, 450, '{\"lunes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"jueves\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"martes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"viernes\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}, \"miércoles\": {\"cierre\": \"18:00\", \"apertura\": \"10:00\"}}', 'T007'),
+('A100', 'aaAlmacén Central', 'Calle Ficticia 123', 'Madrid', 'España', 912345678, 500, 100, '{\"lunes\": {\"cierre\": \"Almacén Central\", \"apertura\": \"Almacén Central\"}, \"jueves\": {\"cierre\": \"Almacén Central\", \"apertura\": \"Almacén Central\"}, \"martes\": {\"cierre\": \"Almacén Central\", \"apertura\": \"Almacén Central\"}, \"domingo\": {\"cierre\": \"Almacén Central\", \"apertura\": \"Almacén Central\"}, \"sábado\": {\"cierre\": \"Almacén Central\", \"apertura\": \"Almacén Central\"}, \"viernes\": {\"cierre\": \"Almacén Central\", \"apertura\": \"Almacén Central\"}, \"miércoles\": {\"cierre\": \"Almacén Central\", \"apertura\": \"Almacén Central\"}}', 'T001'),
+('A101', 'ccc', 'c', 'Sevilla', 'España', 999999999, 0, 90, '{\"lunes\": {\"cierre\": \"c\", \"apertura\": \"c\"}, \"jueves\": {\"cierre\": \"c\", \"apertura\": \"c\"}, \"martes\": {\"cierre\": \"c\", \"apertura\": \"c\"}, \"domingo\": {\"cierre\": \"c\", \"apertura\": \"c\"}, \"sábado\": {\"cierre\": \"c\", \"apertura\": \"c\"}, \"viernes\": {\"cierre\": \"c\", \"apertura\": \"c\"}, \"miércoles\": {\"cierre\": \"c\", \"apertura\": \"c\"}}', 'T001'),
+('A102', 'zz', 'z', 'Almería', 'España', 999999999, 0, 900, '{\"lunes\": {\"cierre\": \"z\", \"apertura\": \"z\"}, \"jueves\": {\"cierre\": \"z\", \"apertura\": \"z\"}, \"martes\": {\"cierre\": \"z\", \"apertura\": \"z\"}, \"sabado\": {\"cierre\": \"z\", \"apertura\": \"z\"}, \"domingo\": {\"cierre\": \"z\", \"apertura\": \"z\"}, \"viernes\": {\"cierre\": \"z\", \"apertura\": \"z\"}, \"miercoles\": {\"cierre\": \"z\", \"apertura\": \"z\"}}', 'T001');
 
 -- --------------------------------------------------------
 
@@ -62,7 +65,7 @@ INSERT INTO `almacenes` (`id_almacen`, `nombre`, `direccion`, `ciudad`, `pais`, 
 CREATE TABLE `productos` (
   `id_producto` varchar(20) NOT NULL,
   `nombre` varchar(150) NOT NULL,
-  `imagen` longtext NOT NULL,
+  `imagen` longtext,
   `tipo` enum('Accesorios','Ropa','Zapatillas') NOT NULL,
   `subtipo_ropa` enum('Camiseta','Sudadera','Jersey','Chaqueta','Pantalon_corto','Pantalon_largo','Leggins','Chandals','Falda','Vestido') DEFAULT NULL,
   `subtipo_accesorios` enum('Gorro','Bolso','Mochila','Calcetines','Guantes','Cinturon','Cartera','Gafas de sol') DEFAULT NULL,
@@ -229,76 +232,53 @@ INSERT INTO `productos` (`id_producto`, `nombre`, `imagen`, `tipo`, `subtipo_rop
 ('P024', 'Pantalon Largo Oversize', 'PantalonLargoOversize.jpg', 'Ropa', 'Pantalon_largo', NULL, 'M,L,XL', 45, 97, 'T004', 'A004'),
 ('P024', 'Pantalon Largo Oversize', 'PantalonLargoOversize.jpg', 'Ropa', 'Pantalon_largo', NULL, 'S,M,L', 45, 11, 'T005', 'A005'),
 ('P024', 'Pantalon Largo Oversize', 'PantalonLargoOversize.jpg', 'Ropa', 'Pantalon_largo', NULL, 'S,M', 45, 10, 'T006', 'A006'),
-('P024', 'Pantalon Largo Oversize', 'PantalonLargoOversize.jpg', 'Ropa', 'Pantalon_largo', NULL, 'S', 45, 1, 'T007', 'A007');
+('P024', 'Pantalon Largo Oversize', 'PantalonLargoOversize.jpg', 'Ropa', 'Pantalon_largo', NULL, 'S', 45, 1, 'T007', 'A007'),
+('P100', 'Bandolera Deportiva', 'BandoleraStrip.png', 'Ropa', 'Camiseta', NULL, 'M', 29.99, 20, 'T001', 'A001'),
+('P101', 'bbbbb', 'ZapatillaShoxR4.jpg', 'Ropa', NULL, NULL, '35,36', 160.49, 3, 'T001', 'A001'),
+('P103', 'zzz', 'camiseta.jpg', 'Accesorios', NULL, 'Bolso', 'M', 19.99, 50, 'T001', 'A001'),
+('P104', 'bbbb', 'camiseta.jpg', 'Accesorios', NULL, 'Bolso', 'M', 19.99, 50, 'T001', 'A001');
 
 --
 -- Disparadores `productos`
 --
 DELIMITER $$
-CREATE TRIGGER `actualizar_capacidad_ocupada_delete` AFTER DELETE ON `productos` FOR EACH ROW BEGIN
-    -- Verificar si el almacén asociado existe
-    IF EXISTS (SELECT 1 FROM almacen WHERE id_almacen = OLD.id_almacen) THEN
-        -- Actualizar la capacidad ocupada del almacén
-        UPDATE almacen
-        SET capacidad_ocupada = (
-            SELECT COALESCE(SUM(stock), 0) 
-            FROM productos 
-            WHERE id_almacen = OLD.id_almacen
-        )
-        WHERE id_almacen = OLD.id_almacen;
-    END IF;
-END
-$$
-DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `actualizar_capacidad_ocupada_insert` AFTER INSERT ON `productos` FOR EACH ROW BEGIN
-    UPDATE almacen
-    SET capacidad_ocupada = (
-        SELECT COALESCE(SUM(stock), 0)
-        FROM productos
-        WHERE id_almacen = NEW.id_almacen
-    )
-    WHERE id_almacen = NEW.id_almacen;
-END
-$$
-DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `actualizar_capacidad_ocupada_update` AFTER UPDATE ON `productos` FOR EACH ROW BEGIN
-    -- Primero, actualizamos la capacidad del almacén afectado por el cambio
-    UPDATE almacen
-    SET capacidad_ocupada = (
-        SELECT COALESCE(SUM(stock), 0)
-        FROM productos
-        WHERE id_almacen = NEW.id_almacen
-    )
-    WHERE id_almacen = NEW.id_almacen;
+CREATE TRIGGER `actualizar_capacidad_ocupada_actualizar_producto` AFTER UPDATE ON `productos` FOR EACH ROW BEGIN
+    -- Si el producto cambia de almacen:
+    IF OLD.`id_almacen` <> NEW.`id_almacen` THEN
+        -- le restamos al almacen inicial
+        UPDATE `almacenes`
+        SET `capacidad_ocupada` = `capacidad_ocupada` - OLD.`stock`
+        WHERE `id_almacen` = OLD.`id_almacen`;
 
-    -- Si el producto ha cambiado de almacén, actualizamos el almacén de destino
-    IF OLD.id_almacen != NEW.id_almacen THEN
-        UPDATE almacen
-        SET capacidad_ocupada = (
-            SELECT COALESCE(SUM(stock), 0)
-            FROM productos
-            WHERE id_almacen = NEW.id_almacen
-        )
-        WHERE id_almacen = NEW.id_almacen;
+        -- le sumamos el stock al nuevvo almacen 
+        UPDATE `almacenes`
+        SET `capacidad_ocupada` = `capacidad_ocupada` + NEW.`stock`
+        WHERE `id_almacen` = NEW.`id_almacen`;
+
+    -- Pero si el producto cambia el stock del producto, acutaliza la cap. ocupada del almacen:
+    ELSEIF OLD.`stock` <> NEW.`stock` THEN
+        -- actulizar la cap. ocupada
+        UPDATE `almacenes`
+        SET `capacidad_ocupada` = `capacidad_ocupada` - OLD.`stock` + NEW.`stock`
+        WHERE `id_almacen` = NEW.`id_almacen`;
     END IF;
 END
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `before_insert_producto` BEFORE INSERT ON `productos` FOR EACH ROW BEGIN
-    IF NEW.stock = 0 THEN
-        SET NEW.talla = NULL;
-    END IF;
+CREATE TRIGGER `actualizar_capacidad_ocupada_borrar_producto` AFTER DELETE ON `productos` FOR EACH ROW BEGIN
+    -- Se borrra el producto, y cambia la cap. ocupada
+    UPDATE `almacenes`
+    SET `capacidad_ocupada` = `capacidad_ocupada` - OLD.`stock`
+    WHERE `id_almacen` = OLD.`id_almacen`;
 END
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `before_update_producto` BEFORE UPDATE ON `productos` FOR EACH ROW BEGIN
-    IF NEW.stock = 0 THEN
-        SET NEW.talla = NULL;
-    END IF;
+CREATE TRIGGER `actualizar_capacidad_ocupada_insertar_producto` AFTER INSERT ON `productos` FOR EACH ROW BEGIN
+    UPDATE `almacenes`
+    SET `capacidad_ocupada` = `capacidad_ocupada` + NEW.`stock`
+    WHERE `id_almacen` = NEW.`id_almacen`;
 END
 $$
 DELIMITER ;
@@ -331,7 +311,9 @@ INSERT INTO `tiendas` (`id_tienda`, `nombre`, `tipo`, `direccion`, `ciudad`, `pa
 ('T004', 'Nike Store Los Angeles', 'normal', 'Hollywood Boulevard, 123', 'Los Angeles', 'Estados Unidos', 213456789, '{\"lunes\": \"09:00-20:00\", \"jueves\": \"09:00-20:00\", \"martes\": \"09:00-20:00\", \"domingo\": \"Cerrado\", \"sábado\": \"10:00-18:00\", \"viernes\": \"09:00-20:00\", \"miércoles\": \"09:00-20:00\"}'),
 ('T005', 'Nike Outlet Tokyo', 'outlet', 'Shibuya, 1', 'Tokio', 'Japón', 312345678, '{\"lunes\": \"11:00-19:00\", \"jueves\": \"11:00-19:00\", \"martes\": \"11:00-19:00\", \"domingo\": \"Cerrado\", \"sábado\": \"10:00-18:00\", \"viernes\": \"11:00-19:00\", \"miércoles\": \"11:00-19:00\"}'),
 ('T006', 'Nike Premium Paris', 'premium', 'Avenue des Champs-Élysées, 55', 'París', 'Francia', 142345678, '{\"lunes\": \"10:00-20:00\", \"jueves\": \"10:00-20:00\", \"martes\": \"10:00-20:00\", \"domingo\": \"Cerrado\", \"sábado\": \"10:00-20:00\", \"viernes\": \"10:00-20:00\", \"miércoles\": \"10:00-20:00\"}'),
-('T007', 'Nike Store Berlin', 'normal', 'Kurfürstendamm, 101', 'Berlín', 'Alemania', 302345678, '{\"lunes\": \"10:00-19:00\", \"jueves\": \"10:00-19:00\", \"martes\": \"10:00-19:00\", \"domingo\": \"Cerrado\", \"sábado\": \"10:00-18:00\", \"viernes\": \"10:00-19:00\", \"miércoles\": \"10:00-19:00\"}');
+('T007', 'Nike Store Berlin', 'normal', 'Kurfürstendamm, 101', 'Berlín', 'Alemania', 302345678, '{\"lunes\": \"10:00-19:00\", \"jueves\": \"10:00-19:00\", \"martes\": \"10:00-19:00\", \"domingo\": \"Cerrado\", \"sábado\": \"10:00-18:00\", \"viernes\": \"10:00-19:00\", \"miércoles\": \"10:00-19:00\"}'),
+('T008', 'a', 'normal', 'a', 'Sevilla', 'España', 999999999, '{\"lunes\": {\"cierre\": \"obtenerHorarioDia c\", \"apertura\": \"obtenerHorarioDia a\"}, \"jueves\": {\"cierre\": \"obtenerHorarioDia c\", \"apertura\": \"obtenerHorarioDia a\"}, \"martes\": {\"cierre\": \"obtenerHorarioDia c\", \"apertura\": \"obtenerHorarioDia a\"}, \"sabado\": {\"cierre\": \"obtenerHorarioDia c\", \"apertura\": \"obtenerHorarioDia a\"}, \"domingo\": {\"cierre\": \"obtenerHorarioDia c\", \"apertura\": \"obtenerHorarioDia a\"}, \"viernes\": {\"cierre\": \"obtenerHorarioDia c\", \"apertura\": \"obtenerHorarioDia a\"}, \"miercoles\": {\"cierre\": \"obtenerHorarioDia c\", \"apertura\": \"obtenerHorarioDia a\"}}'),
+('T009', 'bb', 'normal', 'b', 'Sevilla', 'España', 999999999, '{\"lunes\": {\"cierre\": \"obtenerHorarioDia c\", \"apertura\": \"obtenerHorarioDia a\"}, \"jueves\": {\"cierre\": \"obtenerHorarioDia c\", \"apertura\": \"obtenerHorarioDia a\"}, \"martes\": {\"cierre\": \"obtenerHorarioDia c\", \"apertura\": \"obtenerHorarioDia a\"}, \"sabado\": {\"cierre\": \"obtenerHorarioDia c\", \"apertura\": \"obtenerHorarioDia a\"}, \"domingo\": {\"cierre\": \"obtenerHorarioDia c\", \"apertura\": \"obtenerHorarioDia a\"}, \"viernes\": {\"cierre\": \"obtenerHorarioDia c\", \"apertura\": \"obtenerHorarioDia a\"}, \"miercoles\": {\"cierre\": \"obtenerHorarioDia c\", \"apertura\": \"obtenerHorarioDia a\"}}');
 
 --
 -- Índices para tablas volcadas
@@ -351,6 +333,7 @@ ALTER TABLE `productos`
   ADD PRIMARY KEY (`id_producto`,`id_tienda`,`id_almacen`),
   ADD KEY `fk_tienda` (`id_tienda`),
   ADD KEY `fk_almacen` (`id_almacen`);
+ALTER TABLE `productos` ADD FULLTEXT KEY `id_almacen` (`id_almacen`);
 
 --
 -- Indices de la tabla `tiendas`
