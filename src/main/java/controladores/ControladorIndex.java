@@ -5,6 +5,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.hansolo.tilesfx.Tile;
 import eu.hansolo.tilesfx.TileBuilder;
 import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 
 import modelos.Tiendas;
@@ -34,6 +37,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -42,6 +46,7 @@ import java.util.Locale;
 import java.util.Set;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -70,6 +75,9 @@ import org.controlsfx.validation.ValidationMessage;
 import org.controlsfx.validation.ValidationResult;
 import org.controlsfx.validation.ValidationSupport;
 import javafx.scene.control.Control;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
+import javax.imageio.ImageIO;
 import org.controlsfx.validation.Validator;
 import org.controlsfx.validation.decoration.GraphicValidationDecoration;
 import utils.ConexionBD;
@@ -241,12 +249,14 @@ public class ControladorIndex implements Initializable {
     }
     private void mostrarPane(Pane paneMostrar) {
         paneContenidoInicio.setVisible(false);
+        
         paneContenidoListaProductos.setVisible(false);
         paneContenidoProductoSelec.setVisible(false);
         paneAñadirProducto.setVisible(false);
         
         paneContenidoListaTiendas.setVisible(false);
         paneContenidoTiendaSelec.setVisible(false);
+        paneAñadirTienda.setVisible(false);
         
         paneContenidoListaAlmacenes.setVisible(false);
         paneContenidoAlmacenSelec.setVisible(false);
@@ -569,10 +579,6 @@ public class ControladorIndex implements Initializable {
     private HBox editarProductoElegirTienda;
     @FXML
     private HBox editarProductoElegirAlmacen;
-    private void editarProducto(boolean b){
-        editarProductoElegirTienda.setVisible(!b);
-        editarProductoElegirAlmacen.setVisible(!b);
-    }
     
     
     
@@ -583,6 +589,8 @@ public class ControladorIndex implements Initializable {
     private TextField textNombreAñProducto;
     @FXML
     private Label iconoValiNombreAñProducto;
+    @FXML
+    private ImageView imgAñProducto;
     @FXML
     private ChoiceBox<Productos.TipoProducto> choiceBoxTipoAñProducto;
     @FXML
@@ -611,6 +619,8 @@ public class ControladorIndex implements Initializable {
     private ComboBox comboBoxElegirAlmacenAñProd;
     @FXML
     private Label iconoValiIdAlmacenAñProducto;
+ 
+            
   
 
     //elementos de añadir tiendas:
@@ -697,7 +707,7 @@ public class ControladorIndex implements Initializable {
     @FXML
     private Label iconoValiCapTotalAñAlmacen;
     @FXML
-    private TextField textIdTiendaAñAlmacen;
+    private ComboBox textIdTiendaAñAlmacen;
     @FXML
     private Label iconoValiIdTiendaAñAlmacen;
     @FXML
@@ -734,14 +744,27 @@ public class ControladorIndex implements Initializable {
     private TextField textCieDHorarioAñAlmacen;
     @FXML
     private VBox barraProgresoAñAlmacen;
-  
+    @FXML
+    private HBox footerBtnAñProducto;
+    @FXML
+    private HBox footerBtnEdProducto;
+    
+    private String imagenBase64;
+    
     @FXML
     private void añadir(){
         limpiarPaneAñAlmacen();
         ObservableList<Tiendas> tiendasPro = darListaTiendas();
 
         if (paneContenidoListaProductos.isVisible() || paneContenidoProductoSelec.isVisible()) {
+           
+            footerModificarProductoEdProducto.setVisible(false);
+            footerModificarProductoEdProducto.setPrefHeight(0);
+            footerBtnAñProducto.setTranslateY(-20);
+            footerBtnEdProducto.setVisible(false);
             mostrarPane(paneAñadirProducto);
+           
+            arrastrarImg();
             
             ObservableList<Productos.TipoProducto> opcTipo = FXCollections.observableArrayList(Productos.TipoProducto.values());
             ObservableList<Productos.TallaProducto> opcTalla = FXCollections.observableArrayList(Productos.TallaProducto.values());
@@ -768,8 +791,8 @@ public class ControladorIndex implements Initializable {
        
             comboBoxTallasAñProducto.setItems(opcTalla);
   
-            //comboBoxElegirTiendaAñProd.setItems(obtenerNombresTiendas());
-            comboBoxElegirAlmacenAñProd.setItems(obtenerNombresAlmacenes());
+            comboBoxElegirTiendaAñProd.setItems(obtenerIdsTiendas());
+            comboBoxElegirAlmacenAñProd.setItems(obtenerIdsAlmacenes());
             
             comprobarValidacionesAñProducto();
             
@@ -785,6 +808,17 @@ public class ControladorIndex implements Initializable {
             comboBoxPaisAñTienda.getItems().addAll(paisesEu);
             comboBoxPaisAñTienda.getSelectionModel().selectFirst();
             
+            comboBoxPaisAñTienda.valueProperty().addListener((observable, oldValue, newValue) -> {
+                if(comboBoxPaisAñTienda.getValue() == "España"){
+
+                    comboBoxCiudadAñTienda.setDisable(false);
+                    comboBoxCiudadAñTienda.setValue("");
+
+                }else{
+                    comboBoxCiudadAñTienda.setDisable(true);
+                }
+            });
+            
             comprobarValidacionesAñTienda();
             
             
@@ -798,10 +832,80 @@ public class ControladorIndex implements Initializable {
             comboBoxPaisAñAlmacen.getItems().addAll(paisesEu);
             comboBoxPaisAñAlmacen.getSelectionModel().selectFirst();
     
+            comboBoxPaisAñAlmacen.valueProperty().addListener((observable, oldValue, newValue) -> {
+                if(comboBoxPaisAñAlmacen.getValue() == "España"){
+
+                    comboBoxCiudadAñAlmacen.setDisable(false);
+                    comboBoxCiudadAñAlmacen.setValue("");
+
+                }else{
+                    comboBoxCiudadAñAlmacen.setDisable(true);
+                }
+            });
+            
+            textIdTiendaAñAlmacen.setItems(obtenerIdsTiendas());
+            textCapTotalAñAlmacen.getText();
+            System.out.println("textCapTotalAñAlmacen"+textCapTotalAñAlmacen.getText());
+            
 
             comprobarValidacionesAñAlmacen(); 
         }
         
+    }
+    
+    //soltar y agarrar img
+    private void arrastrarImg(){
+        //agarrar img 
+            paneAñadirProducto.setOnDragOver(event -> {
+                if (event.getGestureSource() != paneAñadirProducto && event.getDragboard().hasFiles()) {
+                    //compruba q tiene imagenes para copiar
+                    event.acceptTransferModes(TransferMode.COPY);
+                }
+                //consume() : hace qye lo cierre para que no siga 
+                event.consume();
+            });
+            
+            //soltar img
+            paneAñadirProducto.setOnDragDropped(event -> {
+                Dragboard db = event.getDragboard();
+                boolean success = false;
+
+                if (db.hasFiles()) {
+                    List<File> files = db.getFiles();
+                    File selectedFile = files.get(0);
+
+                    try {
+
+                        //redimensionar la img
+                        Image originalImage = new Image(selectedFile.toURI().toString());
+                        Image resizedImage = new Image(originalImage.getUrl(), 222, 197, true, true);
+                        imgAñProducto.setImage(resizedImage);
+
+                        //conversiones para usar b64
+                        BufferedImage bufferedImage = SwingFXUtils.fromFXImage(resizedImage, null);
+                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                        ImageIO.write(bufferedImage, "png", baos);
+                        
+                        //convertimos a byte
+                        byte[] imageBytes = baos.toByteArray();
+                        imagenBase64 = Base64.getEncoder().encodeToString(imageBytes);
+
+                        //mostar nombre b64
+                        System.out.println("Imagen en base64: " + imagenBase64);
+                        success = true;
+                        
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    mostrarAlerta(Alert.AlertType.INFORMATION, "Problemas con la imagen", "La imagen no se ha poodido cargar");
+                    cargarImagen("sinFoto.png", imgAñProducto);
+                }
+
+                //indicar si ha salido bien
+                event.setDropCompleted(success);
+                event.consume();
+            });
     }
     
     //Recoger todo el horario:
@@ -860,9 +964,9 @@ public class ControladorIndex implements Initializable {
     
     @FXML
     private void aceptarAñProducto(){
-        System.out.println("Producto añadido");
-        
-        String nombreProd = textNombreAñTienda.getText();
+     
+        String nombreProd = textNombreAñProducto.getText();
+        String imgProd = imagenBase64;
         Enum tipoProd = choiceBoxTipoAñProducto.getValue();
         Enum subProd = null;
         
@@ -879,17 +983,16 @@ public class ControladorIndex implements Initializable {
         Enum tallaProd = comboBoxTallasAñProducto.getValue();
         double precioProd = Double.parseDouble(textPrecioAñProducto.getText());
         int stockProd = Integer.parseInt(textStockAñProducto.getText());
-        //String tiendaProd = comboBoxElegirTiendaAñProd.getSelectionModel().toString();
-        String tiendaProd = comboBoxElegirTiendaAñProd.getSelectionModel().toString();
-        System.out.println("---tiendaProd "+tiendaProd);
-        String almacenProd = comboBoxElegirAlmacenAñProd.getSelectionModel().toString();
+        String tiendaProd = comboBoxElegirTiendaAñProd.getSelectionModel().getSelectedItem().toString();
+        String almacenProd = comboBoxElegirAlmacenAñProd.getSelectionModel().getSelectedItem().toString();
 
-        
+
         if(comprobarDatosProducto()){
-            System.out.println("-- aceptarProducto -- comprobarDatosProducto");
-            //? añadir img
-            añadirProducto(nombreProd, tipoProd, subProd, tallaProd, precioProd, stockProd, tiendaProd, almacenProd);
+            System.out.println("Añadir porducto: "+nombreProd+imgProd+tipoProd+subProd+tallaProd+precioProd+stockProd+tiendaProd+almacenProd);
+            añadirProducto(nombreProd, imgProd, tipoProd, subProd, tallaProd, precioProd, stockProd, tiendaProd, almacenProd);
             limpiarPaneAñProducto();
+            actualizar();
+            mostrarPane(paneContenidoListaProductos);
         }
     }
     @FXML
@@ -899,27 +1002,15 @@ public class ControladorIndex implements Initializable {
     }
     private void limpiarPaneAñProducto() {
         tablaListaTiendas.getSelectionModel().clearSelection();
-        textNombreAñTienda.clear();
-        comboBoxTipoAñTienda.getSelectionModel().clearSelection();
-        textDirAñTienda.clear();
-        comboBoxPaisAñTienda.getSelectionModel().clearSelection();
-        comboBoxCiudadAñTienda.getSelectionModel().clearSelection();
-        textTelAñTienda.clear();
-
-        textAperLHorarioAñTienda.clear();
-        textCieLHorarioAñTienda.clear();
-        textAperMHorarioAñTienda.clear();
-        textCieMHorarioAñTienda.clear();
-        textAperXHorarioAñTienda.clear();
-        textCieXHorarioAñTienda.clear();
-        textAperJHorarioAñTienda.clear();
-        textCieJHorarioAñTienda.clear();
-        textAperVHorarioAñTienda.clear();
-        textCieVHorarioAñTienda.clear();
-        textAperSHorarioAñTienda.clear();
-        textCieSHorarioAñTienda.clear();
-        textAperDHorarioAñTienda.clear();
-        textCieDHorarioAñTienda.clear();
+        
+        textNombreAñProducto.clear();
+        choiceBoxTipoAñProducto.getSelectionModel().clearSelection();
+        choiceBoxSubTipoAñProducto.getSelectionModel().clearSelection();
+        comboBoxTallasAñProducto.getSelectionModel().clearSelection();
+        textPrecioAñProducto.clear();
+        textStockAñProducto.clear();
+        comboBoxElegirTiendaAñProd.getSelectionModel().clearSelection();
+        comboBoxElegirAlmacenAñProd.getSelectionModel().clearSelection();
     }
     
     @FXML
@@ -940,6 +1031,8 @@ public class ControladorIndex implements Initializable {
             System.out.println("-- aceptarTienda -- comprobarDatosTienda");
             añadirTienda(nombreTienda, tipoTienda, dirTienda, ciudadTienda, paisTienda, telefonoTienda, horario);
             limpiarPaneAñTienda();
+            actualizar();
+            mostrarPane(paneContenidoListaTiendas);
         }
     }
     @FXML
@@ -982,7 +1075,7 @@ public class ControladorIndex implements Initializable {
         String paisAlmacen = comboBoxPaisAñAlmacen.getValue().toString();
         int telefonoAlmacen = Integer.parseInt(textTelAñAlmacen.getText());
         int capacidadTotalAlmacen = Integer.parseInt(textCapTotalAñAlmacen.getText());
-        String idTiendaAlmacen = textIdTiendaAñAlmacen.getText();
+        String idTiendaAlmacen = textIdTiendaAñAlmacen.getValue().toString();
         Map<String, Map<String, String>> horario = recogerHorario();
         
         
@@ -1006,7 +1099,7 @@ public class ControladorIndex implements Initializable {
         comboBoxCiudadAñAlmacen.getSelectionModel().clearSelection();
         textTelAñAlmacen.clear();
         textCapTotalAñAlmacen.clear();
-        textIdTiendaAñAlmacen.clear();
+        textIdTiendaAñAlmacen.getSelectionModel().clearSelection();
 
         textAperLHorarioAñAlmacen.clear();
         textCieLHorarioAñAlmacen.clear();
@@ -1039,6 +1132,15 @@ public class ControladorIndex implements Initializable {
     private HBox footerAñAlmacen;
     @FXML
     private HBox footerEdAlmacen;
+    @FXML
+    private HBox footerModificarProductoEdProducto;
+    @FXML
+    private HBox footerModificarProductoAñProducto;
+    @FXML
+    private Text textTiendaEdProd;
+    @FXML
+    private Text textAlmacenEdProd;
+    
     private String idObjSelecEd;
     @FXML
     public void editar(){
@@ -1056,18 +1158,30 @@ public class ControladorIndex implements Initializable {
             footerEdTienda.setVisible(true);
             tabPaneProductos.setPrefHeight(330);
             
+            footerModificarProductoAñProducto.setVisible(false);
+            footerModificarProductoEdProducto.setVisible(true);
+            footerModificarProductoEdProducto.setTranslateY(-40);
+            footerBtnAñProducto.setVisible(false);
+            footerBtnEdProducto.setVisible(true);
+            footerBtnEdProducto.setTranslateY(-90);
+ 
+            
             idObjSelecEd = productoSelec.getId_producto();
             System.out.println("productoSelec idAlam"+idObjSelecEd);
             
             textNombreAñProducto.setText(productoSelec.getNombre());
+            arrastrarImg();
+            cargarImagen(productoSelec.getImagen(), imgAñProducto);
             choiceBoxTipoAñProducto.setValue(productoSelec.getTipo());
             choiceBoxSubTipoAñProducto.setValue(productoSelec.getTipo());
-            //comboBoxTallasAñProducto.setValue(productoSelec.getTalla());
+            
+            Productos.TallaProducto tallaSeleccionada = productoSelec.getTalla().iterator().next();
+            comboBoxTallasAñProducto.getSelectionModel().select(tallaSeleccionada);
+            
             textPrecioAñProducto.setText(String.valueOf(productoSelec.getPrecio()));
             textStockAñProducto.setText(String.valueOf(productoSelec.getStock()));
-            
-            //? corregir tienda y almacen
-            
+            textTiendaEdProd.setText(productoSelec.getId_tienda());
+            textAlmacenEdProd.setText(productoSelec.getId_almacen());
             
             
         } else if (tablaListaTiendas.getSelectionModel().getSelectedItem() != null){
@@ -1086,7 +1200,19 @@ public class ControladorIndex implements Initializable {
             comboBoxTipoAñTienda.setValue(tiendaSelec.getTipo());
             textDirAñTienda.setText(tiendaSelec.getDireccion());
             comboBoxPaisAñTienda.setValue(tiendaSelec.getPais());
-            comboBoxCiudadAñTienda.setValue(tiendaSelec.getCiudad());
+            
+            comboBoxPaisAñTienda.valueProperty().addListener((observable, oldValue, newValue) -> {
+                if(comboBoxPaisAñTienda.getValue() == "España"){
+
+                    comboBoxCiudadAñTienda.setDisable(false);
+                    comboBoxCiudadAñTienda.setValue("");
+
+                }else{
+                    comboBoxCiudadAñTienda.setDisable(true);
+                    comboBoxCiudadAñTienda.setValue(tiendaSelec.getCiudad());
+                }
+            });
+            
             textTelAñTienda.setText(Integer.toString(tiendaSelec.getTelefono()));
             
             //? mostrar el horario real
@@ -1126,10 +1252,22 @@ public class ControladorIndex implements Initializable {
             textNombreAñAlmacen.setText(almacenSelec.getNombre());
             textDirAñAlmacen.setText(almacenSelec.getDireccion());
             comboBoxPaisAñAlmacen.setValue(almacenSelec.getPais());
-            comboBoxCiudadAñAlmacen.setValue(almacenSelec.getCiudad());
+            
+            comboBoxPaisAñAlmacen.valueProperty().addListener((observable, oldValue, newValue) -> {
+                if(comboBoxPaisAñAlmacen.getValue() == "España"){
+
+                    comboBoxCiudadAñAlmacen.setDisable(false);
+                    comboBoxCiudadAñAlmacen.setValue("");
+
+                }else{
+                    comboBoxCiudadAñAlmacen.setDisable(true);
+                    comboBoxCiudadAñAlmacen.setValue(almacenSelec.getCiudad());
+                }
+            });
+
             textTelAñAlmacen.setText(Integer.toString(almacenSelec.getTelefono()));
             textCapTotalAñAlmacen.setText(Integer.toString(almacenSelec.getCapacidad_total()));
-            textIdTiendaAñAlmacen.setText(almacenSelec.getId_tienda());
+            textIdTiendaAñAlmacen.setValue(almacenSelec.getId_tienda());
             
             //? mostrar el horario real
             textAperLHorarioAñAlmacen.setText(almacenSelec.getNombre());
@@ -1155,13 +1293,54 @@ public class ControladorIndex implements Initializable {
 
     }
     @FXML
+    private void aceptarEdProducto(){
+        System.out.println("Editando producto: ");
+        String nombreProd = textNombreAñProducto.getText().toString();
+        String imgProd = imagenBase64;
+        Enum tipoProd = choiceBoxTipoAñProducto.getValue();
+        String tipoProdS = tipoProd.toString();
+        Enum subProd = null;
+        Enum subProdRopa = null;
+        Enum subProdAccesorios = null;
+        
+        if (tipoProd == Productos.TipoProducto.Ropa) {
+            subProdRopa = (Productos.SubTipoRopaProducto) choiceBoxSubTipoAñProducto.getValue();
+        } else if (tipoProd == Productos.TipoProducto.Accesorios) {
+            subProdAccesorios = (Productos.SubTipoAccProducto) choiceBoxSubTipoAñProducto.getValue();
+        } else {
+            subProdRopa = null;
+            subProdAccesorios = null;
+        }
+        Enum tallaProd = comboBoxTallasAñProducto.getValue();
+        double precioProd = Double.parseDouble(textPrecioAñProducto.getText());
+        int stockProd = Integer.parseInt(textStockAñProducto.getText());
+        String tiendaProd = textTiendaEdProd.getText();
+        String almacenProd = textAlmacenEdProd.getText();
+
+        //if (comprobarDatosProducto()) {
+            System.out.println("Editando producto: " + nombreProd);
+            editarProducto(idObjSelecEd, nombreProd, imgProd, tipoProd, subProdRopa, subProdAccesorios, tallaProd, precioProd, stockProd, tiendaProd, almacenProd);
+        
+
+            limpiarPaneAñProducto();
+            actualizar();
+            mostrarPane(paneContenidoListaProductos);
+        //}
+    }
+    @FXML
+    private void cancelarEdProducto(){
+        mostrarPane(paneContenidoListaProductos);
+        limpiarPaneAñProducto();
+    }
+    @FXML
     private void aceptarEdTienda(){
         String idTiendaSelec = idObjSelecEd;
         String nombreTienda = textNombreAñTienda.getText();
         String tipoTienda = comboBoxTipoAñTienda.getValue().toString();
         String dirTienda = textDirAñTienda.getText();
-        String ciudadTienda = comboBoxCiudadAñTienda.getValue().toString();
         String paisTienda = comboBoxPaisAñTienda.getValue().toString();
+        String ciudadTienda = comboBoxCiudadAñTienda.getValue().toString();
+        
         int telefonoTienda = Integer.parseInt(textTelAñTienda.getText());
         
         Map<String, Map<String, String>> horario = recogerHorario();
@@ -1170,6 +1349,8 @@ public class ControladorIndex implements Initializable {
         editarTienda(idTiendaSelec,nombreTienda, tipoTienda, dirTienda, ciudadTienda, paisTienda, telefonoTienda, horario);
         
         limpiarPaneAñTienda();
+        actualizar();
+        mostrarPane(paneContenidoListaTiendas);
     }
     @FXML
     private void cancelarEdTienda(){
@@ -1185,13 +1366,15 @@ public class ControladorIndex implements Initializable {
         String paisAlmacen = comboBoxPaisAñAlmacen.getValue().toString();
         int telefonoAlmacen = Integer.parseInt(textTelAñAlmacen.getText());
         int capacidadTotalAlmacen = Integer.parseInt(textCapTotalAñAlmacen.getText());
-        String idTiendaAlmacen = textIdTiendaAñAlmacen.getText();
+        String idTiendaAlmacen = textIdTiendaAñAlmacen.getValue().toString();
         Map<String, Map<String, String>> horario = recogerHorario();
         
 
         editarAlmacen(idAlmacenSelec,nombreAlmacen, dirAlmacen, ciudadAlmacen, paisAlmacen, telefonoAlmacen, horario, capacidadTotalAlmacen, idTiendaAlmacen);
         
         limpiarPaneAñAlmacen();
+        actualizar();
+        mostrarPane(paneContenidoListaAlmacenes);
     }
     @FXML
     private void cancelarEdAlmacen(){
@@ -1199,37 +1382,31 @@ public class ControladorIndex implements Initializable {
         limpiarPaneAñAlmacen();
     }
             
-@FXML
     private void actualizar(){
-        
-        if (paneContenidoListaProductos.isVisible()) {
-            ObservableList<Productos> productosActualizados = darListaProductos();
-            
-            if (productosActualizados != null && !productosActualizados.isEmpty()) {
-                tablaListaProductos.setItems(productosActualizados);
-                tablaListaProductos.refresh();
-                System.out.println("Tabla prodcutos actualizada");
-            } 
-            
-        }else if (paneContenidoListaTiendas.isVisible()) {
-            ObservableList<Tiendas> tiendasActualizadas = darListaTiendas();
-            
-            if (tiendasActualizadas != null && !tiendasActualizadas.isEmpty()) {
-                tablaListaTiendas.setItems(tiendasActualizadas);
-                tablaListaTiendas.refresh();
-                System.out.println("Tabla tiendas actualizada");
-            } 
-            
-        } else if (paneContenidoListaAlmacenes.isVisible()) {
-            ObservableList<Almacenes> almacenesActualizados = darListaAlmacenes();
-            
-            if (almacenesActualizados != null && !almacenesActualizados.isEmpty()) {
-                tablaListaAlmacenes.setItems(almacenesActualizados);
-                tablaListaAlmacenes.refresh();
-                System.out.println("Tabla almacenes actualizada");
-            } 
-        }
+    if (paneContenidoListaProductos.isVisible()) {
+        ObservableList<Productos> productosActualizados = darListaProductos();
+        if (productosActualizados != null && !productosActualizados.isEmpty()) {
+            tablaListaProductos.setItems(productosActualizados);
+            tablaListaProductos.refresh();
+            System.out.println("Tabla productos actualizada");
+        } 
+    } else if (paneContenidoListaTiendas.isVisible()) {
+        ObservableList<Tiendas> tiendasActualizadas = darListaTiendas();
+        if (tiendasActualizadas != null && !tiendasActualizadas.isEmpty()) {
+            tablaListaTiendas.setItems(tiendasActualizadas);
+            tablaListaTiendas.refresh();
+            System.out.println("Tabla tiendas actualizada");
+        } 
+    } else if (paneContenidoListaAlmacenes.isVisible()) {
+        ObservableList<Almacenes> almacenesActualizados = darListaAlmacenes();
+        if (almacenesActualizados != null && !almacenesActualizados.isEmpty()) {
+            tablaListaAlmacenes.setItems(almacenesActualizados);
+            tablaListaAlmacenes.refresh();
+            System.out.println("Tabla almacenes actualizada");
+        } 
     }
+}
+
             
     @FXML
     private void borrar(){
@@ -1253,9 +1430,8 @@ public class ControladorIndex implements Initializable {
 
             boolean eliminado = borrarProducto(idProducto,idTienda,idAlmacen);
 
-            System.out.println("eliminado"+eliminado);
-            if (eliminado) {
-                mostrarAlerta(Alert.AlertType.INFORMATION, "Exito", "La producto ha sido borrado");
+
+            if (!eliminado) {
                 actualizar();
             } 
         
@@ -1265,8 +1441,7 @@ public class ControladorIndex implements Initializable {
 
             boolean eliminado = borrarTienda(idTienda);
 
-            if (eliminado) {
-                mostrarAlerta(Alert.AlertType.INFORMATION, "Exito", "La tienda ha sido borrada");
+            if (!eliminado) {
                 actualizar();
             } 
             
@@ -1276,8 +1451,7 @@ public class ControladorIndex implements Initializable {
 
             boolean eliminado = borrarAlmacen(idAlmacen);
 
-            if (eliminado) {
-                mostrarAlerta(Alert.AlertType.INFORMATION, "Exito", "El almacén ha sido borrado");
+            if (!eliminado) {
                 actualizar();
             } 
         }
@@ -1288,41 +1462,97 @@ public class ControladorIndex implements Initializable {
     @FXML
     private void verSeleccion() {
        
-        if (tablaListaProductos.getSelectionModel().getSelectedItem() != null){
+        if (tablaListaProductos.getSelectionModel().getSelectedItem() != null  || tablaProductosTienda.getSelectionModel().getSelectedItem() != null || tablaProductosAlmacen.getSelectionModel().getSelectedItem() != null){
             Productos productoSelec = tablaListaProductos.getSelectionModel().getSelectedItem();
-            var almacenProductoSelec = productoSelec.getId_almacen();
+            Productos tiendaSelecPro = tablaProductosTienda.getSelectionModel().getSelectedItem();
+            Productos almacenSelecPro = tablaProductosAlmacen.getSelectionModel().getSelectedItem();
+            
             mostrarPane(paneContenidoProductoSelec);
             visiblePaneCabecera(true);
+            
+            if(productoSelec != null){
+                var almacenProductoSelec = productoSelec.getId_almacen();
+                
+                rellenarProductoSelec(productoSelec);
+                rellenarTiendasProductoSelec(productoSelec.getId_producto());
+                rellenarAlmacenesProductoSelec(almacenProductoSelec);
+                
+            }else if (tiendaSelecPro != null){
+                var almacenProductoSelec = tiendaSelecPro.getId_almacen();
+                
+                rellenarProductoSelec(productoSelec);
+                rellenarTiendasProductoSelec(productoSelec.getId_producto());
+                rellenarAlmacenesProductoSelec(almacenProductoSelec);
+                
+            } else if(almacenSelecPro != null){
+                var almacenProductoSelec = almacenSelecPro.getId_almacen();
+                
+                rellenarProductoSelec(almacenSelecPro);
+                rellenarTiendasProductoSelec(almacenSelecPro.getId_producto());
+                rellenarAlmacenesProductoSelec(almacenProductoSelec);
+            }else{
+                
+            }
 
-            System.out.println("producto Selec id-- " + productoSelec.getId_producto());
-            rellenarProductoSelec(productoSelec);
-            rellenarTiendasProductoSelec(productoSelec.getId_producto());
-            rellenarAlmacenesProductoSelec(almacenProductoSelec);
+            
 
             tablaListaProductos.getSelectionModel().clearSelection();
                     
-        }else if (tablaListaTiendas.getSelectionModel().getSelectedItem() != null){
+        }else if (tablaListaTiendas.getSelectionModel().getSelectedItem() != null || tablaTiendasProducto.getSelectionModel().getSelectedItem() != null || tablaTiendasAlmacen.getSelectionModel().getSelectedItem() != null){
             Tiendas tiendaSelec = tablaListaTiendas.getSelectionModel().getSelectedItem();
+            Tiendas tiendaSelecPro = tablaTiendasProducto.getSelectionModel().getSelectedItem();
+            Tiendas almacenSelecPro = tablaTiendasAlmacen.getSelectionModel().getSelectedItem();
+            
             mostrarPane(paneContenidoTiendaSelec);
             visiblePaneCabecera(true);
             
-            System.out.println("tiendaSelec id-- " + tiendaSelec.getId_tienda());
-            rellenarTablaTiendaSelec(tiendaSelec);
-            rellenarProductosTiendaSelec(tiendaSelec.getId_tienda());
-            rellenarAlmacenesTiendaSelec(tiendaSelec.getId_tienda());
+            if(tiendaSelec != null){
+                rellenarTablaTiendaSelec(tiendaSelec);
+                rellenarProductosTiendaSelec(tiendaSelec.getId_tienda());
+                rellenarAlmacenesTiendaSelec(tiendaSelec.getId_tienda());
+                
+            }else if(tiendaSelecPro != null){
+                rellenarTablaTiendaSelec(tiendaSelecPro);
+                rellenarProductosTiendaSelec(tiendaSelecPro.getId_tienda());
+                rellenarAlmacenesTiendaSelec(tiendaSelecPro.getId_tienda());
+                
+            }else if (almacenSelecPro != null){
+                rellenarTablaTiendaSelec(almacenSelecPro);
+                rellenarProductosTiendaSelec(almacenSelecPro.getId_tienda());
+                rellenarAlmacenesTiendaSelec(almacenSelecPro.getId_tienda());
+            }
+            
             
             tablaListaTiendas.getSelectionModel().clearSelection();
             
-        }else if (tablaListaAlmacenes.getSelectionModel().getSelectedItem() != null){
+        }else if (tablaListaAlmacenes.getSelectionModel().getSelectedItem() != null || tablaAlmacenesProductoSelec.getSelectionModel().getSelectedItem() != null || tablaAlmacenesTienda.getSelectionModel().getSelectedItem() != null){
             Almacenes almacenSelec = tablaListaAlmacenes.getSelectionModel().getSelectedItem();
-            var tiendaAlmacenSelec = almacenSelec.getId_tienda();
+            Almacenes prodSelecAlma = tablaAlmacenesProductoSelec.getSelectionModel().getSelectedItem();
+            Almacenes tiendaSelecAlma = tablaAlmacenesTienda.getSelectionModel().getSelectedItem();
+            
             mostrarPane(paneContenidoAlmacenSelec);
             visiblePaneCabecera(true);
             
-            System.out.println("almacen selec -- " + almacenSelec.getId_almacen());
-            rellenarAlmacenSelec(almacenSelec);
-            rellenarProductosAlmacenSelec(almacenSelec.getId_almacen());
-            rellenarTiendasAlmacenSelec(tiendaAlmacenSelec);
+            if(almacenSelec != null){
+                var tiendaAlmacenSelec = almacenSelec.getId_tienda();
+                
+                rellenarAlmacenSelec(almacenSelec);
+                rellenarProductosAlmacenSelec(almacenSelec.getId_almacen());
+                rellenarTiendasAlmacenSelec(tiendaAlmacenSelec);
+                
+            } else if(prodSelecAlma != null){
+                var tiendaAlmacenSelec = prodSelecAlma.getId_tienda();
+                
+                rellenarAlmacenSelec(prodSelecAlma);
+                rellenarProductosAlmacenSelec(prodSelecAlma.getId_almacen());
+                rellenarTiendasAlmacenSelec(tiendaAlmacenSelec);
+            }else if(tiendaSelecAlma != null){
+                var tiendaAlmacenSelec = tiendaSelecAlma.getId_tienda();
+                
+                rellenarAlmacenSelec(tiendaSelecAlma);
+                rellenarProductosAlmacenSelec(tiendaSelecAlma.getId_almacen());
+                rellenarTiendasAlmacenSelec(tiendaAlmacenSelec);
+            }
             
             tablaListaAlmacenes.getSelectionModel().clearSelection();
         }
@@ -1343,7 +1573,7 @@ public class ControladorIndex implements Initializable {
         
         cargarImagen(productoSelec.getImagen(), imgProductoSelec);
     }
-    //? pasar a modelos??
+    
     public Object contenerProducto(String idProducto) {
         ObservableList<Productos> productos = darListaProductos();
         ObservableList<Tiendas> tiendas = darListaTiendas();
@@ -1428,30 +1658,49 @@ public class ControladorIndex implements Initializable {
     public void cargarImagen(String imagenNombre, ImageView imgProductoSelec) {
         
         if (imagenNombre != null && !imagenNombre.isEmpty()) {
-            String rutaCarpeta = "src/main/resources/assets/";
-            String rutaImagen = rutaCarpeta + imagenNombre;
-
-            File imagenArchivo = new File(rutaImagen);
-            if (imagenArchivo.exists() && imagenArchivo.isFile()) {
-                
+            
+            if (imagenNombre.startsWith("data:image")) {
+                //decodificar img
                 try {
-                    Image image = new Image(imagenArchivo.toURI().toString());
+                    byte[] imageBytes = Base64.getDecoder().decode(imagenNombre.split(",")[1]);
+                    ByteArrayInputStream bis = new ByteArrayInputStream(imageBytes);
+                    Image image = new Image(bis);
                     imgProductoSelec.setImage(image);
                     
                 } catch (Exception e) {
-                    System.out.println("Error al cargar la imagen");
                     imgProductoSelec.setImage(null);
                 }
                 
             } else {
-                imgProductoSelec.setImage(null);
+                String rutaCarpeta = "src/main/resources/assets/";
+                String rutaImagen = rutaCarpeta + imagenNombre;
+                File imagenArchivo = new File(rutaImagen);
+                
+                if (imagenArchivo.exists() && imagenArchivo.isFile()) {
+                    
+                    try {
+                        Image image = new Image(imagenArchivo.toURI().toString());
+                        imgProductoSelec.setImage(image);
+                    } catch (Exception e) {
+                        imgProductoSelec.setImage(null);
+                    }
+                    
+                } else {
+                    //si no por defecto se pone sinFoto
+                    String rutaCarSinFoto = "src/main/resources/assets/sinFoto.png";
+                    File imagenArchSF = new File(rutaCarSinFoto);
+                    Image image = new Image(imagenArchSF.toURI().toString());
+                    imgProductoSelec.setImage(image);
+                }
             }
-            
         } else {
-            imgProductoSelec.setImage(null);
-            //? poner texto para indicar q no hay nada
+            String rutaCarSinFoto = "src/main/resources/assets/sinFoto.png";
+            File imagenArchSF = new File(rutaCarSinFoto);
+            Image image = new Image(imagenArchSF.toURI().toString());
+            imgProductoSelec.setImage(image);
         }
     }
+
     
     
     //pg tienda selec:
@@ -1667,14 +1916,30 @@ public class ControladorIndex implements Initializable {
         quitarPaneCabecera(true);
         mostrarPane(paneContenidoInicio);
     }
-    
-    
+    @FXML
+    private ImageView iconoMenu, iconoTablero, iconoProductos, iconoTiendas, iconoAlmacenes, iconoHerramientas, iconoAñadir, iconoEditar, iconoBorrar, iconoVer;
+    private void cargarIconos(){
+        iconoMenu.setImage(new Image("/iconos/menu.png"));
+        iconoTablero.setImage(new Image("/iconos/tablero.png"));
+        iconoProductos.setImage(new Image("/iconos/productos.png"));
+        iconoTiendas.setImage(new Image("/iconos/tablero.png"));
+        iconoAlmacenes.setImage(new Image("/iconos/tiendas.png"));
+        iconoHerramientas.setImage(new Image("/iconos/ajustes.png"));
+        iconoAñadir.setImage(new Image("/iconos/añadir.png"));
+        iconoEditar.setImage(new Image("/iconos/editar.png"));
+        iconoBorrar.setImage(new Image("/iconos/borrar.png"));
+        iconoVer.setImage(new Image("/iconos/ver.png"));
+
+    }
 
     GraphicValidationDecoration decorador;
-    int maxValueAñAlmacen;
-    
+    double maxValueAñAlmacen;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        //cargar iconos
+        cargarIconos();
+        
         //cargar los idiomas
         btnCambioIdioma.getItems().addAll("Español", "English");
         btnCambioIdioma.setValue("Español"); 
@@ -1682,14 +1947,18 @@ public class ControladorIndex implements Initializable {
         
         setearPaneInicio();
         
+       // maxValueAñAlmacen = Double.parseDouble(textCapTotalAñAlmacen.getText());
+        System.out.println("");
         //barra de progreso
         Tile barraProgreso = TileBuilder.create()
             .skinType(Tile.SkinType.CIRCULAR_PROGRESS)
             .unit("Un.")
             .value(50)
-            .minValue(0)
+            //.minValue(50)
             .maxValue(maxValueAñAlmacen) 
-            .barColor(javafx.scene.paint.Color.RED) 
+                //.maxValue(100)
+            //.barColor(javafx.scene.paint.Color.RED)
+               .barColor(javafx.scene.paint.Color.rgb(204, 95, 127)) 
             .build();
 
         //barraProgreso.setMaxValue();
@@ -1774,7 +2043,7 @@ public class ControladorIndex implements Initializable {
             }
         };
        
-       
+       actualizar();
         try {
             conexion = ConexionBD.getConexion();  
             if (conexion != null) {
@@ -2066,34 +2335,86 @@ public class ControladorIndex implements Initializable {
         return String.format("%s001", prefijo);
     }
     
-    //? añadir img
-    private void añadirProducto(String nombre, Enum tipo, Enum subtipo, Enum talla, double precio, int stock, String idTienda, String idAlmacen) {
+    private void añadirProducto(String nombre, String img, Enum tipo, Enum subtipo, Enum talla, double precio, int stock, String idTienda, String idAlmacen) {
         
         if (conexion != null) {
             //valores por defecto
             String nuevoIdProducto = obtenerUltimoId("productos", "id_producto");
             
-    
-            
             // si se llama igual a otro pero con diferentes ids, se le agrega el mismo id_producto
             if(verificarProductoExistente(nombre)){
                 
                 String query = "SELECT id_producto FROM productos WHERE nombre = ?";
-                try (PreparedStatement ps = conexion.prepareStatement(query)) {
+                try {
+                    PreparedStatement ps = conexion.prepareStatement(query);
+                    
                     ps.setString(1, nombre);
             
                     ResultSet rs = ps.executeQuery();
                     if (rs.next()) {
-                        // Si el producto existe, devolvemos el id_producto
-                        rs.getString("id_producto");
-                    }
-                    System.out.println("La tienda existe con el mismo nombre");
+                       
+                    String idProductoExistente = rs.getString("id_producto");
+                    System.out.println("El producto ya existe con ID: " + idProductoExistente);
 
-                } catch (SQLException e) {
-                    System.err.println("No existe la tienda que has indicado" + e.getMessage());
-                }
-                
-                
+                    String nuevoQuery = "INSERT INTO productos "
+                            + "(id_producto, nombre, imagen, tipo, subtipo_ropa, subtipo_accesorios, talla, precio, stock, id_tienda, id_almacen) "
+                            + "VALUES ( ?, ?, ?,?, ?, ?, ?, ?, ?, ?, ?)";
+                    
+                    try {
+                        PreparedStatement psNuevo = conexion.prepareStatement(nuevoQuery);
+                        
+                        psNuevo.setString(1, nuevoIdProducto);
+                        psNuevo.setString(2, nombre);
+                        psNuevo.setString(3, img);
+                        psNuevo.setString(4, tipo.name());
+
+                        if (tipo == Productos.TipoProducto.Ropa) {
+                            if (subtipo != null) {
+                                psNuevo.setString(5, ((Productos.SubTipoRopaProducto) subtipo).name());
+                            } else {
+                                psNuevo.setString(5, null);
+                            }
+                            psNuevo.setString(6, null);
+
+                        } else if (tipo == Productos.TipoProducto.Accesorios) {
+                            psNuevo.setString(5, null);
+
+                            if (subtipo != null) {
+                                psNuevo.setString(6, ((Productos.SubTipoAccProducto) subtipo).name());
+                            } else {
+                                psNuevo.setString(6, null);
+                            }
+
+                        } else {
+                            psNuevo.setString(5, null);
+                            psNuevo.setString(6, null);
+                        }
+
+                        psNuevo.setString(7, talla.name());
+                        psNuevo.setDouble(8, precio);
+                        psNuevo.setInt(9, stock);
+                        psNuevo.setString(10, idTienda);
+                        psNuevo.setString(11, idAlmacen);
+                        
+                        int rowsInserted = psNuevo.executeUpdate();
+
+                        if (rowsInserted > 0) {
+                            System.out.println("Producto añadido con el mismo nombre");
+                            mostrarAlerta(Alert.AlertType.INFORMATION, "Exito", "Producto añadido! :)");
+                        } else {
+                            System.err.println("No se ha añadido el producto a la nueva ubicacion");
+                            mostrarAlerta(Alert.AlertType.ERROR, "Error", "No se ha podido añadir el producto :(");
+                        }
+                    } catch(SQLException e){
+                        System.err.println("Error al verificar la existencia del producto: " + e.getMessage());
+                    }
+                    
+                }       
+            } catch (SQLException e) {
+                System.err.println("Error al verificar la existencia del producto: " + e.getMessage());
+            }
+                    
+           
                 
             // si se llama igual a otro y con mismos ids, no se puede crear
             }else if(verificarProductoExistenteIgualIds(nombre, idTienda, idAlmacen)){
@@ -2104,7 +2425,9 @@ public class ControladorIndex implements Initializable {
             // si no se llama igual a otro prod, se le pone un id_producto nuevo
             } else {
                 
-                String query = "INSERT INTO productos (id_producto, nombre, tipo, subtipo_ropa, subtipo_accesorios, talla, precio, stock, id_tienda, id_almacen) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                String query = "INSERT INTO productos "
+                        + "(id_producto, nombre, imagen, tipo, subtipo_ropa, subtipo_accesorios, talla, precio, stock, id_tienda, id_almacen) "
+                        + "VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
                 
                 try {
 
@@ -2112,42 +2435,42 @@ public class ControladorIndex implements Initializable {
 
                     ps.setString(1, nuevoIdProducto);
                     ps.setString(2, nombre);
-                    // .name() recoge lo selec devolviendolo como un string para q lo coja
-                    ps.setString(3, tipo.name());
-                    System.out.println("---------------- tipoS "+tipo.name());
-                
+                    ps.setString(3, img);
+                    // .name() : recoge lo selec devolviendolo como un string para q lo coja
+                    ps.setString(4, tipo.name());
+        
                     
                     if (tipo == Productos.TipoProducto.Ropa) {
                         if (subtipo != null) {
-                            ps.setString(4, ((Productos.SubTipoRopaProducto) subtipo).name());
-                        } else {
-                            ps.setString(4, null);
-                        }
-                        ps.setString(5, null);
-
-                    } else if (tipo == Productos.TipoProducto.Accesorios) {
-                        ps.setString(4, null);
-                        
-                        if (subtipo != null) {
-                            ps.setString(5, ((Productos.SubTipoAccProducto) subtipo).name());
+                            ps.setString(5, ((Productos.SubTipoRopaProducto) subtipo).name());
                         } else {
                             ps.setString(5, null);
                         }
+                        ps.setString(6, null);
+
+                    } else if (tipo == Productos.TipoProducto.Accesorios) {
+                        ps.setString(5, null);
+                        
+                        if (subtipo != null) {
+                            ps.setString(6, ((Productos.SubTipoAccProducto) subtipo).name());
+                        } else {
+                            ps.setString(6, null);
+                        }
 
                     } else {
-                        ps.setString(4, null);
                         ps.setString(5, null);
+                        ps.setString(6, null);
                     }
                     
-                    ps.setString(6, talla.name());
-                    ps.setDouble(7, precio);
-                    ps.setInt(8, stock);
-                    ps.setString(9, idTienda);
-                    ps.setString(10, idAlmacen);
+                    ps.setString(7, talla.name());
+                    ps.setDouble(8, precio);
+                    ps.setInt(9, stock);
+                    ps.setString(10, idTienda);
+                    ps.setString(11, idAlmacen);
 
                     int rowsInserted = ps.executeUpdate();
 
-                    //? cambiar texto segun idioma
+                    //? cambiar texto segun idioma para las alert
                     if (rowsInserted > 0) {
                         System.out.println("Producto añadido!");
                         mostrarAlerta(Alert.AlertType.INFORMATION, "Operacion exitosa", "Producto añadido! :)");
@@ -2239,8 +2562,7 @@ public class ControladorIndex implements Initializable {
         }
         return false;
     }
-    
-    
+
     private void añadirTienda(String nombre, String tipo, String direccion, String ciudad, String pais, int telefono, 
                            Map<String, Map<String, String>> horario) {
         if (conexion != null) {
@@ -2472,7 +2794,7 @@ public class ControladorIndex implements Initializable {
                 
             } catch (SQLException e) {
                 System.err.println("--error borrar almacén: " + e.getMessage());
-                mostrarAlerta(Alert.AlertType.ERROR, "Error", "No se ha podido eliminar el almacen" + e.getMessage());
+                mostrarAlerta(Alert.AlertType.ERROR, "Error", "No se ha podido eliminar el almacen, porque tienes productos y tiendas enlazadas");
             }
         }
         return false;
@@ -2867,7 +3189,7 @@ public class ControladorIndex implements Initializable {
         capTotalAl.registerValidator(textCapTotalAñAlmacen, false, capTotalVal);
         
         
-        
+        /*
         ValidationSupport idTiendaAl = new ValidationSupport();
         Validator<String> idTiendaVal = (Control c, String texto) -> {
              if (texto.isEmpty()) {
@@ -2882,10 +3204,12 @@ public class ControladorIndex implements Initializable {
             }
         };
         idTiendaAl.registerValidator(textIdTiendaAñAlmacen, false, idTiendaVal);
-        
+        */
         
         validadores = new ArrayList<>();
-        validadores.addAll(Arrays.asList(nombreAl, dirAl, paisAl, ciudadAl, telAl, capTotalAl, idTiendaAl));
+        validadores.addAll(Arrays.asList(nombreAl, dirAl, paisAl, ciudadAl, telAl, capTotalAl
+                //,idTiendaAl
+        ));
         
         
         Platform.runLater(() -> {
@@ -2997,33 +3321,28 @@ public class ControladorIndex implements Initializable {
     }
     
     
-    //private Map<String, String> mapaTiendas = new LinkedHashMap<>();
     
-    private ObservableList<String> obtenerNombresTiendas() {
+    private ObservableList<String> obtenerIdsTiendas() {
         ObservableList<String> idTiendas = FXCollections.observableArrayList();
         ObservableList<Tiendas> listaTiendas = darListaTiendas();
-
-        //mapaTiendas.clear();
         
         for (Tiendas tienda : listaTiendas) {
-            //mapaTiendas.put(tienda.getNombre(), tienda.getId_tienda());
             idTiendas.add(tienda.getId_tienda());
         }
 
-        //nombresTiendas.addAll(mapaTiendas.keySet());
         return idTiendas;
     }
     
-    private ObservableList<String> obtenerNombresAlmacenes() {
-        ObservableList<String> nombresAlmacenes = FXCollections.observableArrayList();
+    private ObservableList<String> obtenerIdsAlmacenes() {
+        ObservableList<String> idAlmacenes = FXCollections.observableArrayList();
         ObservableList<Almacenes> listaAlmacenes = darListaAlmacenes();
 
         for (Almacenes almacen : listaAlmacenes) {
         
-            nombresAlmacenes.add(almacen.getNombre());
+            idAlmacenes.add(almacen.getId_almacen());
         }
 
-        return nombresAlmacenes;
+        return idAlmacenes;
     }
     
     
