@@ -152,7 +152,7 @@ public class ControladorIndex implements Initializable {
         
     }
     private void visiblePaneCabecera(boolean b){
-        btnVolver.setVisible(b);
+        //btnVolver.setVisible(b);
         //textoMigas.setVisible(b);
     }
     private void quitarPaneCabecera(boolean b){

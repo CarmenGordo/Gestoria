@@ -26,45 +26,45 @@
 
 
 
-/* Botón en estado normal */
+/* Btn  normal */
 .button {
-    -fx-background-color: #77B3A9; 
+    -fx-background-color: #95E1D4; 
     -fx-text-fill: white;       
     -fx-font-size: 14px;         
     -fx-border-radius: 5px;      
     -fx-background-radius: 5px;  
-    -fx-border-color: #69B1A3;
+    -fx-border-color: white;
     -fx-border-width: 2px;   
 }
 
 /* Hover */
 .button:hover {
-    -fx-background-color: #95E2D4;
+    -fx-background-color: #78B3A9;
     -fx-text-fill: white; 
 }
 
-/* Botón presionado */
+/* btn presionado */
 .button:pressed {
     -fx-background-color: #69B1A3; 
     -fx-text-fill: white;
 }
 
-/* Estilo para los gráficos dentro del botón (ImageView) en estado normal */
-.button > .graphic {
-    -fx-background-color: #000000;
-    -fx-opacity: 1; 
+.icono-blanco {
+    -fx-background-color: white;
 }
 
-/* Gráfico (ImageView) en hover */
+
 .button:hover > .graphic {
     -fx-opacity: 0.8; 
 }
 
-/* Botón seleccionado (si necesitas manejar el estado con focus) */
+
 .button:focused {
     -fx-background-color: #95E2D4; 
     -fx-text-fill: white;     
 }
+
+
 
 
 /**/

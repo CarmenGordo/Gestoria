@@ -1,0 +1,74 @@
+/*Colores:*/ 
+.amarillo{
+    color: #fce289;
+}
+.amarillo_oscuro{
+    color: #C9B56E;
+}
+.rosa{
+    color: #FE759F;
+}
+.rosa_oscuro{
+    color: #CC5F7F;
+}
+.azul{
+    color: #95E1D4;
+}
+.azul_oscuro{
+    color: #78B3A9;
+}
+.verde{
+    color: #E9FFD0;
+}
+.verde_oscuro{
+    color: #BDCBA7;
+}
+
+
+
+/* Btn  normal */
+.button {
+    -fx-background-color: #95E1D4; 
+    -fx-text-fill: white;       
+    -fx-font-size: 14px;         
+    -fx-border-radius: 5px;      
+    -fx-background-radius: 5px;  
+    -fx-border-color: white;
+    -fx-border-width: 2px;   
+}
+
+/* Hover */
+.button:hover {
+    -fx-background-color: #78B3A9;
+    -fx-text-fill: white; 
+}
+
+/* btn presionado */
+.button:pressed {
+    -fx-background-color: #69B1A3; 
+    -fx-text-fill: white;
+}
+
+.icono-blanco {
+    -fx-background-color: white;
+}
+
+
+.button:hover > .graphic {
+    -fx-opacity: 0.8; 
+}
+
+
+.button:focused {
+    -fx-background-color: #95E2D4; 
+    -fx-text-fill: white;     
+}
+
+
+
+
+/**/
+.barraProgreso{
+    color: #fce289;
+}
+

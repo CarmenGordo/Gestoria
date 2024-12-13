@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
@@ -11,7 +12,6 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -21,9 +21,10 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" stylesheets="@../estilos/style.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.ControladorIndex">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controladores.ControladorIndex">
    <children>
       <VBox fx:id="menuPrincipal" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="150.0">
          <children>
@@ -32,7 +33,7 @@
                   <ImageView fx:id="imgLogo" fitHeight="60.0" fitWidth="97.0" pickOnBounds="true" preserveRatio="true" />
                   <Button fx:id="btnMenu" alignment="CENTER" mnemonicParsing="false" onAction="#btnCambiarMenu" prefHeight="65.0" prefWidth="53.0">
                      <graphic>
-                        <ImageView fx:id="iconoMenu" fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="iconoMenu" fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true" styleClass="icono-blanco">
                            <image>
                               <Image url="@../../resources/iconos/menu.png" />
                            </image>
@@ -87,12 +88,8 @@
          <children>
             <Pane fx:id="paneCabecera" prefHeight="60.0" prefWidth="650.0">
                <children>
-                  <Button fx:id="btnVolver" contentDisplay="GRAPHIC_ONLY" layoutX="14.0" layoutY="17.0" mnemonicParsing="false" onAction="#volverTiendas" text="Volver" visible="false" />
-                        <Button fx:id="btnBuscar" contentDisplay="GRAPHIC_ONLY" graphicTextGap="2.0" layoutX="437.0" layoutY="17.0" text="_Buscar" />
-
-                  <TextField fx:id="textoBuscar" layoutX="271.0" layoutY="16.0" />
-                  <ToggleButton fx:id="btnTema" layoutX="485.0" layoutY="16.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="65.0" text="Off" textFill="RED" />
-                  <ComboBox fx:id="btnCambioIdioma" layoutX="563.0" layoutY="16.0" onAction="#cambiarIdioma" prefHeight="26.0" prefWidth="67.0" />
+                  <ComboBox fx:id="btnCambioIdioma" layoutX="533.0" layoutY="16.0" onAction="#cambiarIdioma" prefHeight="26.0" prefWidth="97.0" />
+                  <Text layoutX="481.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Idioma:" />
                </children>
             </Pane>
             <Pane fx:id="paneBotonera" layoutY="60.0" prefHeight="44.0" prefWidth="650.0">
@@ -136,27 +133,18 @@
                <children>
                   <Pane fx:id="paneContenidoInicio" prefHeight="439.0" prefWidth="650.0" visible="false">
                      <children>
-                        <FlowPane columnHalignment="CENTER" layoutY="-43.0" prefHeight="234.0" prefWidth="650.0">
+                        <FlowPane alignment="CENTER" columnHalignment="CENTER" layoutY="-43.0" prefHeight="439.0" prefWidth="650.0">
                            <children>
-                              <Pane prefHeight="200.0" prefWidth="326.0" style="-fx-background-color: #B0B0B0;;">
+                              <Pane prefHeight="439.0" prefWidth="649.0" style="-fx-background-color: #fce289;">
                                  <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Bienvenido!" />
+                                    <Text layoutX="121.0" layoutY="204.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bienvenido a Gestoria" textAlignment="CENTER" wrappingWidth="406.4287109375">
+                                       <font>
+                                          <Font size="73.0" />
+                                       </font>
+                                    </Text>
                                  </children>
                               </Pane>
-                              <Region prefHeight="200.0" prefWidth="65.0" />
-                              <Pane prefHeight="200.0" prefWidth="240.0" style="-fx-background-color: #B0B0B0;;" />
                            </children></FlowPane>
-                        <FlowPane layoutY="162.0" prefHeight="234.0" prefWidth="650.0">
-                           <children>
-                              <Pane prefHeight="200.0" prefWidth="213.0" style="-fx-background-color: #B0B0B0;;">
-                                 <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-                                 </children>
-                              </Pane>
-                              <Region prefHeight="200.0" prefWidth="75.0" />
-                              <Pane prefHeight="200.0" prefWidth="344.0" style="-fx-background-color: #B0B0B0;;" />
-                           </children>
-                        </FlowPane>
                      </children>
                   </Pane>
                   <Pane fx:id="paneContenidoListaProductos" prefHeight="396.0" prefWidth="650.0" visible="false">
@@ -999,7 +987,7 @@
                         </TabPane>
                      </children>
                   </Pane>
-                  <Pane fx:id="paneAñadirAlmacen" prefHeight="396.0" prefWidth="650.0">
+                  <Pane fx:id="paneAñadirAlmacen" prefHeight="396.0" prefWidth="650.0" visible="false">
                      <children>
                         <TabPane prefHeight="396.0" prefWidth="650.0" tabClosingPolicy="UNAVAILABLE">
                            <tabs>
@@ -1235,4 +1223,8 @@
          </children>
       </AnchorPane>
    </children>
+   <stylesheets>
+      <URL value="@../estilos/style.css" />
+      <URL value="@../../resources/estilos/style.css" />
+   </stylesheets>
 </HBox>
